@@ -1,250 +1,413 @@
 ﻿# FLUX — KNOW WHAT CHANGED.
-### *Smart Market Watchlist Intelligence Core*
-**Groww CODE 2026 Submission** | Built for the 72-Hour Engineering Challenge
+> **Understand the movement.**
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
-[![React](https://img.shields.io/badge/React-18.3-61DAFB?style=flat&logo=react)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com)
-[![SQLite / SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0_(Async)-D71F00?style=flat)](https://www.sqlalchemy.org)
-[![Tests](https://img.shields.io/badge/Tests-13%20Passed-brightgreen?style=flat)](https://pytest.org)
+FLUX is an intelligent market watchlist engine designed to surface meaningful market shifts rather than overwhelming users with raw ticker noise. By comparing current market conditions against a user's previous check-in snapshot, FLUX isolates notable price velocity, unusual volume anomalies, volatility breaches, and critical price extremes into ranked, explainable signals.
+
+*Built for the Code by Groww 2026 engineering challenge.*
 
 ---
 
-## ⚡ Executive Summary
+## Overview
 
-Traditional market watchlists are noisy firehoses of raw data: endless rows of green and red percentages that tell you *what the price is right now*, but leave you completely blind to **what actually happened since you last looked**. 
+### The Problem
+Traditional market watchlists operate as raw data displays. They present rows of current prices and fixed 24-hour percentage changes without context. For a user returning after two hours or three days, standard percent-change metrics fail to answer the most critical questions:
+- *What changed since I last looked?*
+- *Is this movement routine market chop or an actual momentum shift?*
+- *Which stocks in my watchlist actually require my attention right now?*
 
-**FLUX** is an intelligent, opinionated market watchlist engineered around a single core insight:  
-> **Users don't need more data points; they need cognitive clarity on what meaningfully changed.**
-
-Rather than calculating generic 24-hour daily price changes, FLUX captures a **First-Class User Baseline Snapshot** every time you check in. When you return—whether 20 minutes, 4 hours, or 3 days later—our **Algorithmic Meaningful Change Engine** deconstructs session-to-session market dynamics across multiple factors, suppresses market noise, and surfaces what truly deserves your attention.
+### The FLUX Approach
+FLUX shifts the focus from continuous observation to stateful session comparison:
+1. **User Baseline Snapshots**: Every check-in captures the exact market state of the user's watchlist stocks.
+2. **Session-to-Session Delta**: When the user returns, current quotes are evaluated directly against their prior personal baseline rather than an arbitrary 24-hour window.
+3. **Multi-Factor Meaningful Change Engine**: Movements are scored across five distinct dimensions (price velocity, volume ratio, volatility multiples, price-level boundaries, and confluence) to separate true signals from routine fluctuations.
+4. **Explainable Insights**: Every alert is paired with a quantitative factor breakdown and concise summary explaining why the movement was flagged.
 
 ---
 
-## 🏛️ System Architecture
+## Key Features
 
-```mermaid
-flowchart TD
-    subgraph Client ["Client Tier (React 18 + Vite + TypeScript)"]
-        UI[Watchlist & Signal Feed UI]
-        Pulse[Market Pulse Intraday Timeline]
-        Explainer[Transparent Factor Score Breakdown]
-        Scenario[Live Demo Scenario Switcher]
-    end
+- **Custom Watchlist Management**: Create and organize multiple watchlists, reorder entries, and toggle priority flags per symbol.
+- **Stateful Baseline Snapshots**: Freezes watchlist quotes upon each user check-in to compute true personal delta over time.
+- **Meaningful Change Detection**: Algorithmic scoring model that suppresses noise below a configurable threshold and ranks changes by significance.
+- **Categorized Severity Tiers**: Signals classified into `NORMAL`, `MODERATE`, `HIGH`, and `CRITICAL` with visual 1–5 level meters.
+- **Transparent Factor Breakdown**: Detailed scoring decomposition covering price velocity, volume multiples, volatility bands, and 52-week proximity.
+- **Market Pulse Timeline**: Chronological tracking of notable intraday inflection points throughout trading hours.
+- **Market Session Status**: Live indicator for market state (Open/Closed), active exchange (NSE), and current session timing.
+- **Data Freshness Indicators**: Explicit classification tags (`LIVE`, `RECENT`, `STALE`, `UNAVAILABLE`) reflecting provider latency.
+- **Resilient Multi-Provider Handling**: Fallback aggregation that handles provider timeouts, missing symbols, and cross-provider price conflicts.
+- **Deterministic Demo Scenarios**: Built-in test scenarios (surges, market pullbacks, stale data, provider failures) for repeatable local evaluation.
+- **JWT Authentication**: Secure user registration, login, and session persistence across client devices.
 
-    subgraph Gateway ["API & Application Gateway (FastAPI)"]
-        Router[CORS / Router / JWT Security Layer]
-        SnapRoute[Snapshot & Check-in Controller]
-        WatchRoute[Watchlist CRUD Controller]
-    end
+---
 
-    subgraph CoreEngine ["Intelligence & Data Tier"]
-        Engine[Meaningful Change Engine<br/>5-Factor Multi-Variate Scoring]
-        SnapService[Snapshot State Service<br/>Delta Vector Comparator]
-        Consensus[Consensus Market Aggregator<br/>Multi-Provider Arbitration]
-        Cache[(In-Memory Shared TTL Cache)]
-    end
+## How It Works
 
-    subgraph Persistence ["Persistence Tier (Async SQLAlchemy)"]
-        DB[(SQLite / PostgreSQL Compatible)]
-        SnapshotsTable[market_snapshots / stock_snapshots]
-        WatchlistsTable[watchlists / watchlist_stocks]
-        UsersTable[users / user_events]
-    end
-
-    UI -->|REST + Proxy /api/v1| Router
-    Router --> SnapRoute
-    Router --> WatchRoute
-    SnapRoute --> SnapService
-    SnapService --> Engine
-    SnapService --> Consensus
-    Consensus --> Cache
-    SnapService --> SnapshotsTable
-    WatchRoute --> WatchlistsTable
-    SnapRoute --> UsersTable
+```
+┌─────────────────┐       ┌────────────────────────┐       ┌──────────────────────┐
+│  User Check-In  │ ────> │ Capture Baseline State │ ────> │ Stores Snapshot in   │
+│                 │       │ (Prices, Volume, 52W)  │       │ Database (User-tied) │
+└─────────────────┘       └────────────────────────┘       └──────────────────────┘
+                                                                       │
+                                   User returns later                  │
+                                                                       ▼
+┌─────────────────┐       ┌────────────────────────┐       ┌──────────────────────┐
+│ Ranked Signals  │ <──── │ Meaningful Change      │ <──── │ Fetch Current Market │
+│ & Explanations  │       │ Scoring Engine         │       │ Quotes via Provider  │
+└─────────────────┘       └────────────────────────┘       └──────────────────────┘
 ```
 
+1. **First Visit**: An initial baseline snapshot is recorded for the user's watchlist symbols without generating false or fabricated alerts.
+2. **Subsequent Visits**: The system queries current quotes for all tracked symbols, retrieves the user's most recent snapshot, and computes the delta vector for each stock.
+3. **Evaluation**: The **Meaningful Change Engine** scores each stock against baseline thresholds.
+4. **Presentation**: Results are sorted descending by composite significance score, displaying prioritized change cards with editorial commentary and factor scores.
+
 ---
 
-## 🧠 Engineering Decisions: The "You Decide" Breakdown
+## Meaningful Change Engine
 
-### 1. What Counts as a "Meaningful Change"?
-A stock moving ±0.2% on normal volume is routine tick noise. A stock jumping +3.5% on 2.5x typical volume while breaking out near its 52-week high is an institutional catalyst.
-
-FLUX evaluates changes using a decoupled **5-Factor Weighted Mathematical Model**:
+The core scoring engine is decoupled from storage and presentation logic. It evaluates market deltas through a composite mathematical model yielding a normalized score between `0.0` and `1.0`:
 
 $$\text{Composite Score} = w_p S_p + w_v S_v + w_\sigma S_\sigma + w_l S_l + w_c S_c$$
 
-| Factor | Weight ($w$) | Metric Evaluated | Noise Threshold vs. Signal Trigger |
+### Implemented Factors & Weights
+
+| Factor | Weight ($w$) | Metric Evaluated | Implementation Logic |
 | :--- | :---: | :--- | :--- |
-| **Price Velocity ($S_p$)** | **35%** | Percentage change from previous user baseline | Suppressed below **0.4%** noise floor; notable at **2.0%**; extreme at **6.0%+** |
-| **Volume Anomaly ($S_v$)** | **25%** | Current volume vs. 30-day average volume | 1.0x (normal) → 1.5x (notable) → 2.2x (high) → 3.5x (institutional surge) |
-| **Volatility Expansion ($S_\sigma$)** | **15%** | Price delta divided by stock's typical ATR band | Triggers when movement exceeds **1.25x** normal expected session range |
-| **Price Level Extremes ($S_l$)** | **15%** | Proximity to 52-Week High / Low & Gap-opens | Max score if new 52W record is set; elevated score if within **1.5%** of boundary |
-| **Contextual Synergy ($S_c$)** | **10%** | Confluence of multiple independent triggers | Compound bonus awarded when 3+ factors fire simultaneously |
+| **Price Velocity ($S_p$)** | **0.35** | Absolute % price change vs. baseline | Suppressed below **0.4%** (noise floor). Scaled linearly between **2.0%** (notable), **4.0%** (significant), and **6.0%+** (extreme). |
+| **Volume Anomaly ($S_v$)** | **0.25** | Current volume vs. typical daily volume | Evaluates ratio against baseline average. Triggers at **1.5×** (notable), **2.2×** (high), and **3.5×** (extreme volume surge). |
+| **Volatility Deviation ($S_\sigma$)** | **0.15** | Move divided by typical volatility band | Measures whether the price move exceeds **1.25×** the stock's typical session volatility / ATR band. |
+| **Price Level Proximity ($S_l$)** | **0.15** | 52-week High/Low boundaries & Gap-opens | Awards maximum score for new 52W record breaks, elevated score within **1.5%** of boundary, or opening gaps $\ge \mathbf{2.0\%}$. |
+| **Contextual Confluence ($S_c$)** | **0.10** | Co-occurrence of independent signals | Bonus awarded when 2 or more factors trigger simultaneously (compound movement). |
 
-#### Classification Tiers & Visual Signal
-- **CRITICAL (≥ 0.80):** `● ● ● ● ●` — Major momentum break, heavy institutional volume, high priority.
-- **HIGH (≥ 0.60):** `● ● ● ● ○` — Significant directional catalyst or 52-week extreme.
-- **MODERATE (≥ 0.35):** `● ● ● ○ ○` — Notable volume or price divergence above normal drift.
-- **NORMAL (< 0.35):** `● ● ○ ○ ○` — Routine market movement (filtered from the priority feed by default).
+### Severity Classification
 
----
+Based on the composite score, changes are categorized into four operational tiers:
 
-### 2. What Information to Surface?
-* **Actionable Editorial Headlines**: Plain-English explanations (e.g., *"INFY +3.4% — HIGH IMPACT — Crossed 2.0x volume threshold during US IT earnings updates"*).
-* **Transparent Factor Radar / Score Breakdown**: Users can inspect the exact scores for price, volume, volatility, and level proximity. No black-box magic.
-* **Signature Market Pulse Timeline**: Chronological intraday inflection points across the Indian trading session (9:15 AM opening gap → 11:30 AM European crossover → 2:45 PM closing volume).
-* **Priority Stock Toggles**: Users can star specific stocks inside any watchlist to give them priority weighting in notifications.
+| Severity Tier | Composite Score Cutoff | Signal Meter | Treatment in UI |
+| :--- | :---: | :---: | :--- |
+| **CRITICAL** | $\ge 0.80$ | `● ● ● ● ●` | Highlighted as primary alert; high price velocity with anomalous volume. |
+| **HIGH** | $\ge 0.60$ | `● ● ● ● ○` | Significant directional catalyst or 52-week breakout boundary. |
+| **MODERATE** | $\ge 0.35$ | `● ● ● ○ ○` | Activity noticeably above normal daily variance. |
+| **NORMAL** | $< 0.35$ | `● ● ○ ○ ○` | Routine market movement; filtered from priority view by default. |
 
 ---
 
-### 3. How State Persists Across Sessions & Devices
-* **Relational Schema with ACID Guarantees**: Built on asynchronous SQLAlchemy with structured foreign keys, cascading deletes, and unique database constraints (`uq_watchlist_stock`, `uq_snapshot_stock`).
-* **First-Class Snapshot Model**: Every check-in creates an immutable `MarketSnapshot` linking individual `StockSnapshot` records with captured prices, volumes, and extremes tied to `user_id`.
-* **Multi-Device JWT Sync**: Authenticated via standard Bearer tokens (`/api/v1/auth`). A user establishing a morning baseline on desktop can open their phone hours later and immediately see the accumulated delta since their morning desktop session.
-* **First-Visit Awareness**: When a user registers or creates an initial watchlist, FLUX establishes a reference baseline without fabricating false alerts, welcoming them with an empty state explaining that changes will be highlighted on their return.
+## Architecture
+
+FLUX is organized as a modular application with clean separation of concerns:
+
+```mermaid
+flowchart TD
+    subgraph Client ["Frontend (React 18 + Vite + TypeScript)"]
+        UI[Watchlist & Signal Feed]
+        Pulse[Market Pulse Timeline]
+        Drawer[Explainability Factor Drawer]
+        DemoBar[Demo Scenario Selector]
+    end
+
+    subgraph API ["API Gateway (FastAPI)"]
+        AuthRouter["/api/v1/auth"]
+        WatchRouter["/api/v1/watchlists"]
+        SnapRouter["/api/v1/snapshots & /changes"]
+        MarketRouter["/api/v1/market & /stocks"]
+    end
+
+    subgraph ServiceLayer ["Application Services"]
+        SnapService[SnapshotService]
+        WatchService[WatchlistService]
+        MarketService[MarketDataService]
+        Engine[MeaningfulChangeEngine]
+    end
+
+    subgraph DataAccess ["Data & Aggregation"]
+        Consensus[ConsensusMarketProvider]
+        DemoProv[DemoMarketDataProvider]
+        Cache[(In-Memory SharedCache)]
+        DB[(SQLite Database via aiosqlite)]
+    end
+
+    UI -->|REST / HTTP| API
+    Pulse -->|REST / HTTP| API
+    Drawer -->|REST / HTTP| API
+    DemoBar -->|REST / HTTP| API
+
+    AuthRouter --> DB
+    WatchRouter --> WatchService
+    SnapRouter --> SnapService
+    MarketRouter --> MarketService
+
+    SnapService --> Engine
+    SnapService --> MarketService
+    SnapService --> DB
+    WatchService --> DB
+    MarketService --> Consensus
+    Consensus --> Cache
+    Consensus --> DemoProv
+```
+
+- **Client Layer**: Single Page Application built with React 18, TypeScript, and Vite, utilizing Tailwind CSS and Lucide React.
+- **API Gateway**: Asynchronous FastAPI endpoints with CORS middleware, Pydantic v2 validation, and JWT authentication.
+- **Service Layer**: Decoupled domain services isolating business logic (`SnapshotService`, `WatchlistService`, `MarketDataService`).
+- **Engine**: Pure algorithmic evaluation with zero external database or HTTP dependencies.
+- **Data Access**: Asynchronous SQLAlchemy 2.0 interface with SQLite (`aiosqlite`) and an in-memory TTL cache.
 
 ---
 
-### 4. How to Handle Stale, Delayed, or Conflicting Data
-Market data feeds are notoriously unreliable. FLUX implements a dedicated **Consensus Market Provider** (`app/services/market_data/consensus_provider.py`):
-* **Explicit Freshness Classification**:
-  - `LIVE`: Captured within < 15 seconds
-  - `RECENT`: Captured within 15s - 5 minutes
-  - `STALE`: Older than 15 minutes (UI displays yellow alert badge)
-  - `UNAVAILABLE`: Upstream provider unreachable (fail-safe fallback)
-* **Resilient Multi-Provider Fallback**: Primary provider attempts query first; if it times out or errors, secondary providers are seamlessly queried.
-* **Deterministic Dispute Arbitration**: If two providers report prices differing by >0.5% for the same symbol, the system logs a disagreement warning and arbitrates based on timestamp freshness.
+## Data & State
+
+### Database Models
+The relational schema is managed through SQLAlchemy models:
+- **`User`**: Account identity, hashed credentials, user role, and activity counters.
+- **`Watchlist`**: User-owned watchlists with positioning and default flags.
+- **`WatchlistStock`**: Join table mapping stocks to watchlists with an `is_priority` flag. Enforces a database-level unique constraint (`uq_watchlist_stock`) to prevent duplicate additions.
+- **`Stock`**: Master stock directory containing reference baselines (52W high/low, typical daily volume, typical volatility %).
+- **`MarketSnapshot`**: Records check-in metadata, timestamp, and meaningful change counts for a user (`ix_user_created_at` index).
+- **`StockSnapshot`**: Frozen price, volume, and boundary values for each stock captured during a snapshot (`uq_snapshot_stock` unique constraint).
+- **`MarketEvent` & `UserEvent`**: Historic log of detected signals and user interactions (read/bookmarked).
+
+### Session & Cross-Device Persistence
+- User state is stored server-side and accessed via Bearer JWT tokens.
+- Snapshots are persistent in the database rather than local client storage, ensuring consistent baseline comparisons whether a user logs in from desktop or mobile.
 
 ---
 
-### 5. How the System Scales for Larger Watchlists and More Users
-* **In-Memory Shared TTL Cache (`app/core/cache.py`)**: If 100,000 users have `RELIANCE` and `HDFCBANK` on their watchlists, upstream market APIs are queried **only once per 10-second window**. Cache hits serve downstream requests in < 2ms.
-* **Batch Ingestion & Multi-Key Lookups**: Quotes are retrieved via `get_quotes_batch` and `get_multi`, avoiding the O(N) N+1 query problem.
-* **Asynchronous Concurrency**: Built with Python `asyncio` and `aiosqlite`/asyncpg, handling hundreds of concurrent snapshot evaluations per worker without thread blocking.
+## Market Data Reliability
+
+Market data ingestion is designed around provider abstraction to maintain system stability:
+
+```
+                  ┌───────────────────────────────┐
+                  │    ConsensusMarketProvider    │
+                  └──────────────┬────────────────┘
+                                 │
+                 ┌───────────────┴───────────────┐
+                 ▼                               ▼
+    ┌─────────────────────────┐     ┌─────────────────────────┐
+    │    Primary Provider     │     │   Secondary Provider    │
+    │  (Attempts real-time)   │     │    (Graceful Fallback)  │
+    └─────────────────────────┘     └─────────────────────────┘
+```
+
+1. **Provider Abstraction**: All market feeds adhere to the `MarketDataProvider` abstract interface, allowing pluggable data sources.
+2. **Freshness Tracking**: Every quote is stamped with a `FreshnessStatus`:
+   - `LIVE`: Data refreshed within the last 15 seconds.
+   - `RECENT`: Data refreshed within the last 5 minutes.
+   - `STALE`: Data older than 15 minutes (displays an explicit UI warning banner).
+   - `UNAVAILABLE`: Data feed unreachable.
+3. **Multi-Provider Fallback**: The `ConsensusMarketProvider` attempts queries via primary feeds; if timeouts or exceptions occur, it fails over to secondary providers.
+4. **Discrepancy Arbitration**: If concurrent provider quotes for the same symbol diverge by more than **0.5%**, the system logs an anomaly warning and arbitrates based on timestamp freshness.
+5. **Fail-Safe Containment**: If all providers fail, the service returns an explicit `UNAVAILABLE` quote structure with descriptive failure context rather than raising unhandled 500 errors.
 
 ---
 
-### 6. Where to Keep Simple vs. Add Complexity
-* **Kept Simple**: Zero-dependency SQLite for evaluation (`aiosqlite`), single-command setup, clean modular layers without distributed microservice overhead.
-* **Added Complexity Where It Counts**: 
-  - The multi-factor mathematical change engine.
-  - Multi-provider arbitration with freshness tags.
-  - Interactive **Demo Scenario Switcher** so evaluators can test market shocks on demand.
+## Resilience & Edge Cases
+
+The codebase includes explicit handling for common operational edge cases:
+
+- **First-Time Users**: Initial check-in creates a baseline snapshot without generating phantom change alerts.
+- **Market Closed**: The system inspects market hours (`09:15` to `15:30` IST) and surfaces the official session status to clarify static price behavior.
+- **Duplicate Additions**: Handled both in application validation and via the `uq_watchlist_stock` database unique constraint.
+- **Provider Timeouts**: Caught within the provider abstraction, returning fallback values without breaking the user session.
+- **Stale Feed Warning**: Automatically alerts the user when incoming quotes exceed the freshness window.
+- **Concurrent Ingestion**: Thread-safe shared caching primitives prevent redundant concurrent network roundtrips for identical symbols.
 
 ---
 
-## 🚀 Quickstart & Setup Guide
+## Scalability Considerations
+
+FLUX incorporates several architectural optimizations to sustain larger user and watchlist volumes:
+
+- **Shared In-Memory Cache with TTL**: In-memory caching with a 10-second TTL (`app/core/cache.py`) serves popular symbols across all user watchlists from a single upstream fetch, eliminating redundant queries.
+- **Batch Processing**: The service layer uses batch operations (`get_quotes_batch` and `get_multi`) to fetch quote sets in bulk rather than executing individual queries per stock.
+- **Asynchronous Non-Blocking I/O**: The entire backend pipeline—from FastAPI route handlers to SQLAlchemy database operations via `aiosqlite`—is asynchronous, allowing worker threads to remain non-blocked during database and provider queries.
+- **Database Indexing**: Targeted indexing on foreign keys (`user_id`, `watchlist_id`, `snapshot_id`) and chronological compound indexes (`ix_user_created_at`) optimize snapshot retrieval for high-volume users.
+
+---
+
+## Security
+
+- **Password Security**: Passwords hashed using bcrypt through `passlib.context.CryptContext`.
+- **Stateless Authentication**: Cryptographically signed JSON Web Tokens (PyJWT) using HMAC-SHA256 (`HS256`).
+- **Endpoint Authorization**: Route protection via FastAPI dependencies (`get_current_user`) verifying token integrity.
+- **Input Validation**: Strict request/response payload validation through Pydantic v2 schemas.
+- **CORS Protection**: Explicitly configured `CORSMiddleware` restricting origins, allowed headers, and methods.
+- **Config Management**: Environment variable isolation managed via `pydantic-settings` with local `.env` overrides.
+
+---
+
+## Tech Stack
+
+### Frontend
+- **Framework**: React 18 (TypeScript)
+- **Tooling**: Vite, PostCSS, Autoprefixer
+- **Styling**: Tailwind CSS
+- **Charts & Visualization**: Recharts
+- **Icons**: Lucide React
+
+### Backend
+- **Framework**: FastAPI (Python 3.10+)
+- **ASGI Server**: Uvicorn
+- **ORM & Database**: SQLAlchemy 2.0 (Async), aiosqlite, SQLite
+- **Validation**: Pydantic v2, Pydantic Settings
+- **Authentication**: PyJWT, passlib, bcrypt
+- **HTTP Client**: HTTPX
+
+### Testing & Tooling
+- **Testing**: pytest, pytest-asyncio
+- **Process & Dev**: Git, npm, pip
+
+---
+
+## Project Structure
+
+```
+Flux/
+├── backend/
+│   ├── app/
+│   │   ├── api/v1/              # API Route Controllers (auth, watchlists, changes, market, stocks)
+│   │   ├── core/                # Config, logging, JWT security, in-memory cache
+│   │   ├── db/                  # Relational models, connection setup, database seed
+│   │   ├── engine/              # MeaningfulChangeEngine & transparent factor breakdown
+│   │   ├── services/            # SnapshotService, WatchlistService, MarketDataService
+│   │   └── main.py              # Application entrypoint & FastAPI lifespan
+│   ├── tests/                   # Automated unit, integration, and resilience tests
+│   ├── requirements.txt         # Python dependencies
+│   └── test_e2e_verify.py       # End-to-end integration test runner
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── cards/           # Change cards & explainability drawers
+│   │   │   ├── changes/         # Changes feed & filter controls
+│   │   │   ├── common/          # Badges, meters, banners, skyline art
+│   │   │   ├── demo/            # Interactive scenario control bar
+│   │   │   ├── engine/          # System specs & threshold documentation view
+│   │   │   ├── hero/            # Editorial dashboard hero & summary
+│   │   │   ├── layout/          # Navigation header & sidebar
+│   │   │   ├── pulse/           # Market Pulse chronological timeline
+│   │   │   ├── stock/           # Stock detail modal & candlestick charts
+│   │   │   └── watchlist/       # Watchlist table, tabs, and stock management
+│   │   ├── context/             # Auth, Market, Watchlist, and Mission contexts
+│   │   ├── services/api.ts      # Typed API client with token storage
+│   │   ├── types/               # TypeScript interfaces and data models
+│   │   ├── App.tsx              # Root dashboard layout
+│   │   └── main.tsx             # Application bootstrap
+│   ├── package.json             # Frontend dependencies & build scripts
+│   └── vite.config.ts           # Development proxy & compilation settings
+│
+├── .gitignore                   # Repository exclusion patterns
+├── pytest.ini                   # Pytest test execution configuration
+└── README.md                    # Project documentation
+```
+
+---
+
+## Getting Started
 
 ### Prerequisites
 - **Python 3.10+** (Tested on Python 3.13)
-- **Node.js 18+** & **npm**
+- **Node.js 18+** and **npm**
+- **Git**
 
-### Step 1: Clone & Navigate
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-repo/signal-groww.git
-cd "Grow Project"
+git clone https://github.com/dharshini66/Flux.git
+cd Flux
 ```
 
-### Step 2: Backend Setup
+### 2. Backend Setup
 ```bash
 cd backend
 python -m pip install -r requirements.txt
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
-*Backend runs on `http://127.0.0.1:8000`*  
-*Interactive Swagger API Docs available at `http://127.0.0.1:8000/docs`*
+- API Server: `http://127.0.0.1:8000`
+- Interactive Swagger Documentation: `http://127.0.0.1:8000/docs`
+- Healthcheck Endpoint: `http://127.0.0.1:8000/health`
 
-### Step 3: Frontend Setup
+### 3. Frontend Setup
+In a separate terminal window:
 ```bash
-cd ../frontend
+cd frontend
 npm install
 npm run dev
 ```
-*Frontend runs on `http://localhost:5173`*
+- Web Application: `http://localhost:5173`
 
 ---
 
-## 🧪 Test Suite & Verification
+## Demo Mode
 
-The test suite covers algorithmic correctness, edge case resilience, concurrent modifications, and snapshot lifecycle:
+For local evaluation and testing without depending on external market data feeds, FLUX includes a seeded **Demo Mode**. The bottom control panel exposes deterministic test scenarios:
+
+- **Default (`default`)**: Balanced intraday session exhibiting mixed price movements and volume across core index stocks (INFY, TCS, HDFCBANK, RELIANCE).
+- **Large Surge (`large_surge`)**: Critical upward velocity catalyst testing 52-week high breakout logic (INFY +7.3% on 4.2× volume).
+- **Market Pullback (`market_crash`)**: Downward liquidity sweep testing support breach behavior across financial sector symbols (HDFCBANK -6.4%).
+- **Stale Data (`stale_data`)**: Simulates a 14-minute data ingestion delay to verify freshness badge transitions and user warnings.
+- **Provider Failure (`provider_failure`)**: Simulates a gateway timeout on specific symbols to demonstrate graceful error containment and fallback states.
+- **Quiet Consolidation (`no_signal_quiet`)**: Confines stock price fluctuations below the 0.4% noise floor to demonstrate empty-state suppression.
+
+*Note: In Demo Mode, market quotes are simulated deterministically to ensure consistent and reproducible behavior.*
+
+---
+
+## Testing
+
+The backend includes an automated test suite verifying scoring algorithms, concurrency safety, multi-provider resilience, and snapshot persistence:
 
 ```bash
 cd backend
 python -m pytest -v
 ```
 
-### Test Coverage Highlights
-* `tests/test_change_engine.py`: Validates noise suppression, volume multipliers, 52W extreme triggers, and factor score bounds (0.0 ≤ S ≤ 1.0).
-* `tests/test_resilience.py`: Validates multi-provider failover, stale data badge rendering, and price discrepancy arbitration.
-* `tests/test_concurrency.py`: Simulates simultaneous concurrent requests to ensure shared cache thread-safety and avoid race conditions.
-* `tests/test_snapshots.py`: Tests first-visit baseline creation, returning-visit delta computation, and forced baseline resets.
-* `tests/test_auth_watchlist.py`: Tests JWT authentication, watchlist creation, stock additions, and unique constraint enforcement.
-
----
-
-## 🎯 5-Minute Pitch & Defense Guide (Groww Finals)
-
-When presenting to Groww engineers, follow this walkthrough:
-
-1. **Minute 1: The Problem (0:00 - 1:00)**
-   * Open the app. Point out how typical watchlists drown users in noise.
-   * Highlight our solution: *"FLUX doesn't show you the price—it tells you what changed since you last checked in."*
-
-2. **Minute 2: The Core Demo & Check-In (1:00 - 2:00)**
-   * Demonstrate the **Check-In button**. Show how the initial visit established our baseline snapshot.
-   * Switch the **Scenario Switcher** to *"Earnings Shock"* or *"Breakout Rally"*.
-   * Click **Check In Again**: show the instant delta computation, the headline summary, and the severity badges.
-
-3. **Minute 3: The Engine & Explainability (2:00 - 3:00)**
-   * Click on a stock change card. Expand the **Factor Score Breakdown**.
-   * Defend the formula: Explain why price move alone is insufficient, and how factoring volume anomaly (2.2x) and 52W proximity creates actionable signal over noise.
-
-4. **Minute 4: Engineering Depth & Resilience (3:00 - 4:00)**
-   * Highlight the **Data Freshness Indicators** (`LIVE`, `RECENT`, `STALE`).
-   * Explain the **Consensus Provider**: How the system arbitrates if two exchanges or providers disagree by >0.5%.
-   * Explain the **Shared Cache with TTL**: How the system scales to millions of users without multiplying upstream market queries.
-
-5. **Minute 5: Code Simplicity & Wrap-Up (4:00 - 5:00)**
-   * Mention the clean decoupled architecture (`Engine` has zero HTTP/DB dependencies, making it 100% unit testable).
-   * Show passing `pytest` test suite (13/13 passing in <1.5s).
-
----
-
-## 📂 Project Structure
+### Test Suite Summary
 
 ```
-Grow Project/
-├── backend/
-│   ├── app/
-│   │   ├── api/v1/          # Modular API Routers (auth, watchlists, changes, market, stocks)
-│   │   ├── core/            # Config, centralized thresholds, JWT security, shared cache
-│   │   ├── db/              # SQLAlchemy models, SQLite database connection, seed data
-│   │   ├── engine/          # MeaningfulChangeEngine & transparent factor explainer
-│   │   ├── services/        # SnapshotService, WatchlistService, ConsensusMarketProvider
-│   │   └── main.py          # FastAPI application entrypoint & lifespan
-│   ├── tests/               # 13 Automated unit, resilience, and concurrency tests
-│   ├── requirements.txt     # Python dependencies
-│   └── flux_market.db     # Local SQLite market database
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/      # UI components (Watchlist, ChangesFeed, MarketPulse, Demo)
-│   │   ├── services/api.ts  # Typed API Client with JWT storage & proxy configuration
-│   │   ├── types/           # TypeScript interfaces for quotes, factors, and events
-│   │   ├── App.tsx          # Master dashboard layout & state management
-│   │   └── main.tsx         # React entrypoint
-│   ├── package.json         # React 18, Vite, Lucide, Recharts, Tailwind
-│   └── vite.config.ts       # Reverse proxy configuration to backend
-│
-├── pytest.ini               # Test configuration
-└── README.md                # Submission & architectural documentation
+tests/test_auth_watchlist.py ..                                          [15%]
+tests/test_change_engine.py ......                                       [61%]
+tests/test_concurrency.py .                                              [69%]
+tests/test_resilience.py ..                                              [84%]
+tests/test_snapshots.py ..                                               [100%]
+
+============================= 13 passed in 1.61s ==============================
 ```
+
+- **`test_change_engine.py`**: Validates noise suppression (<0.4%), volume multiplier escalation, 52W extreme triggers, and bounded score normalization ($0.0 \le S \le 1.0$).
+- **`test_resilience.py`**: Verifies provider failover, stale data badge generation, and conflicting price arbitration.
+- **`test_concurrency.py`**: Validates cache thread-safety under simultaneous asynchronous worker requests.
+- **`test_snapshots.py`**: Tests first-visit baseline establishment and returning-visit delta calculations.
+- **`test_auth_watchlist.py`**: Tests user registration, JWT generation, watchlist CRUD operations, and duplicate entry rejection.
 
 ---
 
-<div align="center">
-  <b>FLUX</b> was conceived and built with ❤️ for <b>Groww CODE 2026</b>.
-</div>
+## Engineering Trade-offs
+
+### 1. Snapshot-Based Comparison vs. Rolling 24-Hour Change
+Standard platforms display rolling 24-hour price changes. While simple, this metric is irrelevant to users whose visit intervals do not align with calendar days. FLUX adopts explicit snapshot persistence. While this requires database writes on user check-in, it guarantees that surfaced changes accurately reflect the interval since the user was last active.
+
+### 2. Decoupled Algorithmic Engine vs. Database-Coupled Triggers
+The `MeaningfulChangeEngine` is implemented as a pure Python component taking a `StockDeltaContext` dataclass and returning an evaluation result. By decoupling the engine from database and HTTP frameworks, the scoring logic remains easily testable, benchmarkable, and portable to alternative worker pipelines.
+
+### 3. Asynchronous SQLite vs. External Database Clusters
+For out-of-the-box local setup and evaluation, FLUX uses SQLite through `aiosqlite`. Because all data access is orchestrated via asynchronous SQLAlchemy 2.0 with standard relational modeling, the database layer can be switched to PostgreSQL by updating the `DATABASE_URL` environment variable without altering application queries.
+
+### 4. Modular Monolith vs. Distributed Microservices
+Rather than splitting a 72-hour implementation across multiple microservices with separate network boundaries, FLUX implements a cohesive modular monolith. Domain boundaries (`api`, `services`, `engine`, `db`) are strictly isolated in code, providing high maintainability without unnecessary network serialization or distributed orchestration overhead.
+
+### 5. Configurable Thresholds vs. Hardcoded Heuristics
+All classification cutoffs and factor weights are centralized in `app/engine/thresholds.py` and mapped to `app/core/config.py`. This avoids magic numbers across the codebase and allows straightforward threshold calibration.
+
+---
+
+## Future Improvements
+
+- **WebSocket Ingestion**: Real-time tick streaming via WebSockets for live intraday price updates.
+- **Distributed Cache Layer**: Transitioning in-memory caching to a Redis cluster for multi-node deployments.
+- **User-Defined Threshold Overrides**: Allowing individual users to customize signal sensitivity and volume multipliers per watchlist.
+- **Direct Broker & Exchange Connectors**: Production integrations with official exchange market data feeds.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

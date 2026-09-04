@@ -153,33 +153,33 @@ class DemoMarketDataProvider(MarketDataProvider):
 
         if self.current_scenario == "default":
             if sym == "INFY":
-                # INFY: +5.8%, 2.4x volume, testing 52W high (1940 vs 1950)
-                price = 1940.50
-                pct = 5.8
+                # INFY: +3.4%, 2.4x volume, testing 52W high (1842.30 vs 1880)
+                price = 1842.30
+                pct = 3.4
                 vol_mult = 2.4
             elif sym == "RELIANCE":
                 # RELIANCE: +2.1%, 3.1x volume surge
-                price = 3025.00
+                price = 2942.10
                 pct = 2.1
                 vol_mult = 3.1
             elif sym == "HDFCBANK":
                 # HDFCBANK: -4.3%, 1.8x volume drop
-                price = 1480.00
+                price = 1650.40
                 pct = -4.3
                 vol_mult = 1.8
             elif sym == "TCS":
-                # TCS: +2.1%, new 52-week high breakout (4260 vs 4250)
-                price = 4260.00
+                # TCS: +2.1%, new 52-week high breakout (4213.50 vs 4200)
+                price = 4213.50
                 pct = 2.1
                 vol_mult = 1.4
             elif sym == "ICICIBANK":
                 # Routine drift
-                price = 1240.00
-                pct = 0.32
+                price = 1122.05
+                pct = 0.6
                 vol_mult = 0.95
             elif sym == "TATAMOTORS":
                 price = 985.00
-                pct = 1.23
+                pct = 2.6
                 vol_mult = 1.10
             elif sym == "BHARTIARTL":
                 price = 1590.00

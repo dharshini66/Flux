@@ -42,7 +42,8 @@ class SnapshotService:
         session: AsyncSession,
         user_id: str,
         session_label: Optional[str] = "Market Check-in",
-        force_new_baseline: bool = False
+        force_new_baseline: bool = False,
+        persist_new_snapshot: bool = True
     ) -> Dict[str, Any]:
         """
         Main check-in pipeline:
@@ -171,26 +172,31 @@ class SnapshotService:
         highs_count = sum(1 for r in meaningful_results_filter(meaningful_changes, ["NEW_52W_HIGH", "NEAR_52W_HIGH"]))
         vol_events_count = sum(1 for r in meaningful_results_filter(meaningful_changes, ["VOLATILITY_EXPANSION"]))
 
-        # Persist new Snapshot
-        new_snapshot = MarketSnapshot(
-            user_id=user_id,
-            session_label=session_label,
-            meaningful_changes_count=len(meaningful_changes)
-        )
-        session.add(new_snapshot)
-        await session.flush()
+        # Persist new Snapshot only when requested
+        if persist_new_snapshot:
+            new_snapshot = MarketSnapshot(
+                user_id=user_id,
+                session_label=session_label,
+                meaningful_changes_count=len(meaningful_changes)
+            )
+            session.add(new_snapshot)
+            await session.flush()
 
-        for sym in tracked_symbols:
-            q = current_quotes.get(sym)
-            if q and q.price > 0:
-                session.add(StockSnapshot(
-                    snapshot_id=new_snapshot.id,
-                    stock_symbol=sym,
-                    price=q.price,
-                    volume=q.volume,
-                    high_52w=q.high_52w,
-                    low_52w=q.low_52w
-                ))
+            for sym in tracked_symbols:
+                q = current_quotes.get(sym)
+                if q and q.price > 0:
+                    session.add(StockSnapshot(
+                        snapshot_id=new_snapshot.id,
+                        stock_symbol=sym,
+                        price=q.price,
+                        volume=q.volume,
+                        high_52w=q.high_52w,
+                        low_52w=q.low_52w
+                    ))
+            await session.commit()
+            active_snapshot_id = new_snapshot.id
+        else:
+            active_snapshot_id = previous_snapshot.id
 
         # Format serialized change cards
         formatted_changes = []
@@ -226,8 +232,6 @@ class SnapshotService:
                 "is_meaningful": r.is_meaningful
             })
 
-        await session.commit()
-
         return {
             "is_first_visit": False,
             "headline": "THE MARKET MOVED. HERE'S WHAT MATTERS.",
@@ -241,7 +245,7 @@ class SnapshotService:
                 "volatility_events": vol_events_count
             },
             "reference_timestamp": previous_snapshot.created_at.isoformat(),
-            "snapshot_id": new_snapshot.id,
+            "snapshot_id": active_snapshot_id,
             "tracked_stocks_count": len(tracked_symbols)
         }
 

@@ -50,25 +50,36 @@ export const MarketPulseTimeline: React.FC = () => {
       {/* Horizontal Interactive Timeline Axis */}
       <div className="relative pt-6 pb-4 px-4 bg-ivory-50 border border-ivory-300 rounded-sm scanline-bg">
         
-        {/* Timeline Horizontal Rail */}
-        <div className="h-1 bg-ivory-300 relative rounded-full mb-8">
+        {/* Timeline Horizontal Rail with Circular Nodes */}
+        <div className="relative h-1 bg-softpurple-200 rounded-full mb-8">
           {/* Active session progress bar */}
-          <div className="absolute left-0 top-0 bottom-0 w-3/4 bg-cobalt-500 rounded-full"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-3/4 bg-gradient-to-r from-softpurple-500 to-cobalt-600 rounded-full"></div>
+
+          {/* Circular time nodes along the rail */}
+          <div className="absolute inset-0 flex justify-between items-center -top-1 px-1 pointer-events-none">
+            {hourMarks.map((hm, i) => (
+              <div
+                key={hm}
+                className={`w-3 h-3 rounded-full border-2 border-ink-900 transition-all ${
+                  i < 3 ? 'bg-softpurple-500 shadow-[0_0_4px_rgba(117,97,216,0.5)]' : 'bg-ivory-100'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Time Hour Markers */}
-        <div className="flex justify-between text-[10px] financial-mono text-ink-400 font-bold uppercase -mt-5 mb-6">
+        <div className="flex justify-between text-[10px] financial-mono text-ink-500 font-bold uppercase -mt-5 mb-5">
           {hourMarks.map((hm) => (
             <div key={hm} className="flex flex-col items-center">
-              <div className="w-1.5 h-3 bg-ink-400 mb-1"></div>
               <span>{hm}</span>
             </div>
           ))}
         </div>
 
-        {/* Event Bubbles on the Timeline */}
+        {/* Event Cards on the Timeline */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          {pulseEvents.map((evt, idx) => {
+          {pulseEvents.map((evt) => {
             const isSelected = activeEvent?.id === evt.id;
             const bubbleBg =
               evt.severity === 'CRITICAL'
@@ -81,32 +92,41 @@ export const MarketPulseTimeline: React.FC = () => {
               <button
                 key={evt.id}
                 onClick={() => setActiveEvent(evt)}
-                className={`p-2.5 rounded-sm border text-left transition-all relative ${
+                className={`p-3 rounded-sm border text-left transition-all relative ${
                   isSelected
-                    ? 'bg-ivory-200 border-editorial-dark shadow-retro-sm scale-[1.02]'
-                    : 'bg-ivory-100 hover:bg-ivory-200 border-ivory-300'
+                    ? 'bg-white border-softpurple-500 shadow-retro ring-1 ring-softpurple-400 scale-[1.02]'
+                    : 'bg-ivory-100 hover:bg-ivory-200/80 border-ivory-300'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] financial-mono font-bold text-ink-500">
+                {/* Line 1: Time & Symbol */}
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] financial-mono font-extrabold text-ink-500">
                     {evt.time_label}
                   </span>
                   <span
-                    className={`text-[9px] financial-mono font-bold px-1 py-0.2 rounded-sm border border-ink-900 ${bubbleBg}`}
+                    className={`text-[9px] financial-mono font-bold px-1.5 py-0.5 rounded-xs border border-ink-900 ${bubbleBg}`}
                   >
                     {evt.symbol}
                   </span>
                 </div>
 
-                <div className="text-xs font-bold text-ink-900 leading-tight truncate">
+                {/* Line 2: Event Title */}
+                <div className="text-xs font-bold text-ink-900 leading-tight line-clamp-2 min-h-[2rem]">
                   {evt.event_title}
                 </div>
 
-                <div className="flex items-center justify-between mt-2 pt-1 border-t border-ivory-300 text-[10px] financial-mono">
-                  <span className={evt.price_delta.startsWith('+') ? 'text-signal-green font-bold' : 'text-signal-red font-bold'}>
+                {/* Line 3: Delta & Score */}
+                <div className="flex items-center justify-between mt-2.5 pt-1.5 border-t border-ivory-300 text-[10px] financial-mono">
+                  <span
+                    className={`font-bold ${
+                      evt.price_delta.startsWith('+') ? 'text-signal-green' : 'text-signal-red'
+                    }`}
+                  >
                     {evt.price_delta}
                   </span>
-                  <span className="text-ink-400">Score: {evt.significance_score}</span>
+                  <span className="text-ink-500 font-semibold">
+                    Score: <strong className="text-ink-800">{evt.significance_score.toFixed(2)}</strong>
+                  </span>
                 </div>
               </button>
             );

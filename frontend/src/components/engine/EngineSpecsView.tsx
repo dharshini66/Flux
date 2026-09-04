@@ -18,6 +18,157 @@ export const EngineSpecsView: React.FC = () => {
         </p>
       </div>
 
+      {/* Engineering Pipeline Flowchart */}
+      <div className="bg-ivory-100 border border-editorial rounded-md p-5 shadow-retro">
+        <div className="flex items-center justify-between pb-3 mb-4 border-b border-ivory-300">
+          <div className="flex items-center gap-2">
+            <span className="text-base">⚡</span>
+            <div>
+              <h3 className="text-xs font-bold financial-mono uppercase text-ink-900 tracking-wider">
+                END-TO-END DATA PROCESSING PIPELINE
+              </h3>
+              <span className="text-[10px] financial-mono text-ink-500">
+                From Raw Ingestion to Prioritized User Attention
+              </span>
+            </div>
+          </div>
+          <span className="text-[10px] financial-mono font-bold px-2 py-0.5 bg-cobalt-500 text-white rounded-xs uppercase">
+            6 Pipeline Stages
+          </span>
+        </div>
+
+        {/* 6 Stage Grid / Flow */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+          
+          {/* Stage 1 */}
+          <div className="p-3 bg-ivory-50 border border-ivory-300 rounded-sm relative flex flex-col justify-between shadow-subtle">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[9px] financial-mono font-extrabold px-1.5 py-0.2 bg-ivory-200 text-ink-700 rounded-xs border border-ivory-300">
+                  STAGE 01
+                </span>
+                <span className="text-xs">📡</span>
+              </div>
+              <h4 className="text-xs font-bold financial-mono text-ink-900 uppercase">
+                MARKET DATA
+              </h4>
+              <p className="text-[10.5px] text-ink-600 mt-1 leading-snug">
+                NSE live feeds, 30d ATR baselines, order book volume, multi-provider failover.
+              </p>
+            </div>
+            <div className="mt-2.5 pt-1.5 border-t border-ivory-200 text-[9px] financial-mono text-cobalt-600 font-bold">
+              Shared Ingestion
+            </div>
+          </div>
+
+          {/* Stage 2 */}
+          <div className="p-3 bg-ivory-50 border border-ivory-300 rounded-sm relative flex flex-col justify-between shadow-subtle">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[9px] financial-mono font-extrabold px-1.5 py-0.2 bg-ivory-200 text-ink-700 rounded-xs border border-ivory-300">
+                  STAGE 02
+                </span>
+                <span className="text-xs">📸</span>
+              </div>
+              <h4 className="text-xs font-bold financial-mono text-ink-900 uppercase">
+                USER SNAPSHOT
+              </h4>
+              <p className="text-[10.5px] text-ink-600 mt-1 leading-snug">
+                Personalized baseline frozen at last user visit. Immutable during read requests.
+              </p>
+            </div>
+            <div className="mt-2.5 pt-1.5 border-t border-ivory-200 text-[9px] financial-mono text-softpurple-600 font-bold">
+              Personalized Baseline
+            </div>
+          </div>
+
+          {/* Stage 3 */}
+          <div className="p-3 bg-ivory-50 border border-ivory-300 rounded-sm relative flex flex-col justify-between shadow-subtle">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[9px] financial-mono font-extrabold px-1.5 py-0.2 bg-ivory-200 text-ink-700 rounded-xs border border-ivory-300">
+                  STAGE 03
+                </span>
+                <span className="text-xs">🔍</span>
+              </div>
+              <h4 className="text-xs font-bold financial-mono text-ink-900 uppercase">
+                CHANGE DETECTION
+              </h4>
+              <p className="text-[10.5px] text-ink-600 mt-1 leading-snug">
+                Delta computation vs. baseline. Noise cutoff suppresses routine fluctuations (&lt;0.4%).
+              </p>
+            </div>
+            <div className="mt-2.5 pt-1.5 border-t border-ivory-200 text-[9px] financial-mono text-cobalt-600 font-bold">
+              Delta & Noise Gate
+            </div>
+          </div>
+
+          {/* Stage 4 */}
+          <div className="p-3 bg-ivory-50 border border-ivory-300 rounded-sm relative flex flex-col justify-between shadow-subtle">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[9px] financial-mono font-extrabold px-1.5 py-0.2 bg-ivory-200 text-ink-700 rounded-xs border border-ivory-300">
+                  STAGE 04
+                </span>
+                <span className="text-xs">⚙️</span>
+              </div>
+              <h4 className="text-xs font-bold financial-mono text-ink-900 uppercase">
+                SIGNAL ENGINE
+              </h4>
+              <p className="text-[10.5px] text-ink-600 mt-1 leading-snug">
+                Classifies anomalies: 52W high breakout, volume velocity spikes, volatility surges.
+              </p>
+            </div>
+            <div className="mt-2.5 pt-1.5 border-t border-ivory-200 text-[9px] financial-mono text-retropink-500 font-bold">
+              Catalyst Isolation
+            </div>
+          </div>
+
+          {/* Stage 5 */}
+          <div className="p-3 bg-ivory-50 border border-ivory-300 rounded-sm relative flex flex-col justify-between shadow-subtle">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[9px] financial-mono font-extrabold px-1.5 py-0.2 bg-ivory-200 text-ink-700 rounded-xs border border-ivory-300">
+                  STAGE 05
+                </span>
+                <span className="text-xs">📐</span>
+              </div>
+              <h4 className="text-xs font-bold financial-mono text-ink-900 uppercase">
+                SIGNIFICANCE SCORE
+              </h4>
+              <p className="text-[10.5px] text-ink-600 mt-1 leading-snug">
+                Mathematical weighted multi-factor sum (0.35P + 0.25V + 0.15σ + 0.15L + 0.10C).
+              </p>
+            </div>
+            <div className="mt-2.5 pt-1.5 border-t border-ivory-200 text-[9px] financial-mono text-cobalt-600 font-bold">
+              Normalized [0.0 - 1.0]
+            </div>
+          </div>
+
+          {/* Stage 6 */}
+          <div className="p-3 bg-ivory-50 border border-cobalt-500 rounded-sm relative flex flex-col justify-between shadow-subtle">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[9px] financial-mono font-extrabold px-1.5 py-0.2 bg-cobalt-500 text-white rounded-xs">
+                  STAGE 06
+                </span>
+                <span className="text-xs">🎯</span>
+              </div>
+              <h4 className="text-xs font-bold financial-mono text-ink-900 uppercase">
+                RANKED CHANGES
+              </h4>
+              <p className="text-[10.5px] text-ink-600 mt-1 leading-snug">
+                Sorted by importance. Feeds Editorial Hero, Market Pulse, and Explain Drawers.
+              </p>
+            </div>
+            <div className="mt-2.5 pt-1.5 border-t border-ivory-200 text-[9px] financial-mono text-signal-green font-bold">
+              User Prioritization
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       {/* 5 Evaluation Dimensions Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         

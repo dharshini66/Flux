@@ -70,21 +70,43 @@ export const ExplainDrawer: React.FC = () => {
         {/* Content Body */}
         <div className="p-6 space-y-5 max-h-[75vh] overflow-y-auto">
           
-          {/* Plain Language Editorial Synthesis */}
-          <div className="bg-ivory-50 border border-ivory-300 rounded-sm p-4 shadow-subtle">
-            <span className="text-[10px] financial-mono font-bold text-cobalt-500 uppercase tracking-wider block mb-1">
-              EDITORIAL SYNTHESIS
-            </span>
-            <p className="text-sm text-ink-900 leading-relaxed">
+          {/* WHY THIS MATTERS Callout Card */}
+          <div className="bg-ivory-50 border-2 border-cobalt-500 rounded-sm p-4 shadow-subtle relative">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] financial-mono font-extrabold px-2 py-0.5 bg-cobalt-500 text-white rounded-xs uppercase tracking-wider">
+                  WHY THIS MATTERS
+                </span>
+                <span className="text-xs financial-mono text-ink-500 font-semibold">
+                  Signal Strength:
+                </span>
+              </div>
+              <SignalStrengthMeter
+                level={
+                  selectedExplainChange.severity === 'CRITICAL'
+                    ? 5
+                    : selectedExplainChange.severity === 'HIGH'
+                    ? 4
+                    : 3
+                }
+                severity={selectedExplainChange.severity}
+              />
+            </div>
+            <p className="text-sm text-ink-900 leading-relaxed font-medium">
               {selectedExplainChange.plain_language_explanation}
             </p>
           </div>
 
-          {/* Key Signal Takeaways */}
+          {/* Key Signal Takeaways & Catalysts */}
           <div>
-            <span className="text-[11px] financial-mono font-bold text-ink-900 uppercase tracking-wider block mb-2">
-              DETECTED CATALYSTS & REASONS
-            </span>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] financial-mono font-bold text-ink-900 uppercase tracking-wider">
+                DETECTED CATALYSTS & REASONS
+              </span>
+              <span className="text-[10px] financial-mono text-softpurple-600 font-semibold">
+                {selectedExplainChange.summary_bullets.length} Key Observations
+              </span>
+            </div>
             <div className="space-y-2">
               {selectedExplainChange.summary_bullets.map((bullet, idx) => (
                 <div
@@ -92,7 +114,7 @@ export const ExplainDrawer: React.FC = () => {
                   className="flex items-start gap-2.5 p-2.5 bg-ivory-200 border border-ivory-300 rounded-sm text-xs text-ink-800"
                 >
                   <CheckCircle2 className="w-4 h-4 text-signal-green shrink-0 mt-0.5" />
-                  <span>{bullet}</span>
+                  <span className="leading-snug">{bullet}</span>
                 </div>
               ))}
             </div>
@@ -133,9 +155,11 @@ export const ExplainDrawer: React.FC = () => {
           )}
 
           {/* Non-Recommendation Disclaimer */}
-          <div className="p-3 bg-ivory-200 border border-editorial rounded-sm text-[11px] text-ink-500 financial-mono">
-            <strong>NOTICE:</strong> FLUX computes market significance metrics purely for informational and
-            filtering purposes. This does not constitute a buy/sell recommendation or financial advice.
+          <div className="p-3 bg-ivory-200 border border-editorial rounded-sm text-[11px] text-ink-600 financial-mono flex items-start gap-2">
+            <span className="text-sm">⚖️</span>
+            <div>
+              <strong className="text-ink-900">NOT FINANCIAL ADVICE:</strong> FLUX computes market significance metrics purely for informational filtering and workflow prioritization. This diagnostic does not constitute a buy, hold, or sell recommendation.
+            </div>
           </div>
         </div>
 

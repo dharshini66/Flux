@@ -94,12 +94,12 @@ export const PixelSkylineArt: React.FC<PixelSkylineArtProps> = ({ className = ''
         <rect x="0" y="116" width="320" height="1" fill="#2A2A2A" />
       </svg>
       <div className="flex items-center justify-between mt-1 px-1">
-        <span className="text-[9px] financial-mono text-ink-400 font-semibold tracking-wider uppercase">
-          FLUX OBSERVATION STATION // NSE FEED
+        <span className="text-[10px] financial-mono font-bold text-ink-700 tracking-wider">
+          "A CALMER WAY TO WATCH THE MARKETS." <span className="text-cobalt-600">— FLUX</span>
         </span>
         <span className="inline-flex items-center gap-1 text-[9px] financial-mono text-cobalt-500 font-bold">
           <span className="w-1.5 h-1.5 rounded-full bg-signal-green animate-pulse"></span>
-          REAL-TIME TELEMETRY
+          REAL-TIME
         </span>
       </div>
     </div>

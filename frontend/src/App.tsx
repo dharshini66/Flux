@@ -7,6 +7,7 @@ import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { EditorialHero } from './components/hero/EditorialHero';
 import { MarketPulseTimeline } from './components/pulse/MarketPulseTimeline';
+import { RightRail } from './components/layout/RightRail';
 import { TopChangeCard } from './components/cards/TopChangeCard';
 import { WatchlistTable } from './components/watchlist/WatchlistTable';
 import { WatchlistTabs } from './components/watchlist/WatchlistTabs';
@@ -36,78 +37,84 @@ const MainDashboard: React.FC = () => {
       <div>
         <Header />
 
-        <div className="max-w-7xl mx-auto flex flex-1">
+        <div className="max-w-[1600px] w-full mx-auto flex flex-1">
           {/* Sidebar */}
           <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
           {/* Main Content Area */}
-          <main className="flex-1 p-4 lg:p-8 min-w-0">
+          <main className="flex-1 p-4 lg:p-6 min-w-0">
             {/* Stale Data Warning Banner if Active */}
             <StaleDataBanner />
 
             {/* TAB 1: OVERVIEW (Since Last Visit Center) */}
             {activeTab === 'overview' && (
-              <div className="space-y-6">
-                {/* Visual Center Hero */}
-                <EditorialHero />
+              <div className="flex flex-col xl:flex-row gap-6 items-start">
+                {/* Main Center Column */}
+                <div className="flex-1 min-w-0 space-y-6 w-full">
+                  {/* Visual Center Hero */}
+                  <EditorialHero />
 
-                {/* Market Pulse Timeline */}
-                <MarketPulseTimeline />
+                  {/* Market Pulse Timeline */}
+                  <MarketPulseTimeline />
 
-                {/* Top Changes Since Last Visit */}
-                {!isFirstVisit && topChanges.length > 0 && (
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <span className="text-[10px] financial-mono font-bold text-cobalt-500 uppercase tracking-widest block">
-                          SIGNIFICANT MOVES
-                        </span>
-                        <h2 className="editorial-headline text-2xl font-bold text-ink-900">
-                          Top Changes Since Your Last Visit
-                        </h2>
+                  {/* Top Changes Since Last Visit */}
+                  {!isFirstVisit && topChanges.length > 0 && (
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <span className="text-[10px] financial-mono font-bold text-cobalt-500 uppercase tracking-widest block">
+                            SIGNIFICANT MOVES
+                          </span>
+                          <h2 className="editorial-headline text-2xl font-bold text-ink-900">
+                            Top Changes Since Your Last Visit
+                          </h2>
+                        </div>
+
+                        <button
+                          onClick={() => setActiveTab('changes')}
+                          className="inline-flex items-center gap-1 text-xs financial-mono font-bold text-cobalt-500 hover:text-cobalt-700 uppercase"
+                        >
+                          <span>View All Signals</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
                       </div>
 
-                      <button
-                        onClick={() => setActiveTab('changes')}
-                        className="inline-flex items-center gap-1 text-xs financial-mono font-bold text-cobalt-500 hover:text-cobalt-700 uppercase"
-                      >
-                        <span>View All Signals</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {topChanges.map((change) => (
+                          <TopChangeCard key={change.symbol} change={change} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {!isFirstVisit && topChanges.length === 0 && (
+                    <EmptyState type="NO_FLUX" />
+                  )}
+
+                  {/* Watchlist Section */}
+                  <div className="pt-4 border-t border-ivory-300">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <span className="text-[10px] financial-mono font-bold text-cobalt-500 uppercase tracking-widest block">
+                          MONITORED EQUITIES
+                        </span>
+                        <h2 className="editorial-headline text-2xl font-bold text-ink-900">
+                          Your Watchlist
+                        </h2>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {topChanges.map((change) => (
-                        <TopChangeCard key={change.symbol} change={change} />
-                      ))}
-                    </div>
+                    <WatchlistTabs
+                      onAddStockClick={() => setIsAddStockOpen(true)}
+                      onManageWatchlistsClick={() => setIsManageWatchlistsOpen(true)}
+                    />
+
+                    <WatchlistTable onAddStockClick={() => setIsAddStockOpen(true)} />
                   </div>
-                )}
-
-                {!isFirstVisit && topChanges.length === 0 && (
-                  <EmptyState type="NO_FLUX" />
-                )}
-
-                {/* Watchlist Section */}
-                <div className="pt-4 border-t border-ivory-300">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <span className="text-[10px] financial-mono font-bold text-cobalt-500 uppercase tracking-widest block">
-                        MONITORED EQUITIES
-                      </span>
-                      <h2 className="editorial-headline text-2xl font-bold text-ink-900">
-                        Your Watchlist
-                      </h2>
-                    </div>
-                  </div>
-
-                  <WatchlistTabs
-                    onAddStockClick={() => setIsAddStockOpen(true)}
-                    onManageWatchlistsClick={() => setIsManageWatchlistsOpen(true)}
-                  />
-
-                  <WatchlistTable onAddStockClick={() => setIsAddStockOpen(true)} />
                 </div>
+
+                {/* Right Information Rail */}
+                <RightRail />
               </div>
             )}
 

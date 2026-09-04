@@ -58,25 +58,25 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
   );
 
   return (
-    <header className="sticky top-0 z-30 bg-ivory-100 border-b border-ivory-300 px-4 lg:px-8 py-3">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-30 bg-ivory-100 border-b border-ivory-300 px-4 lg:px-8 py-2.5">
+      <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-4">
         
         {/* Brand & Tagline */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-cobalt-500 text-white font-bold flex items-center justify-center rounded-sm shadow-[1.5px_1.5px_0px_#121212] select-none text-xs financial-mono">
-              SG
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-cobalt-500 text-white font-extrabold flex items-center justify-center rounded-sm shadow-[1.5px_1.5px_0px_#121212] select-none text-xs financial-mono">
+              FL
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold tracking-tight text-lg text-ink-900 leading-none">
+                <span className="font-extrabold tracking-tight text-xl text-ink-900 leading-none">
                   FLUX
                 </span>
-                <span className="text-[9px] font-bold financial-mono bg-ivory-300 text-ink-700 px-1.5 py-0.5 rounded-sm uppercase tracking-wider">
+                <span className="text-[9px] font-bold financial-mono bg-ivory-300 text-ink-700 px-1.5 py-0.5 rounded-xs uppercase tracking-wider">
                   INTELLIGENCE
                 </span>
               </div>
-              <span className="text-[10px] financial-mono tracking-widest text-cobalt-500 font-semibold block uppercase">
+              <span className="text-[10px] financial-mono tracking-widest text-cobalt-600 font-bold block uppercase">
                 KNOW WHAT CHANGED.
               </span>
             </div>
@@ -133,9 +133,17 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
           )}
         </div>
 
-        {/* Right Section: Telemetry, Snapshot Trigger & Profile */}
+        {/* Right Section: Telemetry, Snapshot Trigger, Notification & Profile */}
         <div className="flex items-center gap-3">
           
+          {/* Baseline Captured Notification Pill */}
+          {justCheckedIn && (
+            <div className="animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-1.5 px-2.5 py-1 bg-signal-green text-white text-[10px] financial-mono font-bold uppercase rounded-sm shadow-[1.5px_1.5px_0px_#121212]">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>BASELINE CAPTURED · {timeStr || '09:24'} IST</span>
+            </div>
+          )}
+
           {/* Market Status Badge */}
           <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-ivory-200 border border-ivory-300 rounded-sm text-xs financial-mono">
             <Radio className="w-3.5 h-3.5 text-signal-green animate-pulse" />
@@ -144,41 +152,61 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
             <span className="text-ink-600 text-[11px]">{timeStr || '09:45:00'} IST</span>
           </div>
 
-          {/* Snapshot Check-In Trigger */}
+          {/* Snapshot Check-In Trigger with Subtitle & Tooltip */}
+          <div className="relative group">
+            <button
+              onClick={handleManualCheckIn}
+              disabled={isCheckingIn}
+              title="Freeze baseline snapshot and discover new deltas since this visit"
+              className={`flex items-center gap-2 px-3 py-1.5 text-xs financial-mono font-bold uppercase rounded-sm border border-ink-900 transition-all ${
+                justCheckedIn
+                  ? 'bg-signal-green text-white shadow-[1.5px_1.5px_0px_#121212]'
+                  : 'bg-cobalt-500 hover:bg-cobalt-600 text-white shadow-[2px_2px_0px_#121212] active:translate-x-0.5 active:translate-y-0.5'
+              }`}
+            >
+              {justCheckedIn ? (
+                <>
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>CHECKED IN</span>
+                </>
+              ) : (
+                <>
+                  <Camera className={`w-3.5 h-3.5 ${isCheckingIn ? 'animate-spin' : ''}`} />
+                  <div className="text-left flex flex-col">
+                    <span className="leading-none">CHECK IN</span>
+                    <span className="text-[8.5px] lowercase font-normal opacity-85 leading-none mt-0.5 hidden sm:inline">see what's changed</span>
+                  </div>
+                </>
+              )}
+            </button>
+            {/* Tooltip */}
+            <div className="absolute top-full right-0 mt-1.5 hidden group-hover:block z-50 bg-ink-900 text-white text-[10px] financial-mono px-2.5 py-1 rounded-sm shadow-retro whitespace-nowrap pointer-events-none">
+              Freeze baseline snapshot to discover new deltas
+            </div>
+          </div>
+
+          {/* Notification Bell with Pink Badge */}
           <button
-            onClick={handleManualCheckIn}
-            disabled={isCheckingIn}
-            title="Freeze baseline snapshot and discover new deltas since this visit"
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs financial-mono font-bold uppercase rounded-sm border border-ink-900 transition-all ${
-              justCheckedIn
-                ? 'bg-signal-green text-white shadow-[1.5px_1.5px_0px_#121212]'
-                : 'bg-cobalt-500 hover:bg-cobalt-600 text-white shadow-[2px_2px_0px_#121212] active:translate-x-0.5 active:translate-y-0.5'
-            }`}
+            title="1 new critical market signal"
+            className="relative p-2 bg-ivory-200 hover:bg-ivory-300 border border-ivory-300 rounded-sm text-ink-700 hover:text-ink-900 transition-colors"
           >
-            {justCheckedIn ? (
-              <>
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Captured</span>
-              </>
-            ) : (
-              <>
-                <Camera className={`w-3.5 h-3.5 ${isCheckingIn ? 'animate-spin' : ''}`} />
-                <span className="hidden md:inline">Check In</span>
-              </>
-            )}
+            <Bell className="w-4 h-4" />
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-retropink-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-ivory-100 financial-mono">
+              1
+            </span>
           </button>
 
           {/* User Profile Pill */}
           <div className="flex items-center gap-2 pl-2 border-l border-ivory-300">
             <div className="w-7 h-7 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center font-bold text-xs financial-mono text-ink-900 shadow-[1px_1px_0px_#121212]">
-              {user?.username?.substring(0, 2).toUpperCase() || 'AN'}
+              {user?.username?.substring(0, 2).toUpperCase() || 'KS'}
             </div>
             <div className="hidden lg:block text-left leading-tight">
               <span className="block text-xs font-bold text-ink-900">
                 {user?.full_name || 'Kavita Sharma'}
               </span>
-              <span className="text-[10px] financial-mono text-cobalt-500 font-semibold">
-                XP: {user?.experience_points || 120} · {user?.role || 'Lead Analyst'}
+              <span className="text-[10px] financial-mono text-cobalt-600 font-semibold">
+                XP: {user?.experience_points || 320} · {user?.role || 'Lead Analyst'}
               </span>
             </div>
           </div>

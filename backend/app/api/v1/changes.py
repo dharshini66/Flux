@@ -37,8 +37,8 @@ async def get_changes_feed(
     Retrieve ranked list of meaningful changes since the user's previous baseline check-in.
     Ranked strictly by mathematical significance rather than mere chronological recency.
     """
-    # Run evaluation against latest snapshot baseline
-    check_in_data = await snapshot_service.process_user_check_in(db, current_user.id)
+    # Run evaluation against latest snapshot baseline without overwriting it
+    check_in_data = await snapshot_service.process_user_check_in(db, current_user.id, persist_new_snapshot=False)
     all_changes = check_in_data.get("changes", [])
 
     if filter_type == "HIGH_IMPACT":
@@ -71,7 +71,7 @@ async def get_changes_summary(
     """
     Retrieve compact headline and summary statistics for the 'Since Your Last Visit' hero.
     """
-    check_in_data = await snapshot_service.process_user_check_in(db, current_user.id)
+    check_in_data = await snapshot_service.process_user_check_in(db, current_user.id, persist_new_snapshot=False)
     return {
         "is_first_visit": check_in_data.get("is_first_visit", False),
         "headline": check_in_data.get("headline"),
@@ -82,6 +82,13 @@ async def get_changes_summary(
         "tracked_stocks_count": check_in_data.get("tracked_stocks_count", 0),
         "top_changes": check_in_data.get("changes", [])[:4]
     }
+
+
+@router.get("/thresholds")
+async def get_engine_thresholds():
+    """Returns the live configuration thresholds and factor weights of the Meaningful Change Engine."""
+    from app.engine.thresholds import default_thresholds
+    return default_thresholds.to_dict()
 
 
 @router.post("/explain")

@@ -5,7 +5,7 @@ Initializes top stocks, demo users, sample watchlists, and data providers.
 from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.models import User, Stock, Watchlist, WatchlistStock, DataSource
+from app.db.models import User, Stock, Watchlist, WatchlistStock, DataSource, MarketSnapshot, StockSnapshot
 from app.core.security import hash_password
 
 INITIAL_STOCKS = [
@@ -165,7 +165,7 @@ async def seed_database(session: AsyncSession) -> None:
             full_name="Kavita Sharma",
             hashed_password=hash_password("password123"),
             role="lead_analyst",
-            experience_points=120
+            experience_points=320
         )
         session.add(demo_user)
         await session.flush()
@@ -189,7 +189,7 @@ async def seed_database(session: AsyncSession) -> None:
         await session.flush()
 
         # Attach stocks to Primary Focus
-        primary_symbols = ["INFY", "RELIANCE", "HDFCBANK", "TCS", "ICICIBANK"]
+        primary_symbols = ["INFY", "TCS", "RELIANCE", "HDFCBANK", "ICICIBANK", "TATAMOTORS"]
         for idx, sym in enumerate(primary_symbols):
             session.add(WatchlistStock(
                 watchlist_id=wl_primary.id,
@@ -206,6 +206,43 @@ async def seed_database(session: AsyncSession) -> None:
                 stock_symbol=sym,
                 is_priority=(sym == "INFY"),
                 position=idx
+            ))
+
+    # Check if demo_user has a baseline snapshot; if not, create one
+    snap_res = await session.execute(
+        select(MarketSnapshot).where(MarketSnapshot.user_id == demo_user.id).limit(1)
+    )
+    existing_snap = snap_res.scalars().first()
+
+    if not existing_snap:
+        baseline_time = datetime.now(timezone.utc).replace(hour=13, minute=46, second=0, microsecond=0) # 01:46 PM
+        initial_snap = MarketSnapshot(
+            user_id=demo_user.id,
+            session_label="Previous Session Baseline",
+            meaningful_changes_count=5,
+            created_at=baseline_time
+        )
+        session.add(initial_snap)
+        await session.flush()
+
+        # Seed baseline prices for watchlist stocks
+        baseline_stocks = [
+            {"symbol": "INFY", "price": 1781.70, "volume": 1_800_000, "high_52w": 1880.0, "low_52w": 1350.0},
+            {"symbol": "TCS", "price": 4126.80, "volume": 1_500_000, "high_52w": 4200.0, "low_52w": 3300.0},
+            {"symbol": "RELIANCE", "price": 2881.60, "volume": 2_100_000, "high_52w": 3100.0, "low_52w": 2220.0},
+            {"symbol": "HDFCBANK", "price": 1724.50, "volume": 6_700_000, "high_52w": 1780.0, "low_52w": 1380.0},
+            {"symbol": "ICICIBANK", "price": 1119.80, "volume": 7_200_000, "high_52w": 1320.0, "low_52w": 930.0},
+            {"symbol": "TATAMOTORS", "price": 940.00, "volume": 8_500_000, "high_52w": 1180.0, "low_52w": 620.0},
+        ]
+        for bs in baseline_stocks:
+            session.add(StockSnapshot(
+                snapshot_id=initial_snap.id,
+                stock_symbol=bs["symbol"],
+                price=bs["price"],
+                volume=bs["volume"],
+                high_52w=bs["high_52w"],
+                low_52w=bs["low_52w"],
+                captured_at=baseline_time
             ))
 
     await session.commit()

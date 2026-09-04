@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F3EFE5;
+    color: #121212;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Retro-Editorial Styling Utilities */
+.editorial-headline {
+  font-family: 'Newsreader', Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+.financial-mono {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+}
+
+.pixel-font {
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* Thin Editorial Borders */
+.border-editorial {
+  border-width: 1px;
+  border-color: #E5DFD1;
+}
+
+.border-editorial-dark {
+  border-width: 1.5px;
+  border-color: #121212;
+}
+
+/* Subtle Pixel & Grid Accents */
+.retro-card {
+  background-color: #FAF8F3;
+  border: 1px solid #E5DFD1;
+  border-radius: 6px;
+  transition: all 0.15s ease-in-out;
+}
+
+.retro-card:hover {
+  border-color: #121212;
+  box-shadow: 2px 2px 0px 0px #121212;
+}
+
+.retro-card-active {
+  background-color: #FAF8F3;
+  border: 1.5px solid #121212;
+  box-shadow: 3px 3px 0px 0px #1746D1;
+}
+
+.retro-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* Scanline / Pixel Grid effect for chart cards and pixel art */
+.scanline-bg {
+  background-image: linear-gradient(rgba(18, 18, 18, 0.03) 1px, transparent 1px);
+  background-size: 100% 4px;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3EFE5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D6CEBC;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1746D1;
+}

@@ -15,7 +15,7 @@ export const DemoScenarioBar: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#141822] text-white border-t border-[#252C3D] py-2 px-4 sticky bottom-0 z-40 shadow-xl select-none">
+    <div className="bg-[#141822] dark:bg-[#12151C] text-white border-t border-[#252C3D] dark:border-[#232A38] py-2 px-4 sticky bottom-0 z-40 shadow-xl select-none transition-colors">
       <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs financial-mono">
         {/* Left: Console Status Indicator */}
         <div className="flex items-center gap-2">
@@ -24,7 +24,7 @@ export const DemoScenarioBar: React.FC = () => {
             DEV MODE · EVALUATOR CONTROLS
           </span>
           <span className="text-gray-500 hidden sm:inline">|</span>
-          <span className="text-gray-400 text-[10px] hidden md:inline">
+          <span className="text-gray-400 dark:text-[#737B8A] text-[10px] hidden md:inline">
             (Demo Scenarios & Edge Cases):
           </span>
         </div>
@@ -40,7 +40,7 @@ export const DemoScenarioBar: React.FC = () => {
                 className={`px-2.5 py-1 rounded-xs text-[10.5px] font-bold uppercase transition-all border ${
                   isActive
                     ? 'bg-cobalt-600 text-white border-cobalt-400 shadow-[1px_1px_0px_#000]'
-                    : 'bg-[#1C212E] hover:bg-[#262D3D] text-gray-300 border-[#2C3447]'
+                    : 'bg-[#1C212E] dark:bg-[#1B202B] hover:bg-[#262D3D] dark:hover:bg-[#202633] text-gray-300 dark:text-[#A8AFBD] border-[#2C3447] dark:border-[#303746]'
                 }`}
               >
                 {sc.label}
@@ -55,7 +55,7 @@ export const DemoScenarioBar: React.FC = () => {
             onClick={() => performCheckIn(true)}
             disabled={isCheckingIn}
             title="Reset to fresh baseline snapshot to verify First-Visit empty state"
-            className="flex items-center gap-1.5 px-2.5 py-1 bg-[#1C212E] hover:bg-[#262D3D] text-gray-200 border border-[#333C52] hover:border-retropink-500/60 rounded-xs text-[10.5px] font-bold uppercase transition-all shadow-subtle"
+            className="flex items-center gap-1.5 px-2.5 py-1 bg-[#1C212E] dark:bg-[#1B202B] hover:bg-[#262D3D] dark:hover:bg-[#202633] text-gray-200 dark:text-[#F4F1E8] border border-[#333C52] dark:border-[#303746] hover:border-retropink-500/60 rounded-xs text-[10.5px] font-bold uppercase transition-all shadow-subtle"
           >
             <RotateCcw className={`w-3 h-3 text-retropink-400 ${isCheckingIn ? 'animate-spin' : ''}`} />
             <span>RESET BASELINE</span>

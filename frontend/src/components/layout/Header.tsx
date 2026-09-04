@@ -98,14 +98,14 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
                 setSearchOpen(true);
               }}
               onFocus={() => setSearchOpen(true)}
-              className="w-full pl-9 pr-4 py-1.5 bg-ivory-200 border border-ivory-300 focus:border-cobalt-500 focus:bg-white text-xs text-ink-900 rounded-sm outline-none transition-all placeholder:text-ink-400 font-sans"
+              className="w-full pl-9 pr-4 py-1.5 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] focus:border-cobalt-500 focus:bg-white dark:focus:bg-[#202633] text-xs text-ink-900 rounded-sm outline-none transition-all placeholder:text-ink-400 font-sans"
             />
           </div>
 
           {/* Search Dropdown */}
           {searchOpen && searchQuery && (
             <div
-              className="absolute left-0 right-0 top-full mt-1 bg-ivory-50 border border-editorial-dark rounded-sm shadow-retro-lg z-50 max-h-64 overflow-y-auto"
+              className="absolute left-0 right-0 top-full mt-1 bg-ivory-50 dark:bg-[#151922] border border-editorial-dark dark:border-[#303746] rounded-sm shadow-retro-lg z-50 max-h-64 overflow-y-auto"
               onMouseLeave={() => setSearchOpen(false)}
             >
               {filteredStocks.map((s) => (
@@ -117,7 +117,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
                     setSearchOpen(false);
                     if (onSearchSelect) onSearchSelect(s.symbol);
                   }}
-                  className="w-full text-left px-3 py-2 hover:bg-ivory-200 border-b border-ivory-300 last:border-b-0 flex items-center justify-between text-xs transition-colors"
+                  className="w-full text-left px-3 py-2 hover:bg-ivory-200 dark:hover:bg-[#1B202B] border-b border-ivory-300 dark:border-[#232A38] last:border-b-0 flex items-center justify-between text-xs transition-colors"
                 >
                   <div>
                     <span className="font-bold financial-mono text-ink-900 mr-2">{s.symbol}</span>
@@ -136,17 +136,17 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
         </div>
 
         {/* Right Section: Telemetry, Snapshot Trigger, Notification & Profile */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {/* Baseline Captured Notification Pill */}
           {justCheckedIn && (
-            <div className="animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-1.5 px-2.5 py-1 bg-signal-green text-white text-[10px] financial-mono font-bold uppercase rounded-sm shadow-[1.5px_1.5px_0px_#121212]">
+            <div className="animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-1.5 px-2.5 py-1 bg-signal-green text-white text-[10px] financial-mono font-bold uppercase rounded-sm shadow-retro-sm">
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>BASELINE CAPTURED · {timeStr || '09:24'} IST</span>
             </div>
           )}
 
           {/* Market Status Badge */}
-          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-ivory-200 border border-ivory-300 rounded-sm text-xs">
+          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs">
             <Radio className="w-3.5 h-3.5 text-signal-green animate-pulse shrink-0" />
             <span className="font-bold text-[11px] financial-mono text-ink-800">NSE // LIVE</span>
             <span className="text-ink-400">|</span>
@@ -159,10 +159,10 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
               onClick={handleManualCheckIn}
               disabled={isCheckingIn}
               title="Capture baseline snapshot and discover new deltas since this visit"
-              className={`flex items-center gap-2.5 px-3.5 py-1.5 text-xs rounded-sm border border-ink-900 transition-all ${
+              className={`flex items-center gap-2.5 px-3.5 py-1.5 text-xs rounded-sm border border-editorial-dark transition-all ${
                 justCheckedIn
-                  ? 'bg-signal-green text-white shadow-[1.5px_1.5px_0px_#121212]'
-                  : 'bg-cobalt-500 hover:bg-cobalt-600 text-white shadow-[2px_2px_0px_#121212] active:translate-x-0.5 active:translate-y-0.5'
+                  ? 'bg-signal-green text-white shadow-retro-sm'
+                  : 'bg-cobalt-500 hover:bg-cobalt-600 text-white shadow-retro-sm active:translate-x-0.5 active:translate-y-0.5'
               }`}
             >
               {justCheckedIn ? (
@@ -200,7 +200,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
           {/* Notification Bell with Pink Badge */}
           <button
             title="1 new critical market signal"
-            className="relative p-2 bg-ivory-200 hover:bg-ivory-300 border border-ivory-300 rounded-sm text-ink-700 hover:text-ink-900 transition-colors"
+            className="relative p-2 bg-ivory-200 dark:bg-[#1B202B] hover:bg-ivory-300 dark:hover:bg-[#202633] border border-ivory-300 dark:border-[#303746] rounded-sm text-ink-700 hover:text-ink-900 transition-colors"
           >
             <Bell className="w-4 h-4" />
             <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-retropink-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-ivory-100 financial-mono">
@@ -208,23 +208,23 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
             </span>
           </button>
 
-          {/* Theme Toggle (Light Ivory / Dark Terminal) */}
+          {/* Theme Toggle (Accessible, compact, retro-editorial) */}
           <button
             onClick={toggleTheme}
-            title={theme === 'dark' ? 'Switch to Light Editorial Mode' : 'Switch to Dark Terminal Mode'}
-            className="relative p-2 bg-ivory-200 hover:bg-ivory-300 border border-ivory-300 rounded-sm text-ink-700 hover:text-ink-900 transition-colors"
-            aria-label="Toggle dark mode"
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="relative p-2 bg-ivory-200 dark:bg-[#1B202B] hover:bg-ivory-300 dark:hover:bg-[#202633] border border-ivory-300 dark:border-[#303746] rounded-sm text-ink-700 hover:text-ink-900 transition-colors shadow-subtle flex items-center justify-center group"
           >
             {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-amber-400" />
+              <Sun className="w-4 h-4 text-amber-300 transition-transform group-hover:rotate-45" />
             ) : (
-              <Moon className="w-4 h-4 text-ink-700" />
+              <Moon className="w-4 h-4 text-ink-800 transition-transform group-hover:-rotate-12" />
             )}
           </button>
 
           {/* User Profile Pill */}
-          <div className="flex items-center gap-2.5 pl-2 border-l border-ivory-300">
-            <div className="w-7 h-7 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center font-bold text-xs financial-mono text-ink-900 shadow-[1px_1px_0px_#121212]">
+          <div className="flex items-center gap-2.5 pl-2 border-l border-ivory-300 dark:border-[#303746]">
+            <div className="w-7 h-7 bg-ivory-200 dark:bg-[#1B202B] border border-editorial-dark rounded-sm flex items-center justify-center font-bold text-xs financial-mono text-ink-900 shadow-retro-sm">
               {user?.username?.substring(0, 2).toUpperCase() || 'KS'}
             </div>
             <div className="hidden lg:block text-left leading-tight">

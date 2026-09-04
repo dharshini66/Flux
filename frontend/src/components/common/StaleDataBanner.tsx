@@ -15,7 +15,7 @@ export const StaleDataBanner: React.FC<StaleDataBannerProps> = ({ className = ''
 
   return (
     <div
-      className={`bg-[#FFF9EB] border-2 border-signal-ochre rounded-md p-3 mb-5 flex items-center justify-between shadow-[2px_2px_0px_#C58A1C] ${className}`}
+      className={`bg-[#FFF9EB] dark:bg-[#1E190E] border-2 border-signal-ochre rounded-md p-3 mb-5 flex items-center justify-between shadow-[2px_2px_0px_#C58A1C] dark:shadow-[2px_2px_0px_rgba(0,0,0,0.6)] ${className}`}
     >
       <div className="flex items-center gap-3">
         <div className="p-1.5 bg-signal-ochre text-white rounded-sm">

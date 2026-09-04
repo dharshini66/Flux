@@ -148,15 +148,15 @@ export const StockDetailModal: React.FC = () => {
             </div>
 
             {/* Timeframe selector */}
-            <div className="flex items-center gap-1 bg-ivory-200 p-0.5 border border-ivory-300 rounded-sm text-xs financial-mono">
+            <div className="flex items-center gap-1 bg-ivory-200 dark:bg-[#151922] p-0.5 border border-ivory-300 dark:border-[#303746] rounded-sm text-xs financial-mono">
               {['1D', '1W', '1M', '6M', '1Y'].map((tf) => (
                 <button
                   key={tf}
                   onClick={() => setTimeframe(tf)}
                   className={`px-2 py-0.5 rounded-sm font-bold uppercase transition-all ${
                     timeframe === tf
-                      ? 'bg-ink-900 text-white shadow-retro-sm'
-                      : 'text-ink-600 hover:text-ink-900'
+                      ? 'bg-ink-900 text-white dark:bg-[#202633] dark:text-[#F4F1E8] dark:border dark:border-[#4C72FF] shadow-retro-sm'
+                      : 'text-ink-600 dark:text-[#A8AFBD] hover:text-ink-900 dark:hover:text-[#F4F1E8]'
                   }`}
                 >
                   {tf}
@@ -207,12 +207,12 @@ export const StockDetailModal: React.FC = () => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload as HistoricalCandle;
                       return (
-                        <div className="bg-ink-900 text-white p-2.5 rounded shadow-retro text-xs financial-mono">
-                          <span className="text-[10px] text-ivory-300 block">
+                        <div className="bg-ink-900 text-white dark:bg-[#202633] dark:text-[#F4F1E8] dark:border dark:border-[#303746] p-2.5 rounded shadow-retro text-xs financial-mono">
+                          <span className="text-[10px] text-ivory-300 dark:text-[#A8AFBD] block">
                             {new Date(data.timestamp).toLocaleString()}
                           </span>
                           <span className="text-sm font-bold block mt-1">₹{data.close.toFixed(2)}</span>
-                          <span className="text-[10px] text-cobalt-100 block">
+                          <span className="text-[10px] text-cobalt-100 dark:text-[#4C72FF] block">
                             Vol: {data.volume.toLocaleString()}
                           </span>
                         </div>

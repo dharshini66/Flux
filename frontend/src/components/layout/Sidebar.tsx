@@ -65,7 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
   ];
 
   return (
-    <aside className="w-64 shrink-0 bg-ivory-100 border-r border-ivory-300 min-h-[calc(100vh-57px)] flex flex-col justify-between p-4 hidden md:flex">
+    <aside className="w-64 shrink-0 bg-ivory-100 dark:bg-[#12151C] border-r border-ivory-300 dark:border-[#232A38] min-h-[calc(100vh-57px)] flex flex-col justify-between p-4 hidden md:flex transition-colors">
       <div>
         {/* Navigation Items */}
         <div className="space-y-2">
@@ -81,18 +81,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-sm text-left transition-all ${
                   isActive
-                    ? 'bg-ivory-50 border-[1.5px] border-ink-900 shadow-[2px_2px_0px_#121212] text-ink-900'
-                    : 'text-ink-600 hover:bg-ivory-200/70 hover:text-ink-900 border border-transparent'
+                    ? 'bg-ivory-50 dark:bg-[#1B202B] border-[1.5px] border-ink-900 dark:border-[#4C72FF] shadow-retro-sm text-ink-900 dark:text-[#F4F1E8]'
+                    : 'text-ink-600 dark:text-[#A8AFBD] hover:bg-ivory-200/70 dark:hover:bg-[#1B202B]/70 hover:text-ink-900 dark:hover:text-[#F4F1E8] border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Icon
                     className={`w-4 h-4 shrink-0 transition-colors ${
-                      isActive ? 'text-cobalt-600 stroke-[2.2]' : 'text-ink-400'
+                      isActive ? 'text-cobalt-600 dark:text-[#4C72FF] stroke-[2.2]' : 'text-ink-400'
                     }`}
                   />
                   <div>
-                    <span className={`block text-xs font-sans leading-none ${isActive ? 'font-bold text-ink-900' : 'font-semibold text-ink-700'}`}>
+                    <span className={`block text-xs font-sans leading-none ${isActive ? 'font-bold text-ink-900 dark:text-[#F4F1E8]' : 'font-semibold text-ink-700 dark:text-[#A8AFBD]'}`}>
                       {item.label}
                     </span>
                     <span className="text-[10px] font-sans text-ink-500 block mt-1">
@@ -103,7 +103,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
                 {item.badge && (
                   <span
                     className={`text-[9px] financial-mono font-bold px-1.5 py-0.5 rounded-xs shrink-0 ${
-                      item.badgeColor || 'bg-ivory-300 text-ink-900'
+                      item.badgeColor || 'bg-ivory-300 dark:bg-[#202633] text-ink-900 dark:text-[#F4F1E8]'
                     }`}
                   >
                     {item.badge}
@@ -116,11 +116,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
       </div>
 
       {/* Footer: Pixel Art Girl & Cat Illustration with Quote */}
-      <div className="pt-4 border-t border-ivory-300 space-y-3">
-        <div className="bg-ivory-200 border border-editorial-dark rounded-sm p-3 shadow-subtle overflow-hidden relative">
+      <div className="pt-4 border-t border-ivory-300 dark:border-[#232A38] space-y-3">
+        <div className="bg-ivory-200 dark:bg-[#151922] border border-editorial-dark dark:border-[#303746] rounded-sm p-3 shadow-subtle overflow-hidden relative">
           
           {/* Pixel Art Scene */}
-          <div className="relative h-20 w-full bg-ivory-300/60 rounded-xs border border-ivory-300 flex items-end justify-center overflow-hidden">
+          <div className="relative h-20 w-full bg-ivory-300/60 dark:bg-[#12151C] rounded-xs border border-ivory-300 dark:border-[#232A38] flex items-end justify-center overflow-hidden">
             <svg
               className="w-full h-full"
               viewBox="0 0 200 80"
@@ -128,7 +128,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
               shapeRendering="crispEdges"
             >
               {/* Sky Backdrop with subtle stars/pixels */}
-              <rect x="0" y="0" width="200" height="80" fill="#EDE8DF" />
+              <rect x="0" y="0" width="200" height="80" className="fill-[#EDE8DF] dark:fill-[#161B24]" />
               <rect x="25" y="12" width="2" height="2" fill="#E85AA5" />
               <rect x="70" y="8" width="2" height="2" fill="#7561D8" />
               <rect x="145" y="15" width="2" height="2" fill="#1746D1" />
@@ -146,10 +146,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
               <circle cx="170" cy="11" r="2.5" fill="#F48FB1" />
 
               {/* Distant City Skyline Silhouettes */}
-              <rect x="15" y="38" width="16" height="26" fill="#D3CCC0" />
-              <rect x="35" y="28" width="20" height="36" fill="#C5BDAE" />
-              <rect x="60" y="34" width="14" height="30" fill="#D3CCC0" />
-              <rect x="78" y="42" width="18" height="22" fill="#C5BDAE" />
+              <rect x="15" y="38" width="16" height="26" className="fill-[#D3CCC0] dark:fill-[#252C3D]" />
+              <rect x="35" y="28" width="20" height="36" className="fill-[#C5BDAE] dark:fill-[#1E2433]" />
+              <rect x="60" y="34" width="14" height="30" className="fill-[#D3CCC0] dark:fill-[#252C3D]" />
+              <rect x="78" y="42" width="18" height="22" className="fill-[#C5BDAE] dark:fill-[#1E2433]" />
 
               {/* Brick Ledge */}
               <rect x="0" y="64" width="200" height="16" fill="#784E3A" />

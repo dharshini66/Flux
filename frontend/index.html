@@ -7,6 +7,23 @@
     <title>FLUX — KNOW WHAT CHANGED. | Intelligent Market Watchlist</title>
     <meta name="description" content="Intelligent market watchlist focus on signal over noise. Detect meaningful price movements, unusual volume, and 52-week breakouts since your last visit." />
     
+    <!-- Anti-flash Theme Initialization Script -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('flux_theme');
+          var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    
     <!-- Google Fonts: Inter (Sans), Newsreader (Editorial Serif), JetBrains Mono (Financial Monospace) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

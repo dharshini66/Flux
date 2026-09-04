@@ -2,8 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Light Theme (Warm Ivory Paper & Deep Navy Ink) */
+:root, [data-theme="light"] {
+  /* Centralized Semantic Theme Tokens (Light Mode - Editorial Paper) */
+  --bg-page: #F3EFE5;
+  --bg-surface: #FAF8F3;
+  --bg-surface-secondary: #F0ECE2;
+  --bg-surface-elevated: #FCFAF6;
+  --text-primary: #121212;
+  --text-secondary: #4A4A4A;
+  --text-muted: #7A7A7A;
+  --border: #E5DFD1;
+  --border-dark: #121212;
+  --brand-primary: #1746D1;
+  --brand-pink: #E85AA5;
+  --brand-purple: #7561D8;
+  --positive: #176B52;
+  --negative: #D94336;
+  --warning: #C58A1C;
+
+  /* Backward Compatible RGB Tuples for Tailwind System */
   --color-ivory-50: 252 250 246;   /* #FCFAF6 */
   --color-ivory-100: 250 248 243;  /* #FAF8F3 - Card surface */
   --color-ivory-200: 243 239 229;  /* #F3EFE5 - Canvas background */
@@ -33,35 +50,52 @@
   --border-editorial-dark-color: #121212;
 }
 
-.dark {
-  /* Dark Terminal Theme (Bloomberg / TradingView Charcoal Slate & Crisp Ivory) */
-  --color-ivory-50: 26 32 44;      /* #1A202C - Elevated surface/popover */
-  --color-ivory-100: 21 26 36;     /* #151A24 - Card surface */
-  --color-ivory-200: 13 17 23;     /* #0D1117 - Canvas background */
-  --color-ivory-300: 36 45 61;     /* #242D3D - Subtle dark border */
-  --color-ivory-400: 51 63 84;     /* #333F54 - Hover border */
+.dark, [data-theme="dark"] {
+  /* Centralized Semantic Theme Tokens (Dark Mode - After Hours Terminal) */
+  --bg-page: #0F1117;
+  --bg-surface: #151922;
+  --bg-surface-secondary: #1B202B;
+  --bg-surface-elevated: #202633;
+  --text-primary: #F4F1E8;
+  --text-secondary: #A8AFBD;
+  --text-muted: #737B8A;
+  --border: #303746;
+  --border-dark: #303746;
+  --brand-primary: #4C72FF;
+  --brand-pink: #E85AA5;
+  --brand-purple: #8A78E8;
+  --positive: #35B58A;
+  --negative: #F06A6A;
+  --warning: #D6A23A;
 
-  --color-ink-900: 243 241 236;    /* #F3F1EC - Primary crisp ivory text */
-  --color-ink-700: 216 212 204;    /* #D8D4CC - Secondary readable text */
-  --color-ink-600: 162 168 180;    /* #A2A8B4 - Tertiary text */
-  --color-ink-500: 138 145 158;    /* #8A919E */
-  --color-ink-400: 113 123 140;    /* #717B8C - Muted captions */
+  /* Backward Compatible RGB Tuples for Tailwind System */
+  --color-ivory-50: 32 38 51;      /* #202633 - Elevated surface */
+  --color-ivory-100: 21 25 34;     /* #151922 - Primary surface / Card */
+  --color-ivory-200: 15 17 23;     /* #0F1117 - Page canvas background */
+  --color-ivory-300: 35 42 56;     /* #232A38 - Secondary subtle border */
+  --color-ivory-400: 48 55 70;     /* #303746 - Primary card border */
+
+  --color-ink-900: 244 241 232;    /* #F4F1E8 - Primary crisp ivory text */
+  --color-ink-700: 212 216 224;    /* #D4D8E0 - Secondary readable text */
+  --color-ink-600: 168 175 189;    /* #A8AFBD - Tertiary text */
+  --color-ink-500: 140 148 162;    /* #8C94A2 */
+  --color-ink-400: 115 123 138;    /* #737B8A - Muted captions */
   --color-ink-300: 85 95 112;      /* #555F70 */
   --color-ink-200: 55 64 80;       /* #374050 - Dividers */
 
-  --color-cobalt-50: 24 33 54;     /* Dark navy chip background */
-  --color-cobalt-100: 32 44 74;
-  --color-cobalt-500: 59 130 246;  /* #3B82F6 - Bright terminal blue */
-  --color-cobalt-600: 96 165 250;  /* #60A5FA - Accessible link blue */
-  --color-cobalt-700: 147 197 253; /* #93C5FD */
+  --color-cobalt-50: 27 35 56;     /* #1B2338 - Subtle dark cobalt chip */
+  --color-cobalt-100: 35 48 82;
+  --color-cobalt-500: 76 114 255;  /* #4C72FF - Brand cobalt primary */
+  --color-cobalt-600: 98 132 255;  /* #6284FF */
+  --color-cobalt-700: 150 176 255;
 
-  --color-signal-green: 46 196 143; /* #2EC48F - Vibrant emerald green */
-  --color-signal-red: 248 113 113;  /* #F87171 - Crisp coral red */
-  --color-signal-ochre: 251 191 36; /* #FBBF24 - Amber warning */
+  --color-signal-green: 53 181 138; /* #35B58A - Positive market movement */
+  --color-signal-red: 240 106 106;  /* #F06A6A - Negative market movement */
+  --color-signal-ochre: 214 162 58; /* #D6A23A - Attention / unusual volume */
 
   --shadow-retro-color: #000000;
-  --border-editorial-color: #242D3D;
-  --border-editorial-dark-color: #38435C;
+  --border-editorial-color: #232A38;
+  --border-editorial-dark-color: #303746;
 }
 
 @layer base {
@@ -71,7 +105,13 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* Smooth, polished theme transition (180ms) */
+  body, header, aside, main, section, nav, div, button, input, table, tr, td, th {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 180ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

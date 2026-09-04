@@ -49,9 +49,9 @@ export const MarketPulseTimeline: React.FC = () => {
       </div>
 
       {/* Horizontal Interactive Timeline Axis */}
-      <div className="relative pt-6 pb-4 px-4 bg-ivory-50 border border-ivory-300 rounded-sm scanline-bg">
+      <div className="relative pt-6 pb-4 px-4 bg-ivory-50 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm scanline-bg">
         {/* Timeline Horizontal Rail with Circular Nodes */}
-        <div className="relative h-1 bg-ivory-300 rounded-full mb-8">
+        <div className="relative h-1 bg-ivory-300 dark:bg-[#303746] rounded-full mb-8">
           {/* Active session progress bar */}
           <div className="absolute left-0 top-0 bottom-0 w-3/4 bg-gradient-to-r from-cobalt-600 via-softpurple-500 to-retropink-500 rounded-full"></div>
 
@@ -60,8 +60,8 @@ export const MarketPulseTimeline: React.FC = () => {
             {hourMarks.map((hm, i) => (
               <div
                 key={hm}
-                className={`w-3 h-3 rounded-full border-2 border-ink-900 transition-all ${
-                  i < 3 ? 'bg-cobalt-500 shadow-[0_0_4px_rgba(23,70,209,0.4)]' : 'bg-ivory-100'
+                className={`w-3 h-3 rounded-full border-2 border-ink-900 dark:border-[#151922] transition-all ${
+                  i < 3 ? 'bg-cobalt-500 shadow-[0_0_4px_rgba(76,114,255,0.5)]' : 'bg-ivory-100 dark:bg-[#202633]'
                 }`}
               />
             ))}
@@ -69,7 +69,7 @@ export const MarketPulseTimeline: React.FC = () => {
         </div>
 
         {/* Time Hour Markers */}
-        <div className="flex justify-between text-[10px] financial-mono text-ink-500 font-bold uppercase -mt-5 mb-5">
+        <div className="flex justify-between text-[10px] financial-mono text-ink-500 dark:text-[#737B8A] font-bold uppercase -mt-5 mb-5">
           {hourMarks.map((hm) => (
             <div key={hm} className="flex flex-col items-center">
               <span>{hm}</span>
@@ -94,13 +94,13 @@ export const MarketPulseTimeline: React.FC = () => {
                 onClick={() => setActiveEvent(evt)}
                 className={`p-3.5 rounded-sm border text-left transition-all relative ${
                   isSelected
-                    ? 'bg-white border-cobalt-500 shadow-retro ring-1 ring-cobalt-400 scale-[1.01]'
-                    : 'bg-ivory-100 hover:bg-white/80 border-ivory-300 hover:border-ivory-400'
+                    ? 'bg-white dark:bg-[#202633] border-cobalt-500 dark:border-[#4C72FF] shadow-retro ring-1 ring-cobalt-400 dark:ring-[#4C72FF]/50 scale-[1.01]'
+                    : 'bg-ivory-100 dark:bg-[#202633] hover:bg-white/80 dark:hover:bg-[#283142] border-ivory-300 dark:border-[#303746] hover:border-ivory-400 dark:hover:border-[#4C72FF]/50'
                 }`}
               >
                 {/* Line 1: Time & Symbol Badge */}
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] financial-mono font-semibold text-ink-500">
+                  <span className="text-[10px] financial-mono font-semibold text-ink-500 dark:text-[#737B8A]">
                     {evt.time_label}
                   </span>
                   <span
@@ -116,7 +116,7 @@ export const MarketPulseTimeline: React.FC = () => {
                 </div>
 
                 {/* Line 3: Delta & Score */}
-                <div className="flex items-center justify-between mt-3 pt-2 border-t border-ivory-300 text-[10.5px] financial-mono">
+                <div className="flex items-center justify-between mt-3 pt-2 border-t border-ivory-300 dark:border-[#303746] text-[10.5px] financial-mono">
                   <span
                     className={`font-bold ${
                       evt.price_delta.startsWith('+') ? 'text-signal-green' : 'text-signal-red'
@@ -124,7 +124,7 @@ export const MarketPulseTimeline: React.FC = () => {
                   >
                     {evt.price_delta}
                   </span>
-                  <span className="text-ink-500">
+                  <span className="text-ink-500 dark:text-[#737B8A]">
                     Score: <strong className="text-ink-900 font-bold">{evt.significance_score.toFixed(2)}</strong>
                   </span>
                 </div>
@@ -136,7 +136,7 @@ export const MarketPulseTimeline: React.FC = () => {
 
       {/* Selected Pulse Event Details Drawer */}
       {activeEvent && (
-        <div className="mt-4 p-3.5 bg-ivory-200 border border-ivory-300 rounded-sm flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-subtle">
+        <div className="mt-4 p-3.5 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-subtle">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-cobalt-500 text-white rounded-sm mt-0.5 select-none shrink-0">
               <Zap className="w-4 h-4" />

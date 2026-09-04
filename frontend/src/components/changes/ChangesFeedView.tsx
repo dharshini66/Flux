@@ -76,8 +76,8 @@ export const ChangesFeedView: React.FC = () => {
               onClick={() => setFilterType(opt.id)}
               className={`px-3 py-1 rounded-sm text-xs financial-mono font-bold uppercase transition-all ${
                 filterType === opt.id
-                  ? 'bg-ink-900 text-white shadow-retro-sm'
-                  : 'bg-ivory-100 hover:bg-ivory-50 text-ink-700 border border-ivory-300'
+                  ? 'bg-ink-900 text-white dark:bg-[#202633] dark:text-[#F4F1E8] border border-ink-900 dark:border-[#4C72FF] shadow-retro-sm'
+                  : 'bg-ivory-100 hover:bg-ivory-50 dark:bg-[#151922] dark:hover:bg-[#1B202B] text-ink-700 dark:text-[#A8AFBD] border border-ivory-300 dark:border-[#303746]'
               }`}
             >
               {opt.label}

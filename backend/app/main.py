@@ -83,3 +83,12 @@ async def root():
         "api_v1_docs": "/docs",
         "status": "operational"
     }
+
+
+if __name__ == "__main__":
+    import os
+    import uvicorn
+    port = int(os.environ.get("PORT", settings.PORT))
+    host = os.environ.get("HOST", settings.HOST)
+    uvicorn.run("app.main:app", host=host, port=port, reload=False)
+

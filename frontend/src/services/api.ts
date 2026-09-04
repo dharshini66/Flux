@@ -10,7 +10,9 @@ import {
   User,
 } from '../types';
 
-const API_BASE = '/api/v1';
+// Use VITE_API_URL if defined (for production static hosting), otherwise fallback to relative /api/v1 (for Vite proxy / monolith)
+const VITE_API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.trim() || '';
+const API_BASE = VITE_API_URL ? `${VITE_API_URL.replace(/\/$/, '')}/api/v1` : '/api/v1';
 
 class ApiClient {
   private token: string | null = null;

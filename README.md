@@ -1,4 +1,4 @@
-﻿# FLUX — KNOW WHAT CHANGED.
+# FLUX — KNOW WHAT CHANGED.
 > **Understand the movement.**
 
 FLUX is an intelligent market watchlist engine designed to surface meaningful market shifts rather than overwhelming users with raw ticker noise. By comparing current market conditions against a user's previous check-in snapshot, FLUX isolates notable price velocity, unusual volume anomalies, volatility breaches, and critical price extremes into ranked, explainable signals.
@@ -334,6 +334,25 @@ npm run dev
 ```
 - Web Application: `http://localhost:5173`
 
+### 4. Production Deployment
+
+#### Option A: Docker Compose (All-in-One)
+```bash
+docker-compose up --build
+```
+
+#### Option B: Cloud Hosting (Render / Railway / Vercel)
+1. **Backend (FastAPI)** on Render / Railway / Fly.io:
+   - Root Directory: `backend`
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+   - Environment Variables: Copy from `.env.example` (set `SECRET_KEY`, `CORS_ORIGINS`, `DATABASE_URL`).
+2. **Frontend (Vite / React SPA)** on Vercel / Netlify:
+   - Root Directory: `frontend`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Environment Variables: `VITE_API_URL=https://your-backend-service.onrender.com`
+
 ---
 
 ## Demo Mode
@@ -363,13 +382,14 @@ python -m pytest -v
 ### Test Suite Summary
 
 ```
-tests/test_auth_watchlist.py ..                                          [15%]
-tests/test_change_engine.py ......                                       [61%]
-tests/test_concurrency.py .                                              [69%]
-tests/test_resilience.py ..                                              [84%]
+tests/test_audit_comprehensive.py ......                                 [31%]
+tests/test_auth_watchlist.py ..                                          [42%]
+tests/test_change_engine.py ......                                       [73%]
+tests/test_concurrency.py .                                              [78%]
+tests/test_resilience.py ..                                              [89%]
 tests/test_snapshots.py ..                                               [100%]
 
-============================= 13 passed in 1.61s ==============================
+============================= 19 passed in 5.33s ==============================
 ```
 
 - **`test_change_engine.py`**: Validates noise suppression (<0.4%), volume multiplier escalation, 52W extreme triggers, and bounded score normalization ($0.0 \le S \le 1.0$).

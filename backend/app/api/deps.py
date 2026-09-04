@@ -20,16 +20,29 @@ async def get_current_user(
     If no header provided, seamlessly loads the seeded demo analyst user
     to provide a zero-friction evaluation experience.
     """
-    if authorization and authorization.startswith("Bearer "):
-        token = authorization.split(" ")[1]
+    if authorization is not None:
+        if not authorization.startswith("Bearer "):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid authorization scheme. Expected 'Bearer <token>'."
+            )
+        token = authorization.split(" ", 1)[1].strip()
         payload = decode_access_token(token)
-        if payload and "sub" in payload:
-            user_id = payload["sub"]
-            user = await db.get(User, user_id)
-            if user:
-                return user
+        if not payload or "sub" not in payload:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or expired authentication token."
+            )
+        user_id = payload["sub"]
+        user = await db.get(User, user_id)
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User associated with token not found."
+            )
+        return user
 
-    # Fallback to seeded demo user
+    # Fallback to seeded demo user when no authorization header is provided (for local evaluation ease)
     demo_email = "analyst@flux.market"
     res = await db.execute(select(User).where(User.email == demo_email))
     demo_user = res.scalars().first()
@@ -44,5 +57,5 @@ async def get_current_user(
 
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials or establish demo session."
+        detail="Authentication required."
     )

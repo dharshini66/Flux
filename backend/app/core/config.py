@@ -3,7 +3,8 @@ Configuration module for FLUX Backend.
 Provides environment-driven settings and centralized, configurable thresholds
 for the Meaningful Change Engine.
 """
-from typing import List
+from typing import List, Any
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -24,6 +25,9 @@ class Settings(BaseSettings):
     # Using async SQLite for zero-config out-of-the-box local execution, fully compatible with Postgres
     DATABASE_URL: str = "sqlite+aiosqlite:///./flux_market.db"
 
+    HOST: str = "0.0.0.0"
+    PORT: int = 8000
+
     # CORS
     CORS_ORIGINS: List[str] = [
         "http://localhost:5173",
@@ -32,6 +36,22 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
         "*"
     ]
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Any) -> List[str]:
+        if isinstance(v, str):
+            v_trimmed = v.strip()
+            if v_trimmed.startswith("[") and v_trimmed.endswith("]"):
+                import json
+                try:
+                    return json.loads(v_trimmed)
+                except Exception:
+                    pass
+            return [o.strip() for o in v.split(",") if o.strip()]
+        if isinstance(v, (list, tuple)):
+            return [str(o) for o in v]
+        return ["*"]
 
     # Meaningful Change Engine - Configurable Thresholds
     # All thresholds are documented and centralized here for transparent tuning

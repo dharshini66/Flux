@@ -4,7 +4,7 @@ import { SeverityBadge } from '../common/SeverityBadge';
 import { SignalStrengthMeter } from '../common/SignalStrengthMeter';
 import { Sparkline } from '../common/Sparkline';
 import { useMarket } from '../../context/MarketContext';
-import { ArrowUpRight, HelpCircle, Flame, TrendingUp, TrendingDown, Layers } from 'lucide-react';
+import { ArrowUpRight, HelpCircle } from 'lucide-react';
 
 interface TopChangeCardProps {
   change: ChangeEvent;
@@ -17,18 +17,18 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
   const priceDirection = isPositive ? '+' : '';
 
   return (
-    <div className="retro-card p-5 flex flex-col justify-between relative overflow-hidden group">
+    <div className="card-secondary p-4 lg:p-5 flex flex-col justify-between relative overflow-hidden group hover:border-ink-900 transition-all">
       {/* Top Bar: Symbol, Name & Severity */}
       <div>
         <div className="flex items-start justify-between gap-2 mb-2">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-base financial-mono text-ink-900 tracking-tight">
+              <span className="font-bold text-base financial-mono text-ink-900 tracking-tight">
                 {change.symbol}
               </span>
               <SeverityBadge severity={change.severity} />
             </div>
-            <span className="text-xs text-ink-600 block mt-0.5 truncate max-w-[180px]">
+            <span className="text-xs font-sans text-ink-600 block mt-0.5 truncate max-w-[180px]">
               {change.company_name}
             </span>
           </div>
@@ -40,7 +40,7 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
         </div>
 
         {/* Price Delta and Volume Metric */}
-        <div className="flex items-baseline justify-between py-2 border-y border-ivory-300 my-2">
+        <div className="flex items-baseline justify-between py-2.5 border-y border-ivory-300 my-2.5">
           <div>
             <span
               className={`text-2xl font-extrabold financial-mono tracking-tight ${
@@ -50,7 +50,7 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
               {priceDirection}
               {change.price_change_pct.toFixed(1)}%
             </span>
-            <span className="text-[11px] financial-mono text-ink-400 block">
+            <span className="text-[11px] financial-mono text-ink-500 block mt-0.5">
               ₹{change.current_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
             </span>
           </div>
@@ -59,17 +59,17 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
             <span className="text-xs financial-mono font-bold text-ink-900 block">
               {change.volume_ratio.toFixed(1)}× Vol
             </span>
-            <span className="text-[10px] financial-mono text-ink-400">
+            <span className="text-[10px] font-sans text-ink-400">
               vs historical base
             </span>
           </div>
         </div>
 
         {/* Reason Bullets */}
-        <div className="space-y-1 my-3">
+        <div className="space-y-1.5 my-3">
           {change.summary_bullets.slice(0, 2).map((bullet, idx) => (
-            <div key={idx} className="flex items-start gap-1.5 text-xs text-ink-700 leading-snug">
-              <span className="text-cobalt-500 font-bold select-none text-[11px] mt-0.5">▪</span>
+            <div key={idx} className="flex items-start gap-1.5 text-xs text-ink-700 leading-snug font-sans">
+              <span className="text-cobalt-600 font-bold select-none text-[11px] mt-0.5 font-mono">▪</span>
               <span>{bullet}</span>
             </div>
           ))}
@@ -80,13 +80,13 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
       <div className="pt-3 border-t border-ivory-300 flex items-center justify-between gap-2 mt-2">
         <SignalStrengthMeter level={change.signal_level} severity={change.severity} showText={false} />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {/* Why Does This Matter Button */}
           <button
             onClick={() => setSelectedExplainChange(change)}
-            className="inline-flex items-center gap-1 text-[11px] financial-mono font-bold text-cobalt-500 hover:text-cobalt-700 bg-cobalt-50 hover:bg-cobalt-100 border border-cobalt-100 px-2 py-1 rounded-sm transition-colors"
+            className="inline-flex items-center gap-1 text-[11px] font-sans font-medium text-cobalt-600 hover:text-cobalt-800 bg-cobalt-50 hover:bg-cobalt-100/80 border border-cobalt-200/80 px-2.5 py-1 rounded-sm transition-colors"
           >
-            <HelpCircle className="w-3 h-3" />
+            <HelpCircle className="w-3 h-3 text-cobalt-600" />
             <span>Why this matters?</span>
           </button>
 
@@ -94,7 +94,7 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
           <button
             onClick={() => setSelectedStockSymbol(change.symbol)}
             title={`View ${change.symbol} chart & session history`}
-            className="p-1 bg-ivory-200 hover:bg-ivory-300 border border-ink-900 rounded-sm text-ink-900 shadow-[1px_1px_0px_#121212] transition-all"
+            className="p-1 bg-ivory-100 hover:bg-white border border-ink-900 rounded-sm text-ink-900 shadow-[1px_1px_0px_#121212] transition-all"
           >
             <ArrowUpRight className="w-3.5 h-3.5" />
           </button>

@@ -1,37 +1,61 @@
-﻿import React, { useState } from 'react';
-import { Sparkles, Trophy, CheckCircle2, TrendingUp, TrendingDown, ArrowUpRight, Radio, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle2, TrendingUp, TrendingDown, Radio, X, Target, BarChart3, Globe } from 'lucide-react';
 import { useMarket } from '../../context/MarketContext';
 import { useMission } from '../../context/MissionContext';
 
 export const RightRail: React.FC = () => {
   const { marketStatus } = useMarket();
-  const { missionState, claimReward } = useMission();
-  const [showQuoteBanner, setShowQuoteBanner] = useState<boolean>(true);
+  const { missionState } = useMission();
+  const [showInsightBanner, setShowInsightBanner] = useState<boolean>(true);
+  const [timeStr, setTimeStr] = useState<string>('');
+  const [dateStr, setDateStr] = useState<string>('');
 
-  // Market indices mock data reflecting the live screenshot
+  useEffect(() => {
+    const updateClock = () => {
+      const d = new Date();
+      setTimeStr(
+        d.toLocaleTimeString('en-US', {
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        })
+      );
+      setDateStr(
+        d.toLocaleDateString('en-US', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+        })
+      );
+    };
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Market indices reflecting official session data
   const marketIndices = [
-    { name: 'NIFTY 50', value: '24,742.30', change: '+1.2%', positive: true, points: [20, 24, 22, 28, 32, 35, 40] },
-    { name: 'SENSEX', value: '81,432.10', change: '+1.1%', positive: true, points: [18, 20, 25, 24, 30, 36, 38] },
-    { name: 'NIFTY BANK', value: '51,230.45', change: '-0.3%', positive: false, points: [35, 34, 30, 28, 26, 24, 22] },
-    { name: 'USD/INR', value: '83.21', change: '+0.1%', positive: true, points: [10, 11, 11, 12, 12, 13, 13] },
+    { name: 'NIFTY 50', value: '24,742.30', change: '+1.2%', positive: true },
+    { name: 'SENSEX', value: '81,432.10', change: '+1.1%', positive: true },
+    { name: 'NIFTY BANK', value: '51,230.45', change: '-0.3%', positive: false },
+    { name: 'USD/INR', value: '83.21', change: '+0.1%', positive: true },
   ];
 
   return (
     <aside className="w-full lg:w-80 shrink-0 space-y-4">
-      
-      {/* 1. Market Mission Card */}
-      <div className="bg-ivory-100 border border-editorial-dark rounded-md p-4 shadow-retro">
-        
+      {/* 1. Market Mission / Analyst Progress Card */}
+      <div className="card-secondary p-4 shadow-subtle">
         {/* Card Header */}
         <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-base">🎮</span>
-            <h3 className="text-xs font-extrabold financial-mono text-ink-900 uppercase tracking-wider">
+            <span className="text-base select-none">🎯</span>
+            <h3 className="text-xs font-bold financial-mono text-ink-900 uppercase tracking-wider">
               MARKET MISSION
             </h3>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] financial-mono font-extrabold px-1.5 py-0.5 bg-softpurple-500 text-white rounded-sm">
+            <span className="text-[10px] financial-mono font-bold px-1.5 py-0.5 bg-softpurple-500 text-white rounded-sm">
               Lv 3
             </span>
             <span className="text-[11px] financial-mono font-bold text-ink-600">
@@ -41,77 +65,92 @@ export const RightRail: React.FC = () => {
         </div>
 
         {/* Tasks Checklist */}
-        <div className="space-y-2 text-xs financial-mono">
-          <div className="flex items-center justify-between p-1.5 bg-ivory-50 border border-ivory-300 rounded-sm">
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center justify-between p-2 bg-ivory-50 border border-ivory-300 rounded-sm">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-cobalt-600" />
-              <span className="text-ink-800 text-[11px] font-medium">Review your biggest mover</span>
+              <CheckCircle2 className="w-4 h-4 text-cobalt-600 shrink-0" />
+              <span className="text-ink-800 text-[11.5px] font-medium font-sans">
+                Review highest price velocity mover
+              </span>
             </div>
-            <span className="text-[10px] font-bold text-retropink-500">+10 XP</span>
+            <span className="text-[10px] font-bold financial-mono text-retropink-500 shrink-0">
+              +10 XP
+            </span>
           </div>
 
-          <div className="flex items-center justify-between p-1.5 bg-ivory-50 border border-ivory-300 rounded-sm">
+          <div className="flex items-center justify-between p-2 bg-ivory-50 border border-ivory-300 rounded-sm">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-cobalt-600" />
-              <span className="text-ink-800 text-[11px] font-medium">Investigate unusual volume</span>
+              <CheckCircle2 className="w-4 h-4 text-cobalt-600 shrink-0" />
+              <span className="text-ink-800 text-[11.5px] font-medium font-sans">
+                Investigate unusual volume surge
+              </span>
             </div>
-            <span className="text-[10px] font-bold text-retropink-500">+15 XP</span>
+            <span className="text-[10px] font-bold financial-mono text-retropink-500 shrink-0">
+              +15 XP
+            </span>
           </div>
 
-          <div className="flex items-center justify-between p-1.5 bg-ivory-50 border border-ivory-300 rounded-sm">
+          <div className="flex items-center justify-between p-2 bg-ivory-50 border border-ivory-300 rounded-sm">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-cobalt-600" />
-              <span className="text-ink-800 text-[11px] font-medium">Check a new 52W high</span>
+              <CheckCircle2 className="w-4 h-4 text-cobalt-600 shrink-0" />
+              <span className="text-ink-800 text-[11.5px] font-medium font-sans">
+                Confirm 52-week boundary breakout
+              </span>
             </div>
-            <span className="text-[10px] font-bold text-retropink-500">+20 XP</span>
+            <span className="text-[10px] font-bold financial-mono text-retropink-500 shrink-0">
+              +20 XP
+            </span>
           </div>
         </div>
 
         {/* XP Progress Bar */}
         <div className="mt-3 pt-3 border-t border-ivory-300">
-          <div className="flex justify-between text-[10px] financial-mono text-ink-600 font-bold mb-1">
+          <div className="flex justify-between text-[10px] financial-mono text-ink-600 font-bold mb-1.5">
             <span>320 / 500 XP</span>
             <span className="text-softpurple-600">64%</span>
           </div>
           <div className="w-full bg-ivory-300 h-2 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-softpurple-500 to-retropink-500 rounded-full"
+              className="h-full bg-gradient-to-r from-softpurple-500 to-retropink-500 rounded-full transition-all duration-500"
               style={{ width: '64%' }}
             ></div>
           </div>
         </div>
 
-        {/* Pixel Cat Mascot & Speech Bubble */}
+        {/* Analytical Guidance Note */}
         <div className="mt-3.5 pt-3 border-t border-ivory-200 flex items-center gap-3">
-          <div className="w-9 h-9 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-xl shrink-0 shadow-[1px_1px_0px_#121212]">
+          <div className="w-8 h-8 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-lg shrink-0 shadow-[1px_1px_0px_#121212] select-none">
             🐱
           </div>
-          <div className="relative bg-softpurple-50 border border-softpurple-200 rounded-sm px-2.5 py-1.5 text-[10px] text-softpurple-900 financial-mono flex-1 leading-snug shadow-subtle">
-            <span className="block font-medium">"Small steps. Brighter decisions."</span>
+          <div className="relative bg-softpurple-50 border border-softpurple-200/80 rounded-sm px-2.5 py-1.5 text-[10.5px] text-softpurple-950 font-sans flex-1 leading-snug shadow-subtle">
+            <span className="block font-medium">
+              "Focus on volume-confirmed catalysts over routine market chop."
+            </span>
           </div>
         </div>
-
       </div>
 
       {/* 2. Market Snapshot Card */}
-      <div className="bg-ivory-100 border border-editorial-dark rounded-md p-4 shadow-retro">
-        
-        <div className="flex items-center gap-2 pb-2.5 border-b border-ivory-300 mb-2">
-          <span className="text-sm">📊</span>
-          <h3 className="text-xs font-extrabold financial-mono text-ink-900 uppercase tracking-wider">
-            MARKET SNAPSHOT
-          </h3>
+      <div className="card-secondary p-4 shadow-subtle">
+        <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 mb-2">
+          <div className="flex items-center gap-2">
+            <span className="text-sm select-none">📊</span>
+            <h3 className="text-xs font-bold financial-mono text-ink-900 uppercase tracking-wider">
+              MARKET SNAPSHOT
+            </h3>
+          </div>
+          <span className="text-[10px] financial-mono text-ink-500 font-medium">INDEX REVENUE</span>
         </div>
 
         <div className="divide-y divide-ivory-200">
           {marketIndices.map((idx) => (
-            <div key={idx.name} className="py-2 flex items-center justify-between text-xs financial-mono">
-              <span className="font-bold text-ink-800 text-[11px]">{idx.name}</span>
-              <div className="flex items-center gap-2.5">
+            <div key={idx.name} className="py-2 flex items-center justify-between text-xs">
+              <span className="font-semibold text-ink-800 text-[11px] font-sans">{idx.name}</span>
+              <div className="flex items-center gap-2.5 financial-mono">
                 <span className="text-ink-900 font-bold">{idx.value}</span>
                 <span
                   className={`text-[10px] font-bold px-1 py-0.5 rounded-xs ${
-                    idx.positive ? 'text-signal-green' : 'text-signal-red'
+                    idx.positive ? 'text-signal-green bg-signal-green/10' : 'text-signal-red bg-signal-red/10'
                   }`}
                 >
                   {idx.change}
@@ -135,64 +174,70 @@ export const RightRail: React.FC = () => {
           ))}
         </div>
 
-        {/* Small Quote Pill */}
-        {showQuoteBanner && (
-          <div className="mt-3 p-2 bg-softpurple-50 border border-softpurple-200 rounded-sm flex items-center justify-between text-[10px] financial-mono text-softpurple-900">
+        {/* Analytical Breadth Note */}
+        {showInsightBanner && (
+          <div className="mt-3 p-2 bg-ivory-200/80 border border-ivory-300 rounded-sm flex items-center justify-between text-[10.5px] text-ink-700 font-sans">
             <div className="flex items-center gap-1.5">
-              <span>🍸</span>
-              <span>Information is a superpower.</span>
+              <span className="text-cobalt-600 font-bold font-mono">▪</span>
+              <span>Market breadth: Advancers lead 3:1 across benchmark constituents.</span>
             </div>
             <button
-              onClick={() => setShowQuoteBanner(false)}
-              className="text-softpurple-400 hover:text-softpurple-700"
+              onClick={() => setShowInsightBanner(false)}
+              className="text-ink-400 hover:text-ink-700 p-0.5"
+              title="Dismiss"
             >
               <X className="w-3 h-3" />
             </button>
           </div>
         )}
-
       </div>
 
       {/* 3. Market Status Card */}
-      <div className="bg-ivory-100 border border-editorial-dark rounded-md p-4 shadow-retro">
-        
-        <div className="flex items-center gap-2 pb-2.5 border-b border-ivory-300 mb-2.5">
-          <span className="text-sm">🌐</span>
-          <h3 className="text-xs font-extrabold financial-mono text-ink-900 uppercase tracking-wider">
-            MARKET STATUS
-          </h3>
+      <div className="card-secondary p-4 shadow-subtle">
+        <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 mb-2.5">
+          <div className="flex items-center gap-2">
+            <span className="text-sm select-none">🌐</span>
+            <h3 className="text-xs font-bold financial-mono text-ink-900 uppercase tracking-wider">
+              MARKET STATUS
+            </h3>
+          </div>
+          <span className="text-[9px] financial-mono bg-ivory-300 text-ink-700 px-1.5 py-0.5 rounded uppercase font-bold">
+            NSE EQUITIES
+          </span>
         </div>
 
         <div className="flex items-center justify-between pb-3 border-b border-ivory-300">
           <div>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-signal-green animate-pulse"></span>
-              <span className="text-xs font-bold text-ink-900 financial-mono">Market Open</span>
+              <span className="text-xs font-bold text-ink-900 font-sans">Market Open</span>
             </div>
-            <span className="text-[10px] financial-mono text-ink-500 block mt-0.5">
-              NSE | 04 Sep 2026 09:24:18 IST
+            <span className="text-[10px] financial-mono text-ink-600 block mt-0.5">
+              NSE | {dateStr || '04 Sep 2026'} {timeStr || '09:45:00'} IST
             </span>
           </div>
           {/* Pixel Monument / Exchange Icon */}
-          <div className="w-8 h-8 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-base shadow-[1px_1px_0px_#121212]">
+          <div className="w-8 h-8 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-base shadow-[1px_1px_0px_#121212] select-none">
             🏛️
           </div>
         </div>
 
         {/* Philosophy Quote */}
         <div className="mt-3 flex items-center justify-between gap-2">
-          <div className="text-[10.5px] font-editorial italic text-ink-700 leading-tight">
+          <div className="text-[11px] font-editorial italic text-ink-800 leading-tight">
             "Not just what moved.<br />
-            <span className="font-bold text-ink-900 not-italic font-mono text-[10px]">But why it matters."</span>
-            <span className="block text-[9px] financial-mono not-italic text-cobalt-600 mt-0.5">— FLUX</span>
+            <span className="font-semibold text-ink-900 not-italic font-sans text-[10.5px]">
+              Understand why it matters."
+            </span>
+            <span className="block text-[9px] financial-mono not-italic text-cobalt-600 mt-0.5 font-bold uppercase tracking-wider">
+              — FLUX INTELLIGENCE
+            </span>
           </div>
-          <div className="w-7 h-7 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-sm shadow-[1px_1px_0px_#121212]">
+          <div className="w-7 h-7 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-sm shadow-[1px_1px_0px_#121212] select-none">
             🌱
           </div>
         </div>
-
       </div>
-
     </aside>
   );
 };

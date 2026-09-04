@@ -60,22 +60,22 @@ const MainDashboard: React.FC = () => {
                   {/* Top Changes Since Last Visit */}
                   {!isFirstVisit && topChanges.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between mb-3.5">
                         <div>
-                          <span className="text-[10px] financial-mono font-bold text-cobalt-500 uppercase tracking-widest block">
+                          <span className="text-[10px] financial-mono font-bold text-cobalt-600 uppercase tracking-widest block mb-0.5">
                             SIGNIFICANT MOVES
                           </span>
-                          <h2 className="editorial-headline text-2xl font-bold text-ink-900">
+                          <h2 className="editorial-headline text-2xl font-bold text-ink-900 tracking-tight">
                             Top Changes Since Your Last Visit
                           </h2>
                         </div>
 
                         <button
                           onClick={() => setActiveTab('changes')}
-                          className="inline-flex items-center gap-1 text-xs financial-mono font-bold text-cobalt-500 hover:text-cobalt-700 uppercase"
+                          className="inline-flex items-center gap-1.5 text-xs font-sans font-semibold text-cobalt-600 hover:text-cobalt-800 uppercase tracking-wider group transition-colors"
                         >
                           <span>View All Signals</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                         </button>
                       </div>
 
@@ -92,13 +92,13 @@ const MainDashboard: React.FC = () => {
                   )}
 
                   {/* Watchlist Section */}
-                  <div className="pt-4 border-t border-ivory-300">
-                    <div className="flex items-center justify-between mb-3">
+                  <div className="pt-6 border-t border-ivory-300 space-y-3.5">
+                    <div className="flex items-center justify-between">
                       <div>
-                        <span className="text-[10px] financial-mono font-bold text-cobalt-500 uppercase tracking-widest block">
+                        <span className="text-[10px] financial-mono font-bold text-cobalt-600 uppercase tracking-widest block mb-0.5">
                           MONITORED EQUITIES
                         </span>
-                        <h2 className="editorial-headline text-2xl font-bold text-ink-900">
+                        <h2 className="editorial-headline text-2xl font-bold text-ink-900 tracking-tight">
                           Your Watchlist
                         </h2>
                       </div>

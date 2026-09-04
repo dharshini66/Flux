@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
                 setSearchOpen(true);
               }}
               onFocus={() => setSearchOpen(true)}
-              className="w-full pl-9 pr-4 py-1.5 bg-ivory-200 border border-ivory-300 focus:border-cobalt-500 focus:bg-white text-xs text-ink-900 rounded-sm outline-none transition-all placeholder:text-ink-400 financial-mono"
+              className="w-full pl-9 pr-4 py-1.5 bg-ivory-200 border border-ivory-300 focus:border-cobalt-500 focus:bg-white text-xs text-ink-900 rounded-sm outline-none transition-all placeholder:text-ink-400 font-sans"
             />
           </div>
 
@@ -119,7 +119,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
                 >
                   <div>
                     <span className="font-bold financial-mono text-ink-900 mr-2">{s.symbol}</span>
-                    <span className="text-ink-600">{s.name}</span>
+                    <span className="text-ink-700 font-sans">{s.name}</span>
                   </div>
                   <span className="text-[10px] financial-mono text-ink-400 uppercase">{s.sector}</span>
                 </button>
@@ -135,7 +135,6 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
 
         {/* Right Section: Telemetry, Snapshot Trigger, Notification & Profile */}
         <div className="flex items-center gap-3">
-          
           {/* Baseline Captured Notification Pill */}
           {justCheckedIn && (
             <div className="animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-1.5 px-2.5 py-1 bg-signal-green text-white text-[10px] financial-mono font-bold uppercase rounded-sm shadow-[1.5px_1.5px_0px_#121212]">
@@ -145,11 +144,11 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
           )}
 
           {/* Market Status Badge */}
-          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-ivory-200 border border-ivory-300 rounded-sm text-xs financial-mono">
-            <Radio className="w-3.5 h-3.5 text-signal-green animate-pulse" />
-            <span className="font-bold text-[11px] text-ink-700">NSE // LIVE</span>
+          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-ivory-200 border border-ivory-300 rounded-sm text-xs">
+            <Radio className="w-3.5 h-3.5 text-signal-green animate-pulse shrink-0" />
+            <span className="font-bold text-[11px] financial-mono text-ink-800">NSE // LIVE</span>
             <span className="text-ink-400">|</span>
-            <span className="text-ink-600 text-[11px]">{timeStr || '09:45:00'} IST</span>
+            <span className="text-ink-600 text-[11px] financial-mono">{timeStr || '09:45:00'} IST</span>
           </div>
 
           {/* Snapshot Check-In Trigger with Subtitle & Tooltip */}
@@ -157,8 +156,8 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
             <button
               onClick={handleManualCheckIn}
               disabled={isCheckingIn}
-              title="Freeze baseline snapshot and discover new deltas since this visit"
-              className={`flex items-center gap-2 px-3 py-1.5 text-xs financial-mono font-bold uppercase rounded-sm border border-ink-900 transition-all ${
+              title="Capture baseline snapshot and discover new deltas since this visit"
+              className={`flex items-center gap-2.5 px-3.5 py-1.5 text-xs rounded-sm border border-ink-900 transition-all ${
                 justCheckedIn
                   ? 'bg-signal-green text-white shadow-[1.5px_1.5px_0px_#121212]'
                   : 'bg-cobalt-500 hover:bg-cobalt-600 text-white shadow-[2px_2px_0px_#121212] active:translate-x-0.5 active:translate-y-0.5'
@@ -166,15 +165,26 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
             >
               {justCheckedIn ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>CHECKED IN</span>
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  <div className="text-left flex flex-col">
+                    <span className="financial-mono font-bold leading-none tracking-wide text-[11px] uppercase">
+                      BASELINE CAPTURED
+                    </span>
+                    <span className="text-[9px] font-sans font-normal text-white/90 leading-none mt-0.5">
+                      new delta point set
+                    </span>
+                  </div>
                 </>
               ) : (
                 <>
-                  <Camera className={`w-3.5 h-3.5 ${isCheckingIn ? 'animate-spin' : ''}`} />
+                  <Camera className={`w-4 h-4 shrink-0 ${isCheckingIn ? 'animate-spin' : ''}`} />
                   <div className="text-left flex flex-col">
-                    <span className="leading-none">CHECK IN</span>
-                    <span className="text-[8.5px] lowercase font-normal opacity-85 leading-none mt-0.5 hidden sm:inline">see what's changed</span>
+                    <span className="financial-mono font-bold leading-none tracking-wide text-[11px] uppercase">
+                      CHECK IN
+                    </span>
+                    <span className="text-[9px] font-sans font-normal text-white/90 leading-none mt-0.5 hidden sm:inline">
+                      see what's changed
+                    </span>
                   </div>
                 </>
               )}
@@ -197,12 +207,12 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
           </button>
 
           {/* User Profile Pill */}
-          <div className="flex items-center gap-2 pl-2 border-l border-ivory-300">
+          <div className="flex items-center gap-2.5 pl-2 border-l border-ivory-300">
             <div className="w-7 h-7 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center font-bold text-xs financial-mono text-ink-900 shadow-[1px_1px_0px_#121212]">
               {user?.username?.substring(0, 2).toUpperCase() || 'KS'}
             </div>
             <div className="hidden lg:block text-left leading-tight">
-              <span className="block text-xs font-bold text-ink-900">
+              <span className="block text-xs font-bold text-ink-900 font-sans">
                 {user?.full_name || 'Kavita Sharma'}
               </span>
               <span className="text-[10px] financial-mono text-cobalt-600 font-semibold">

@@ -68,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
     <aside className="w-64 shrink-0 bg-ivory-100 border-r border-ivory-300 min-h-[calc(100vh-57px)] flex flex-col justify-between p-4 hidden md:flex">
       <div>
         {/* Navigation Items */}
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <div className="text-[10px] financial-mono font-bold text-ink-400 uppercase tracking-wider px-3 mb-2">
             INTELLIGENCE SYSTEM
           </div>
@@ -79,24 +79,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-sm text-left transition-all ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-sm text-left transition-all ${
                   isActive
-                    ? 'bg-ivory-200 border-editorial-dark shadow-retro text-ink-900 font-bold'
-                    : 'text-ink-600 hover:bg-ivory-50 hover:text-ink-900 border border-transparent'
+                    ? 'bg-ivory-50 border-[1.5px] border-ink-900 shadow-[2px_2px_0px_#121212] text-ink-900'
+                    : 'text-ink-600 hover:bg-ivory-200/70 hover:text-ink-900 border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-cobalt-500' : 'text-ink-400'}`} />
+                  <Icon
+                    className={`w-4 h-4 shrink-0 transition-colors ${
+                      isActive ? 'text-cobalt-600 stroke-[2.2]' : 'text-ink-400'
+                    }`}
+                  />
                   <div>
-                    <span className="block text-xs font-semibold leading-none">{item.label}</span>
-                    <span className="text-[10px] financial-mono text-ink-400 block mt-0.5">
+                    <span className={`block text-xs font-sans leading-none ${isActive ? 'font-bold text-ink-900' : 'font-semibold text-ink-700'}`}>
+                      {item.label}
+                    </span>
+                    <span className="text-[10px] font-sans text-ink-500 block mt-1">
                       {item.sublabel}
                     </span>
                   </div>
                 </div>
                 {item.badge && (
                   <span
-                    className={`text-[9px] financial-mono font-bold px-1.5 py-0.5 rounded-sm ${
+                    className={`text-[9px] financial-mono font-bold px-1.5 py-0.5 rounded-xs shrink-0 ${
                       item.badgeColor || 'bg-ivory-300 text-ink-900'
                     }`}
                   >

@@ -1,36 +1,35 @@
 import React from 'react';
 import { useMarket } from '../../context/MarketContext';
-import { Sliders, RefreshCw, AlertTriangle, Zap, CheckCircle2, RotateCcw } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 
 export const DemoScenarioBar: React.FC = () => {
   const { activeScenario, switchScenario, performCheckIn, isCheckingIn } = useMarket();
 
   const scenarios = [
-    { id: 'default', label: 'Default: 4 Mixed Signals (INFY, TCS, HDFC, REL)' },
-    { id: 'large_surge', label: 'Surge: Critical INFY (+7.3% / 4.2x Vol)' },
-    { id: 'market_crash', label: 'Pullback: Banking Drop (-6.4%)' },
-    { id: 'stale_data', label: 'Resilience: Stale Data (14m Delay)' },
-    { id: 'provider_failure', label: 'Resilience: HDFC Gateway Failure' },
-    { id: 'no_signal_quiet', label: 'Empty State: No Meaningful Signal' },
+    { id: 'default', label: 'DEFAULT' },
+    { id: 'large_surge', label: 'LARGE_SURGE' },
+    { id: 'market_crash', label: 'MARKET_CRASH' },
+    { id: 'stale_data', label: 'STALE_DATA' },
+    { id: 'provider_failure', label: 'PROVIDER_FAILURE' },
+    { id: 'no_signal_quiet', label: 'NO_SIGNAL_QUIET' },
   ];
 
   return (
-    <div className="bg-[#12141A] text-white border-t-2 border-cobalt-500 py-2.5 px-4 sticky bottom-0 z-40 shadow-2xl scanline-bg">
+    <div className="bg-[#141822] text-white border-t border-[#252C3D] py-2 px-4 sticky bottom-0 z-40 shadow-xl select-none">
       <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs financial-mono">
-        
         {/* Left: Console Status Indicator */}
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-retropink-500 animate-pulse shadow-[0_0_8px_#E85AA5]"></div>
-          <span className="font-extrabold text-retropink-500 uppercase tracking-wider text-[11px]">
+          <div className="w-2 h-2 rounded-full bg-retropink-500 animate-pulse"></div>
+          <span className="font-bold text-retropink-400 uppercase tracking-wider text-[10.5px]">
             DEV MODE · EVALUATOR CONTROLS
           </span>
-          <span className="text-ink-400 hidden sm:inline">|</span>
-          <span className="text-ink-400 text-[10.5px] hidden md:inline">
+          <span className="text-gray-500 hidden sm:inline">|</span>
+          <span className="text-gray-400 text-[10px] hidden md:inline">
             (Demo Scenarios & Edge Cases):
           </span>
         </div>
 
-        {/* Center: Scenario Switcher Console Buttons */}
+        {/* Center: Scenario Switcher Buttons */}
         <div className="flex flex-wrap items-center gap-1.5">
           {scenarios.map((sc) => {
             const isActive = activeScenario === sc.id;
@@ -38,13 +37,13 @@ export const DemoScenarioBar: React.FC = () => {
               <button
                 key={sc.id}
                 onClick={() => switchScenario(sc.id)}
-                className={`px-2.5 py-1 rounded-xs text-[11px] font-bold uppercase transition-all border ${
+                className={`px-2.5 py-1 rounded-xs text-[10.5px] font-bold uppercase transition-all border ${
                   isActive
-                    ? 'bg-cobalt-500 text-white border-cobalt-400 shadow-[1.5px_1.5px_0px_#E85AA5]'
-                    : 'bg-[#1C202B] hover:bg-[#252B3A] text-ink-300 border-[#2E3547]'
+                    ? 'bg-cobalt-600 text-white border-cobalt-400 shadow-[1px_1px_0px_#000]'
+                    : 'bg-[#1C212E] hover:bg-[#262D3D] text-gray-300 border-[#2C3447]'
                 }`}
               >
-                {sc.id}
+                {sc.label}
               </button>
             );
           })}
@@ -56,13 +55,12 @@ export const DemoScenarioBar: React.FC = () => {
             onClick={() => performCheckIn(true)}
             disabled={isCheckingIn}
             title="Reset to fresh baseline snapshot to verify First-Visit empty state"
-            className="flex items-center gap-1.5 px-3 py-1 bg-[#1C202B] hover:bg-[#252B3A] text-ivory-200 border border-[#3A4259] hover:border-retropink-500/60 rounded-xs text-[11px] font-bold uppercase transition-all shadow-subtle"
+            className="flex items-center gap-1.5 px-2.5 py-1 bg-[#1C212E] hover:bg-[#262D3D] text-gray-200 border border-[#333C52] hover:border-retropink-500/60 rounded-xs text-[10.5px] font-bold uppercase transition-all shadow-subtle"
           >
-            <RotateCcw className={`w-3 h-3 text-retropink-500 ${isCheckingIn ? 'animate-spin' : ''}`} />
-            <span>↺ Reset Baseline</span>
+            <RotateCcw className={`w-3 h-3 text-retropink-400 ${isCheckingIn ? 'animate-spin' : ''}`} />
+            <span>RESET BASELINE</span>
           </button>
         </div>
-
       </div>
     </div>
   );

@@ -34,8 +34,8 @@ export const Sparkline: React.FC<SparklineProps> = ({
     })
     .join(' ');
 
-  const strokeColor = isPositive ? '#176B52' : '#D94336';
-  const fillColor = isPositive ? 'rgba(23, 107, 82, 0.08)' : 'rgba(217, 67, 54, 0.08)';
+  const strokeColor = isPositive ? 'rgb(var(--color-signal-green))' : 'rgb(var(--color-signal-red))';
+  const fillColor = isPositive ? 'rgb(var(--color-signal-green) / 0.12)' : 'rgb(var(--color-signal-red) / 0.12)';
 
   // Closed area path
   const firstX = padding;

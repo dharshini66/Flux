@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Radio, Camera, User, Bell, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { Search, Radio, Camera, User, Bell, ChevronDown, CheckCircle2, Sun, Moon } from 'lucide-react';
 import { useMarket } from '../../context/MarketContext';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 
 interface HeaderProps {
   onSearchSelect?: (symbol: string) => void;
@@ -10,6 +11,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
   const { marketStatus, activeScenario, performCheckIn, isCheckingIn, setSelectedStockSymbol } = useMarket();
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [timeStr, setTimeStr] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
@@ -204,6 +206,20 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
             <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-retropink-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-ivory-100 financial-mono">
               1
             </span>
+          </button>
+
+          {/* Theme Toggle (Light Ivory / Dark Terminal) */}
+          <button
+            onClick={toggleTheme}
+            title={theme === 'dark' ? 'Switch to Light Editorial Mode' : 'Switch to Dark Terminal Mode'}
+            className="relative p-2 bg-ivory-200 hover:bg-ivory-300 border border-ivory-300 rounded-sm text-ink-700 hover:text-ink-900 transition-colors"
+            aria-label="Toggle dark mode"
+          >
+            {theme === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-ink-700" />
+            )}
           </button>
 
           {/* User Profile Pill */}

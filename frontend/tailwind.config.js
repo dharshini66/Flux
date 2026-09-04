@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,25 +9,27 @@ export default {
     extend: {
       colors: {
         ivory: {
-          50: '#FCFAF6',
-          100: '#FAF8F3', // Card background
-          200: '#F3EFE5', // Main background
-          300: '#E5DFD1', // Subtle border
-          400: '#D6CEBC',
+          50: 'rgb(var(--color-ivory-50) / <alpha-value>)',
+          100: 'rgb(var(--color-ivory-100) / <alpha-value>)',
+          200: 'rgb(var(--color-ivory-200) / <alpha-value>)',
+          300: 'rgb(var(--color-ivory-300) / <alpha-value>)',
+          400: 'rgb(var(--color-ivory-400) / <alpha-value>)',
         },
         ink: {
-          900: '#121212', // Primary text
-          700: '#2A2A2A',
-          600: '#4A4A4A', // Secondary text
-          400: '#7A7A7A', // Muted captions
-          200: '#B0B0B0',
+          900: 'rgb(var(--color-ink-900) / <alpha-value>)',
+          700: 'rgb(var(--color-ink-700) / <alpha-value>)',
+          600: 'rgb(var(--color-ink-600) / <alpha-value>)',
+          500: 'rgb(var(--color-ink-500) / <alpha-value>)',
+          400: 'rgb(var(--color-ink-400) / <alpha-value>)',
+          300: 'rgb(var(--color-ink-300) / <alpha-value>)',
+          200: 'rgb(var(--color-ink-200) / <alpha-value>)',
         },
         cobalt: {
-          50: '#EEF2FF',
-          100: '#E0E7FF',
-          500: '#1746D1', // Primary brand accent
-          600: '#1239B0',
-          700: '#0E2D8F',
+          50: 'rgb(var(--color-cobalt-50) / <alpha-value>)',
+          100: 'rgb(var(--color-cobalt-100) / <alpha-value>)',
+          500: 'rgb(var(--color-cobalt-500) / <alpha-value>)',
+          600: 'rgb(var(--color-cobalt-600) / <alpha-value>)',
+          700: 'rgb(var(--color-cobalt-700) / <alpha-value>)',
         },
         retropink: {
           400: '#F075B8',
@@ -39,9 +42,9 @@ export default {
           600: '#5F48C4',
         },
         signal: {
-          green: '#176B52', // Positive market signal
-          red: '#D94336',   // Negative market signal
-          ochre: '#C58A1C', // Attention / unusual volume
+          green: 'rgb(var(--color-signal-green) / <alpha-value>)',
+          red: 'rgb(var(--color-signal-red) / <alpha-value>)',
+          ochre: 'rgb(var(--color-signal-ochre) / <alpha-value>)',
         }
       },
       fontFamily: {
@@ -51,10 +54,10 @@ export default {
         pixel: ['"Press Start 2P"', 'monospace'],
       },
       boxShadow: {
-        'retro-sm': '2px 2px 0px 0px #121212',
-        'retro': '3px 3px 0px 0px #121212',
-        'retro-lg': '4px 4px 0px 0px #121212',
-        'subtle': '0 1px 3px 0 rgba(18, 18, 18, 0.05)',
+        'retro-sm': '2px 2px 0px 0px var(--shadow-retro-color)',
+        'retro': '3px 3px 0px 0px var(--shadow-retro-color)',
+        'retro-lg': '4px 4px 0px 0px var(--shadow-retro-color)',
+        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
       },
       borderRadius: {
         'editorial': '4px',

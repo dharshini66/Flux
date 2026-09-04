@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { MarketProvider, useMarket } from './context/MarketContext';
 import { WatchlistProvider } from './context/WatchlistContext';
@@ -168,15 +169,17 @@ const MainDashboard: React.FC = () => {
 
 export function App() {
   return (
-    <AuthProvider>
-      <MarketProvider>
-        <WatchlistProvider>
-          <MissionProvider>
-            <MainDashboard />
-          </MissionProvider>
-        </WatchlistProvider>
-      </MarketProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <MarketProvider>
+          <WatchlistProvider>
+            <MissionProvider>
+              <MainDashboard />
+            </MissionProvider>
+          </WatchlistProvider>
+        </MarketProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

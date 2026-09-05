@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root, [data-theme="light"] {
+:root, [data-theme="light"], html.light, html:not(.dark) {
   /* Centralized Semantic Theme Tokens (Light Mode - Editorial Paper) */
   --bg-page: #F3EFE5;
   --bg-surface: #FAF8F3;
@@ -50,7 +50,7 @@
   --border-editorial-dark-color: #121212;
 }
 
-.dark, [data-theme="dark"] {
+html.dark, html[data-theme="dark"], .dark {
   /* Centralized Semantic Theme Tokens (Dark Mode - After Hours Terminal) */
   --bg-page: #0F1117;
   --bg-surface: #151922;
@@ -146,40 +146,84 @@
 
 /* Primary Card (Anchor elements: Hero, Active timeline item) */
 .card-primary {
-  background-color: rgb(var(--color-ivory-100));
-  border: 1.5px solid var(--border-editorial-dark-color);
+  background-color: #FAF8F3;
+  border: 1.5px solid #121212;
   border-radius: 6px;
-  box-shadow: 2px 2px 0px 0px var(--shadow-retro-color);
+  box-shadow: 2px 2px 0px 0px #121212;
 }
 
 /* Secondary Card (Rail panels, tables, metrics) */
 .card-secondary {
-  background-color: rgb(var(--color-ivory-100));
-  border: 1px solid var(--border-editorial-color);
+  background-color: #FAF8F3;
+  border: 1px solid #E5DFD1;
   border-radius: 6px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .card-secondary:hover {
-  border-color: var(--border-editorial-dark-color);
+  border-color: #121212;
 }
 
 .retro-card {
-  background-color: rgb(var(--color-ivory-100));
-  border: 1px solid var(--border-editorial-color);
+  background-color: #FAF8F3;
+  border: 1px solid #E5DFD1;
   border-radius: 6px;
   transition: all 0.15s ease-in-out;
 }
 
 .retro-card:hover {
-  border-color: var(--border-editorial-dark-color);
-  box-shadow: 2px 2px 0px 0px var(--shadow-retro-color);
+  border-color: #121212;
+  box-shadow: 2px 2px 0px 0px #121212;
 }
 
 .retro-card-active {
-  background-color: rgb(var(--color-ivory-100));
-  border: 1.5px solid rgb(var(--color-cobalt-500));
-  box-shadow: 3px 3px 0px 0px rgb(var(--color-cobalt-500));
+  background-color: #FAF8F3;
+  border: 1.5px solid #1746D1;
+  box-shadow: 3px 3px 0px 0px #1746D1;
+}
+
+/* Card Dark Overrides */
+html.dark .card-primary,
+html[data-theme="dark"] .card-primary,
+.dark .card-primary {
+  background-color: #151922 !important;
+  border-color: #303746 !important;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.75) !important;
+}
+
+html.dark .card-secondary,
+html[data-theme="dark"] .card-secondary,
+.dark .card-secondary {
+  background-color: #151922 !important;
+  border-color: #232A38 !important;
+}
+
+html.dark .card-secondary:hover,
+html[data-theme="dark"] .card-secondary:hover,
+.dark .card-secondary:hover {
+  border-color: #303746 !important;
+}
+
+html.dark .retro-card,
+html[data-theme="dark"] .retro-card,
+.dark .retro-card {
+  background-color: #151922 !important;
+  border-color: #232A38 !important;
+}
+
+html.dark .retro-card:hover,
+html[data-theme="dark"] .retro-card:hover,
+.dark .retro-card:hover {
+  border-color: #303746 !important;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.75) !important;
+}
+
+html.dark .retro-card-active,
+html[data-theme="dark"] .retro-card-active,
+.dark .retro-card-active {
+  background-color: #151922 !important;
+  border-color: #4C72FF !important;
+  box-shadow: 3px 3px 0px 0px #4C72FF !important;
 }
 
 .retro-badge {
@@ -204,20 +248,145 @@
 }
 
 /* ==========================================================================
-   Comprehensive Dark Mode Utility & Surface Overrides
-   Ensures 100% theme consistency across legacy utilities, CSS variable fallbacks,
-   borders, and background surfaces without contrast defects or inverted artifacts.
+   Comprehensive Light Mode Utility & Surface Overrides (Editorial Paper)
+   Ensures 100% theme consistency, crystal-clear typography, and zero dark leaks.
    ========================================================================== */
 
-html.dark,
-html[data-theme="dark"],
+html.light body,
+html:not(.dark) body,
+html[data-theme="light"] body,
+body.light {
+  background-color: #F3EFE5 !important;
+  color: #121212 !important;
+}
+
+/* Background surfaces - Light */
+html.light .bg-ivory-200,
+html:not(.dark) .bg-ivory-200,
+html[data-theme="light"] .bg-ivory-200 {
+  background-color: #F3EFE5 !important;
+}
+
+html.light .bg-ivory-100,
+html:not(.dark) .bg-ivory-100,
+html[data-theme="light"] .bg-ivory-100 {
+  background-color: #FAF8F3 !important;
+}
+
+html.light .bg-ivory-50,
+html:not(.dark) .bg-ivory-50,
+html[data-theme="light"] .bg-ivory-50 {
+  background-color: #FCFAF6 !important;
+}
+
+html.light .bg-ivory-300,
+html:not(.dark) .bg-ivory-300,
+html[data-theme="light"] .bg-ivory-300 {
+  background-color: #E5DFD1 !important;
+}
+
+html.light .bg-ivory-400,
+html:not(.dark) .bg-ivory-400,
+html[data-theme="light"] .bg-ivory-400 {
+  background-color: #D6CEBC !important;
+}
+
+/* Hover surfaces - Light */
+html.light .hover\:bg-ivory-50:hover,
+html:not(.dark) .hover\:bg-ivory-50:hover,
+html[data-theme="light"] .hover\:bg-ivory-50:hover {
+  background-color: #FAF8F3 !important;
+}
+
+html.light .hover\:bg-ivory-100:hover,
+html:not(.dark) .hover\:bg-ivory-100:hover,
+html[data-theme="light"] .hover\:bg-ivory-100:hover {
+  background-color: #F5F1E8 !important;
+}
+
+html.light .hover\:bg-ivory-200:hover,
+html:not(.dark) .hover\:bg-ivory-200:hover,
+html[data-theme="light"] .hover\:bg-ivory-200:hover {
+  background-color: #EBE5D8 !important;
+}
+
+/* Text hierarchy - Light */
+html.light .text-ink-900,
+html:not(.dark) .text-ink-900,
+html[data-theme="light"] .text-ink-900 {
+  color: #121212 !important;
+}
+
+html.light .text-ink-800,
+html:not(.dark) .text-ink-800,
+html[data-theme="light"] .text-ink-800,
+html.light .text-ink-700,
+html:not(.dark) .text-ink-700,
+html[data-theme="light"] .text-ink-700 {
+  color: #2A2A2A !important;
+}
+
+html.light .text-ink-600,
+html:not(.dark) .text-ink-600,
+html[data-theme="light"] .text-ink-600 {
+  color: #4A4A4A !important;
+}
+
+html.light .text-ink-500,
+html:not(.dark) .text-ink-500,
+html[data-theme="light"] .text-ink-500,
+html.light .text-ink-400,
+html:not(.dark) .text-ink-400,
+html[data-theme="light"] .text-ink-400 {
+  color: #7A7A7A !important;
+}
+
+html.light .text-ink-300,
+html:not(.dark) .text-ink-300,
+html[data-theme="light"] .text-ink-300,
+html.light .text-ink-200,
+html:not(.dark) .text-ink-200,
+html[data-theme="light"] .text-ink-200 {
+  color: #B0B0B0 !important;
+}
+
+/* Borders & Dividers - Light */
+html.light .border-ivory-200,
+html:not(.dark) .border-ivory-200,
+html.light .border-ivory-300,
+html:not(.dark) .border-ivory-300,
+html.light .border-editorial,
+html:not(.dark) .border-editorial {
+  border-color: #E5DFD1 !important;
+}
+
+html.light .border-ivory-400,
+html:not(.dark) .border-ivory-400,
+html.light .border-editorial-dark,
+html:not(.dark) .border-editorial-dark {
+  border-color: #121212 !important;
+}
+
+html.light .divide-ivory-300 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-ivory-300 > :not([hidden]) ~ :not([hidden]),
+html.light .divide-ivory-200 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-ivory-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #E5DFD1 !important;
+}
+
+/* ==========================================================================
+   Comprehensive Dark Mode Utility & Surface Overrides (Terminal Theme)
+   Ensures 100% theme consistency, soft borders, and crystal-clear ivory text.
+   ========================================================================== */
+
 html.dark body,
+html[data-theme="dark"] body,
 body.dark {
   background-color: #0F1117 !important;
   color: #F4F1E8 !important;
 }
 
-/* Background surfaces */
+/* Background surfaces - Dark */
 html.dark .bg-ivory-200,
 html[data-theme="dark"] .bg-ivory-200,
 .dark .bg-ivory-200 {
@@ -252,7 +421,7 @@ html[data-theme="dark"] .bg-ivory-400,
   background-color: #1A202C !important;
 }
 
-/* Hover surfaces */
+/* Hover surfaces - Dark */
 html.dark .hover\:bg-ivory-50:hover,
 .dark .hover\:bg-ivory-50:hover,
 html.dark .hover\:bg-ivory-100:hover,
@@ -276,7 +445,7 @@ html.dark .hover\:bg-ivory-300:hover,
   background-color: rgba(0, 0, 0, 0.75) !important;
 }
 
-/* Text hierarchy & contrast */
+/* Text hierarchy & contrast - Dark */
 html.dark .text-ink-900,
 html[data-theme="dark"] .text-ink-900,
 .dark .text-ink-900 {
@@ -316,7 +485,7 @@ html[data-theme="dark"] .text-ink-200,
   color: #555F70 !important;
 }
 
-/* Borders & Dividers */
+/* Borders & Dividers - Dark */
 html.dark .border-ivory-200,
 html.dark .border-ivory-300,
 html.dark .border-editorial,
@@ -356,15 +525,34 @@ html.dark .shadow-retro-lg,
   height: 5px;
 }
 
-::-webkit-scrollbar-track {
-  background: rgb(var(--color-ivory-200));
+html.light ::-webkit-scrollbar-track,
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #F3EFE5;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-ivory-400));
+html.light ::-webkit-scrollbar-thumb,
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #D6CEBC;
+  border-radius: 2px;
+}
+
+html.dark ::-webkit-scrollbar-track,
+.dark ::-webkit-scrollbar-track {
+  background: #0F1117;
+}
+
+html.dark ::-webkit-scrollbar-thumb,
+.dark ::-webkit-scrollbar-thumb {
+  background: #303746;
   border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--color-cobalt-500));
+  background: #1746D1;
 }
+
+html.dark ::-webkit-scrollbar-thumb:hover,
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4C72FF;
+}
+

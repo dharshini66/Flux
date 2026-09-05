@@ -14,22 +14,33 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setThemeState] = useState<Theme>(() => {
     const saved = localStorage.getItem('flux_theme');
     if (saved === 'dark' || saved === 'light') return saved;
-    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
     return 'light';
   });
 
-  useEffect(() => {
+  const applyTheme = (t: Theme) => {
     const root = document.documentElement;
-    if (theme === 'dark') {
+    if (t === 'dark') {
       root.classList.add('dark');
+      root.classList.remove('light');
       root.setAttribute('data-theme', 'dark');
+      if (document.body) {
+        document.body.classList.add('dark');
+        document.body.classList.remove('light');
+      }
     } else {
       root.classList.remove('dark');
+      root.classList.add('light');
       root.setAttribute('data-theme', 'light');
+      if (document.body) {
+        document.body.classList.remove('dark');
+        document.body.classList.add('light');
+      }
     }
-    localStorage.setItem('flux_theme', theme);
+    localStorage.setItem('flux_theme', t);
+  };
+
+  useEffect(() => {
+    applyTheme(theme);
   }, [theme]);
 
   const toggleTheme = () => {

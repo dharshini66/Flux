@@ -73,44 +73,44 @@ export const EditorialHero: React.FC = () => {
 
   return (
     <>
-      <section className="card-primary p-5 lg:p-6 mb-6 relative overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+      <section className="card-primary p-4 lg:p-5 relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
           {/* Left Column: Editorial Headline & Big Counter */}
-          <div className="lg:col-span-7 space-y-3.5">
+          <div className="lg:col-span-7 space-y-3">
             {/* Greeting & Timestamp Tag */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest flex items-center gap-1.5">
+              <span className="text-[11px] financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest flex items-center gap-1.5">
                 <span>{greeting.text}</span>
                 <span>{greeting.icon}</span>
               </span>
               <span className="text-ink-400 dark:text-[#737B8A]">·</span>
-              <span className="text-[11px] financial-mono text-ink-600 dark:text-[#A8AFBD]">
+              <span className="text-[10.5px] financial-mono text-ink-600 dark:text-[#A8AFBD]">
                 {getVisitTime()}
               </span>
             </div>
 
-            {/* Large Editorial Headline */}
-            <div>
-              <h1 className="editorial-headline text-3xl lg:text-[2.6rem] font-bold text-ink-900 dark:text-[#F4F1E8] leading-[1.12] tracking-tight">
+            {/* Editorial Headline Hierarchy */}
+            <div className="space-y-1">
+              <h1 className="editorial-headline text-2xl lg:text-[2.2rem] font-bold text-ink-900 dark:text-[#F4F1E8] leading-[1.12] tracking-tight">
                 THE MARKET MOVED.{' '}
-                <span className="text-cobalt-600 dark:text-[#4C72FF] italic block sm:inline font-normal">
+                <span className="text-lg lg:text-[1.55rem] text-cobalt-600 dark:text-[#4C72FF] font-normal italic font-editorial tracking-tight inline-block sm:inline sm:ml-1">
                   HERE'S WHAT MATTERS.
                 </span>
               </h1>
             </div>
 
-            {/* Prominent Counter and Breakdown Row */}
-            <div className="pt-1">
-              <div className="flex flex-wrap items-center gap-5">
-                <div className="flex items-center gap-3.5">
-                  <span className="text-5xl lg:text-6xl font-extrabold financial-mono text-retropink-500 tracking-tight select-none drop-shadow-xs">
+            {/* Prominent Counter and Action Row */}
+            <div className="pt-0.5">
+              <div className="flex flex-wrap items-center justify-between sm:justify-start gap-4 sm:gap-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-4xl lg:text-5xl font-extrabold financial-mono text-retropink-500 tracking-tight select-none drop-shadow-xs">
                     {countStr}
                   </span>
                   <div className="space-y-0.5">
-                    <span className="block text-xs font-bold financial-mono tracking-wider text-softpurple-600 dark:text-[#8A78E8] uppercase">
+                    <span className="block text-[11px] font-bold financial-mono tracking-wider text-softpurple-600 dark:text-[#8A78E8] uppercase">
                       MEANINGFUL CHANGES
                     </span>
-                    <span className="block text-[10px] financial-mono text-ink-500 dark:text-[#737B8A] uppercase tracking-wide">
+                    <span className="block text-[9.5px] financial-mono text-ink-500 dark:text-[#737B8A] uppercase tracking-wide">
                       SINCE YOUR LAST VISIT
                     </span>
                   </div>
@@ -129,9 +129,9 @@ export const EditorialHero: React.FC = () => {
               </div>
 
               {/* Compact Breakdown Chips */}
-              <div className="flex flex-wrap items-center gap-2 mt-4 pt-3.5 border-t border-ivory-300 dark:border-[#303746]">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs text-ink-800 dark:text-[#F4F1E8]">
-                  <TrendingUp className="w-3.5 h-3.5 text-signal-green shrink-0" />
+              <div className="flex flex-wrap items-center gap-2 mt-3 pt-2.5 border-t border-ivory-300 dark:border-[#303746]">
+                <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-[11px] text-ink-800 dark:text-[#F4F1E8]">
+                  <TrendingUp className="w-3 h-3 text-signal-green shrink-0" />
                   <span>
                     <strong className="financial-mono font-bold">
                       {bd.price_movements < 10 ? `0${bd.price_movements}` : bd.price_movements}
@@ -140,8 +140,8 @@ export const EditorialHero: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs text-ink-800 dark:text-[#F4F1E8]">
-                  <BarChart2 className="w-3.5 h-3.5 text-signal-ochre shrink-0" />
+                <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-[11px] text-ink-800 dark:text-[#F4F1E8]">
+                  <BarChart2 className="w-3 h-3 text-signal-ochre shrink-0" />
                   <span>
                     <strong className="financial-mono font-bold">
                       {bd.unusual_volume < 10 ? `0${bd.unusual_volume}` : bd.unusual_volume}
@@ -150,8 +150,8 @@ export const EditorialHero: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs text-ink-800 dark:text-[#F4F1E8]">
-                  <Flame className="w-3.5 h-3.5 text-retropink-500 shrink-0" />
+                <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-[11px] text-ink-800 dark:text-[#F4F1E8]">
+                  <Flame className="w-3 h-3 text-retropink-500 shrink-0" />
                   <span>
                     <strong className="financial-mono font-bold">
                       {bd.new_52w_highs < 10 ? `0${bd.new_52w_highs}` : bd.new_52w_highs}

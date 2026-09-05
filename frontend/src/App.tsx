@@ -60,12 +60,17 @@ const MainDashboard: React.FC = () => {
 
                   {/* Top Changes Since Last Visit */}
                   {!isFirstVisit && topChanges.length > 0 && (
-                    <div>
-                      <div className="flex items-center justify-between mb-3.5">
+                    <div className="pt-2 border-t border-ivory-300 dark:border-[#232A38]">
+                      <div className="flex items-center justify-between mb-3.5 pt-1">
                         <div>
-                          <span className="text-[10px] financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest block mb-0.5">
-                            SIGNIFICANT MOVES
-                          </span>
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className="text-[10px] financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest">
+                              SIGNIFICANT MOVES
+                            </span>
+                            <span className="text-[9px] financial-mono font-bold text-ink-500 dark:text-[#737B8A] uppercase tracking-wider bg-ivory-300/60 dark:bg-[#1B202B] px-1.5 py-0.5 rounded-xs">
+                              SESSION DELTAS
+                            </span>
+                          </div>
                           <h2 className="editorial-headline text-2xl font-bold text-ink-900 dark:text-[#F4F1E8] tracking-tight">
                             Top Changes Since Your Last Visit
                           </h2>
@@ -80,7 +85,7 @@ const MainDashboard: React.FC = () => {
                         </button>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                         {topChanges.map((change) => (
                           <TopChangeCard key={change.symbol} change={change} />
                         ))}

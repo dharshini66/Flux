@@ -59,7 +59,7 @@ const MainDashboard: React.FC = () => {
             {activeTab === 'overview' && (
               <div className="flex flex-col xl:flex-row gap-6 items-start">
                 {/* Main Center Column */}
-                <div className="flex-1 min-w-0 space-y-6 w-full">
+                <div className="flex-1 min-w-0 space-y-4 lg:space-y-4.5 w-full">
                   {/* Visual Center Hero */}
                   <EditorialHero />
 
@@ -68,8 +68,8 @@ const MainDashboard: React.FC = () => {
 
                   {/* Top Changes Since Last Visit */}
                   {!isFirstVisit && displayedChanges.length > 0 && (
-                    <div className="pt-2 border-t border-ivory-300 dark:border-[#232A38]">
-                      <div className="flex items-center justify-between mb-3.5 pt-1">
+                    <div className="pt-1.5">
+                      <div className="flex items-center justify-between mb-2.5">
                         <div>
                           <div className="flex items-center gap-2 mb-0.5">
                             <span className="text-[10px] financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest">
@@ -93,7 +93,7 @@ const MainDashboard: React.FC = () => {
                         </button>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                         {displayedChanges.map((change) => (
                           <TopChangeCard key={change.symbol} change={change} />
                         ))}

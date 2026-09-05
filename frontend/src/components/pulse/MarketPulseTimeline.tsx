@@ -11,9 +11,9 @@ export const MarketPulseTimeline: React.FC = () => {
   const hourMarks = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM'];
 
   return (
-    <section className="card-secondary p-4 sm:p-5 shadow-subtle">
+    <section className="card-secondary p-3.5 sm:p-4 shadow-subtle">
       {/* Title Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2.5 border-b border-ivory-300 dark:border-[#303746]">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 pb-2 border-b border-ivory-300 dark:border-[#303746]">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 bg-cobalt-500 text-white rounded-sm flex items-center justify-center shadow-[1px_1px_0px_#121212] select-none">
             <Activity className="w-3.5 h-3.5" />
@@ -49,9 +49,9 @@ export const MarketPulseTimeline: React.FC = () => {
       </div>
 
       {/* Horizontal Interactive Timeline Axis */}
-      <div className="relative pt-5 pb-3.5 px-3 sm:px-4 bg-ivory-50 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm scanline-bg">
+      <div className="relative pt-3.5 pb-2.5 px-3 sm:px-3.5 bg-ivory-50 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm scanline-bg">
         {/* Timeline Horizontal Rail with Circular Nodes */}
-        <div className="relative h-1 bg-ivory-300 dark:bg-[#303746] rounded-full mb-6">
+        <div className="relative h-1 bg-ivory-300 dark:bg-[#303746] rounded-full mb-3.5">
           {/* Active session progress bar */}
           <div className="absolute left-0 top-0 bottom-0 w-3/4 bg-gradient-to-r from-cobalt-600 via-softpurple-500 to-retropink-500 rounded-full"></div>
 
@@ -69,7 +69,7 @@ export const MarketPulseTimeline: React.FC = () => {
         </div>
 
         {/* Time Hour Markers */}
-        <div className="flex justify-between text-[10px] financial-mono text-ink-500 dark:text-[#737B8A] font-bold uppercase -mt-4 mb-4">
+        <div className="flex justify-between text-[10px] financial-mono text-ink-500 dark:text-[#737B8A] font-bold uppercase -mt-2 mb-3">
           {hourMarks.map((hm) => (
             <div key={hm} className="flex flex-col items-center">
               <span>{hm}</span>

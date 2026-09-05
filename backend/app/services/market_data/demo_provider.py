@@ -13,12 +13,12 @@ from app.services.market_data.base import (
 )
 
 DEMO_BASE_PROPERTIES = {
-    "INFY": {"name": "Infosys Limited", "base_price": 1834.0, "high_52w": 1950.0, "low_52w": 1350.0, "vol": 4_200_000, "volatility": 1.2},
-    "TCS": {"name": "Tata Consultancy Services", "base_price": 4172.0, "high_52w": 4250.0, "low_52w": 3300.0, "vol": 2_100_000, "volatility": 1.0},
-    "RELIANCE": {"name": "Reliance Industries Ltd.", "base_price": 2962.0, "high_52w": 3100.0, "low_52w": 2220.0, "vol": 6_500_000, "volatility": 1.3},
-    "HDFCBANK": {"name": "HDFC Bank Limited", "base_price": 1546.0, "high_52w": 1780.0, "low_52w": 1380.0, "vol": 12_000_000, "volatility": 1.4},
-    "ICICIBANK": {"name": "ICICI Bank Limited", "base_price": 1236.0, "high_52w": 1320.0, "low_52w": 930.0, "vol": 8_800_000, "volatility": 1.3},
-    "TATAMOTORS": {"name": "Tata Motors Limited", "base_price": 973.0, "high_52w": 1180.0, "low_52w": 620.0, "vol": 9_400_000, "volatility": 1.9},
+    "INFY": {"name": "Infosys Limited", "base_price": 1781.70, "high_52w": 1950.0, "low_52w": 1350.0, "vol": 4_200_000, "volatility": 1.2},
+    "TCS": {"name": "Tata Consultancy Services", "base_price": 4126.80, "high_52w": 4250.0, "low_52w": 3300.0, "vol": 2_100_000, "volatility": 1.0},
+    "RELIANCE": {"name": "Reliance Industries Ltd.", "base_price": 2881.60, "high_52w": 3100.0, "low_52w": 2220.0, "vol": 6_500_000, "volatility": 1.3},
+    "HDFCBANK": {"name": "HDFC Bank Limited", "base_price": 1724.50, "high_52w": 1780.0, "low_52w": 1380.0, "vol": 12_000_000, "volatility": 1.4},
+    "ICICIBANK": {"name": "ICICI Bank Limited", "base_price": 1119.80, "high_52w": 1320.0, "low_52w": 930.0, "vol": 8_800_000, "volatility": 1.3},
+    "TATAMOTORS": {"name": "Tata Motors Limited", "base_price": 940.00, "high_52w": 1180.0, "low_52w": 620.0, "vol": 9_400_000, "volatility": 1.9},
     "BHARTIARTL": {"name": "Bharti Airtel Limited", "base_price": 1582.0, "high_52w": 1720.0, "low_52w": 860.0, "vol": 4_600_000, "volatility": 1.1},
     "ITC": {"name": "ITC Limited", "base_price": 486.0, "high_52w": 530.0, "low_52w": 395.0, "vol": 11_500_000, "volatility": 0.9},
     "WIPRO": {"name": "Wipro Limited", "base_price": 542.0, "high_52w": 580.0, "low_52w": 380.0, "vol": 5_200_000, "volatility": 1.5},
@@ -196,13 +196,21 @@ class DemoMarketDataProvider(MarketDataProvider):
         
         elif self.current_scenario == "large_surge":
             if sym == "INFY":
-                price = 1968.00  # New 52W high + 7.3% surge + 4.2x vol
-                pct = 7.3
+                price = 1968.00  # New 52W high + 10.5% surge + 4.2x vol
+                pct = 10.5
                 vol_mult = 4.2
+            elif sym == "TCS":
+                price = 4310.00  # New 52W high breakout (+4.4%, 2.8x vol)
+                pct = 4.4
+                vol_mult = 2.8
+            elif sym == "RELIANCE":
+                price = 3050.00  # Institutional accumulation (+5.8%, 3.2x vol)
+                pct = 5.8
+                vol_mult = 3.2
             else:
-                price = base_p * 1.015
-                pct = 1.5
-                vol_mult = 1.2
+                price = base_p * 1.008
+                pct = 0.8
+                vol_mult = 1.05
 
         elif self.current_scenario == "market_crash":
             if sym in ["HDFCBANK", "ICICIBANK", "SBIN"]:

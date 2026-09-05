@@ -13,39 +13,20 @@ export const EditorialHero: React.FC = () => {
   // Dynamically calculate displayed meaningful changes: strictly sync with displayed cards
   const topChanges = summary?.top_changes || [];
   const meaningfulChanges = topChanges.filter((c) => c.is_meaningful);
-  const rawCount = summary?.meaningful_changes_count || 0;
+  const rawCount = summary?.meaningful_changes_count ?? 0;
 
-  // Displayed changes are meaningful changes; never fabricate non-meaningful cards when rawCount is 0
-  const displayedChanges =
-    meaningfulChanges.length > 0
-      ? meaningfulChanges
-      : rawCount === 0
-      ? []
-      : topChanges.slice(0, rawCount);
-
-  // Counter strictly matches the count of meaningful changes displayed
-  const activeCount = displayedChanges.length;
+  // Counter strictly uses the backend meaningful_changes_count as the source of truth
+  const activeCount = rawCount;
   const countStr = activeCount < 10 ? `0${activeCount}` : `${activeCount}`;
 
-  // Breakdown chips: strictly reflect displayed changes or official summary breakdown without contradictory numbers
+  // Breakdown chips: strictly reflect meaningful signals from backend summary breakdown
   const bd =
     activeCount === 0
       ? { price_movements: 0, unusual_volume: 0, new_52w_highs: 0, volatility_events: 0 }
-      : summary?.breakdown &&
-        (summary.breakdown.price_movements > 0 ||
-          summary.breakdown.unusual_volume > 0 ||
-          summary.breakdown.new_52w_highs > 0)
-      ? summary.breakdown
-      : {
-          price_movements: displayedChanges.filter((c) =>
-            c.event_types.some((et) => et === 'PRICE_SURGE' || et === 'SIGNIFICANT_DROP')
-          ).length || 1,
-          unusual_volume: displayedChanges.filter((c) =>
-            c.event_types.includes('UNUSUAL_VOLUME')
-          ).length,
-          new_52w_highs: displayedChanges.filter((c) =>
-            c.event_types.some((et) => et === 'NEW_52W_HIGH' || et === 'NEAR_52W_HIGH')
-          ).length,
+      : summary?.breakdown || {
+          price_movements: 0,
+          unusual_volume: 0,
+          new_52w_highs: 0,
           volatility_events: 0,
         };
 
@@ -97,13 +78,13 @@ export const EditorialHero: React.FC = () => {
             </div>
 
             {/* Editorial Headline Hierarchy */}
-            <div className="space-y-1">
-              <h1 className="editorial-headline text-2xl lg:text-[2.2rem] font-bold text-ink-900 dark:text-[#F4F1E8] leading-[1.12] tracking-tight">
-                THE MARKET MOVED.{' '}
-                <span className="text-lg lg:text-[1.55rem] text-cobalt-600 dark:text-[#4C72FF] font-normal italic font-editorial tracking-tight inline-block sm:inline sm:ml-1">
-                  HERE'S WHAT MATTERS.
-                </span>
+            <div className="space-y-0.5">
+              <h1 className="editorial-headline text-2xl lg:text-[2.15rem] font-bold text-ink-900 dark:text-[#F4F1E8] leading-[1.1] tracking-tight block">
+                THE MARKET MOVED.
               </h1>
+              <span className="editorial-headline text-xl lg:text-[1.7rem] text-cobalt-600 dark:text-[#4C72FF] font-normal italic leading-[1.15] tracking-tight block">
+                HERE'S WHAT MATTERS.
+              </span>
             </div>
 
             {/* Prominent Counter and Action Row */}

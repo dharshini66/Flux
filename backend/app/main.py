@@ -74,15 +74,62 @@ app.include_router(health_router, prefix=settings.API_V1_PREFIX)
 app.include_router(health_router)
 
 
-@app.get("/")
-async def root():
-    return {
-        "product": "FLUX",
-        "tagline": "KNOW WHAT CHANGED.",
-        "description": "Intelligent market watchlist focus on signal over noise.",
-        "api_v1_docs": "/docs",
-        "status": "operational"
-    }
+# Static Files and Frontend SPA Serving
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from fastapi import HTTPException
+
+dist_candidates = [
+    Path(__file__).resolve().parent.parent.parent / "frontend" / "dist",
+    Path(__file__).resolve().parent.parent / "frontend_dist",
+    Path("/app/frontend/dist"),
+    Path("/app/dist"),
+]
+
+frontend_dist_path = None
+for candidate in dist_candidates:
+    if candidate.exists() and (candidate / "index.html").is_file():
+        frontend_dist_path = candidate
+        break
+
+if frontend_dist_path:
+    assets_dir = frontend_dist_path / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+
+    @app.get("/api/info")
+    async def api_info():
+        return {
+            "product": "FLUX",
+            "tagline": "KNOW WHAT CHANGED.",
+            "description": "Intelligent market watchlist focus on signal over noise.",
+            "api_v1_docs": "/docs",
+            "status": "operational"
+        }
+
+    @app.get("/")
+    async def serve_spa_root():
+        return FileResponse(str(frontend_dist_path / "index.html"))
+
+    @app.get("/{full_path:path}")
+    async def serve_spa_routes(full_path: str):
+        if full_path.startswith("api/") or full_path in ("docs", "redoc", "openapi.json", "health"):
+            raise HTTPException(status_code=404, detail="Not Found")
+        target = frontend_dist_path / full_path
+        if target.is_file():
+            return FileResponse(str(target))
+        return FileResponse(str(frontend_dist_path / "index.html"))
+else:
+    @app.get("/")
+    async def root():
+        return {
+            "product": "FLUX",
+            "tagline": "KNOW WHAT CHANGED.",
+            "description": "Intelligent market watchlist focus on signal over noise.",
+            "api_v1_docs": "/docs",
+            "status": "operational"
+        }
 
 
 if __name__ == "__main__":

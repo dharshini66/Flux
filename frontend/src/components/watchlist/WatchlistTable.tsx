@@ -123,8 +123,8 @@ export const WatchlistTable: React.FC<WatchlistTableProps> = ({ onAddStockClick 
                       <span
                         className={`inline-block px-1.5 py-0.5 rounded-sm ${
                           isPositive
-                            ? 'text-signal-green bg-green-50'
-                            : 'text-signal-red bg-red-50'
+                            ? 'text-signal-green bg-green-50 dark:bg-emerald-950/40 dark:text-[#35B58A]'
+                            : 'text-signal-red bg-red-50 dark:bg-rose-950/40 dark:text-[#F06A6A]'
                         }`}
                       >
                         {isPositive ? '+' : ''}
@@ -143,12 +143,12 @@ export const WatchlistTable: React.FC<WatchlistTableProps> = ({ onAddStockClick 
                   </td>
 
                   {/* 52W High / Low Bar */}
-                  <td className="py-3 px-4 text-right financial-mono text-[11px] text-ink-600">
+                  <td className="py-3 px-4 text-right financial-mono text-[11px] text-ink-600 dark:text-[#A8AFBD]">
                     {stock.high_52w > 0 && (
                       <div>
                         <span>₹{stock.low_52w}</span>
-                        <span className="mx-1 text-ink-400">-</span>
-                        <span className="font-semibold text-ink-900">₹{stock.high_52w}</span>
+                        <span className="mx-1 text-ink-400 dark:text-[#737B8A]">-</span>
+                        <span className="font-semibold text-ink-900 dark:text-[#F4F1E8]">₹{stock.high_52w}</span>
                       </div>
                     )}
                   </td>
@@ -159,14 +159,14 @@ export const WatchlistTable: React.FC<WatchlistTableProps> = ({ onAddStockClick 
                       <button
                         onClick={() => setSelectedStockSymbol(stock.symbol)}
                         title="View chart and details"
-                        className="p-1 bg-ivory-200 hover:bg-ivory-300 border border-ink-900 rounded-sm text-ink-900 shadow-[1px_1px_0px_#121212] transition-all"
+                        className="p-1 bg-ivory-200 hover:bg-ivory-300 dark:bg-[#1B202B] dark:hover:bg-[#202633] border border-ink-900 dark:border-[#303746] rounded-sm text-ink-900 dark:text-[#F4F1E8] shadow-[1px_1px_0px_#121212] dark:shadow-none transition-all"
                       >
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() => removeStock(activeWatchlist.id, stock.symbol)}
                         title="Remove from watchlist"
-                        className="p-1 bg-ivory-200 hover:bg-red-50 hover:text-signal-red border border-ivory-300 rounded-sm text-ink-400 transition-colors"
+                        className="p-1 bg-ivory-200 hover:bg-red-50 hover:text-signal-red dark:bg-[#1B202B] dark:hover:bg-rose-950/40 dark:hover:text-signal-red border border-ivory-300 dark:border-[#303746] rounded-sm text-ink-400 dark:text-[#737B8A] transition-colors"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

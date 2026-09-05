@@ -46,7 +46,7 @@ export const WatchlistTabs: React.FC<WatchlistTabsProps> = ({
       <div className="flex items-center gap-2">
         <button
           onClick={onAddStockClick}
-          className="flex items-center gap-1 px-3 py-1.5 bg-cobalt-500 hover:bg-cobalt-600 text-white text-xs financial-mono font-bold uppercase rounded-sm border border-ink-900 shadow-[1.5px_1.5px_0px_#121212] transition-all"
+          className="flex items-center gap-1 px-3 py-1.5 bg-cobalt-500 hover:bg-cobalt-600 text-white text-xs financial-mono font-bold uppercase rounded-sm border border-ink-900 dark:border-[#4C72FF] shadow-[1.5px_1.5px_0px_#121212] dark:shadow-none transition-all"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>Add Stock</span>
@@ -55,7 +55,7 @@ export const WatchlistTabs: React.FC<WatchlistTabsProps> = ({
         <button
           onClick={onManageWatchlistsClick}
           title="Create or manage watchlists"
-          className="p-1.5 bg-ivory-100 hover:bg-ivory-200 text-ink-700 border border-ivory-300 rounded-sm shadow-subtle transition-colors"
+          className="p-1.5 bg-ivory-100 hover:bg-ivory-200 dark:bg-[#1B202B] dark:hover:bg-[#202633] text-ink-700 dark:text-[#A8AFBD] border border-ivory-300 dark:border-[#303746] rounded-sm shadow-subtle transition-colors"
         >
           <Settings className="w-4 h-4" />
         </button>

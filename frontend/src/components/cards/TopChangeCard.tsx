@@ -17,18 +17,18 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
   const priceDirection = isPositive ? '+' : '';
 
   return (
-    <div className="card-secondary p-4 lg:p-5 flex flex-col justify-between relative overflow-hidden group hover:border-ink-900 transition-all">
+    <div className="card-secondary p-4 lg:p-5 flex flex-col justify-between relative overflow-hidden group hover:border-ink-900 dark:hover:border-[#4C72FF] transition-all">
       {/* Top Bar: Symbol, Name & Severity */}
       <div>
         <div className="flex items-start justify-between gap-2 mb-2">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-base financial-mono text-ink-900 tracking-tight">
+              <span className="font-bold text-base financial-mono text-ink-900 dark:text-[#F4F1E8] tracking-tight">
                 {change.symbol}
               </span>
               <SeverityBadge severity={change.severity} />
             </div>
-            <span className="text-xs font-sans text-ink-600 block mt-0.5 truncate max-w-[180px]">
+            <span className="text-xs font-sans text-ink-600 dark:text-[#A8AFBD] block mt-0.5 truncate max-w-[180px]">
               {change.company_name}
             </span>
           </div>
@@ -40,7 +40,7 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
         </div>
 
         {/* Price Delta and Volume Metric */}
-        <div className="flex items-baseline justify-between py-2.5 border-y border-ivory-300 my-2.5">
+        <div className="flex items-baseline justify-between py-2.5 border-y border-ivory-300 dark:border-[#303746] my-2.5">
           <div>
             <span
               className={`text-2xl font-extrabold financial-mono tracking-tight ${
@@ -50,16 +50,16 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
               {priceDirection}
               {change.price_change_pct.toFixed(1)}%
             </span>
-            <span className="text-[11px] financial-mono text-ink-500 block mt-0.5">
+            <span className="text-[11px] financial-mono text-ink-500 dark:text-[#737B8A] block mt-0.5">
               ₹{change.current_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
             </span>
           </div>
 
           <div className="text-right">
-            <span className="text-xs financial-mono font-bold text-ink-900 block">
+            <span className="text-xs financial-mono font-bold text-ink-900 dark:text-[#F4F1E8] block">
               {change.volume_ratio.toFixed(1)}× Vol
             </span>
-            <span className="text-[10px] font-sans text-ink-400">
+            <span className="text-[10px] font-sans text-ink-400 dark:text-[#737B8A]">
               vs historical base
             </span>
           </div>
@@ -68,8 +68,8 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
         {/* Reason Bullets */}
         <div className="space-y-1.5 my-3">
           {change.summary_bullets.slice(0, 2).map((bullet, idx) => (
-            <div key={idx} className="flex items-start gap-1.5 text-xs text-ink-700 leading-snug font-sans">
-              <span className="text-cobalt-600 font-bold select-none text-[11px] mt-0.5 font-mono">▪</span>
+            <div key={idx} className="flex items-start gap-1.5 text-xs text-ink-700 dark:text-[#D4D8E0] leading-snug font-sans">
+              <span className="text-cobalt-600 dark:text-[#4C72FF] font-bold select-none text-[11px] mt-0.5">▪</span>
               <span>{bullet}</span>
             </div>
           ))}

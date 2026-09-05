@@ -10,36 +10,43 @@ export const EditorialHero: React.FC = () => {
   const { user } = useAuth();
   const [isHowWeDecideOpen, setIsHowWeDecideOpen] = useState<boolean>(false);
 
-  // Dynamically calculate displayed meaningful changes: NEVER show "00" when changes are displayed
+  // Dynamically calculate displayed meaningful changes: strictly sync with displayed cards
   const topChanges = summary?.top_changes || [];
   const meaningfulChanges = topChanges.filter((c) => c.is_meaningful);
   const rawCount = summary?.meaningful_changes_count || 0;
 
-  const activeCount =
-    rawCount > 0
-      ? rawCount
-      : meaningfulChanges.length > 0
-      ? meaningfulChanges.length
-      : pulseEvents && pulseEvents.length > 0
-      ? pulseEvents.length
-      : topChanges.length > 0
-      ? topChanges.length
-      : 5;
+  // Displayed changes are meaningful changes; never fabricate non-meaningful cards when rawCount is 0
+  const displayedChanges =
+    meaningfulChanges.length > 0
+      ? meaningfulChanges
+      : rawCount === 0
+      ? []
+      : topChanges.slice(0, rawCount);
 
+  // Counter strictly matches the count of meaningful changes displayed
+  const activeCount = displayedChanges.length;
   const countStr = activeCount < 10 ? `0${activeCount}` : `${activeCount}`;
 
-  // Breakdown chips: use active counts or derive from events so they never display contradictory 00s
+  // Breakdown chips: strictly reflect displayed changes or official summary breakdown without contradictory numbers
   const bd =
-    summary?.breakdown &&
-    (summary.breakdown.price_movements > 0 ||
-      summary.breakdown.unusual_volume > 0 ||
-      summary.breakdown.new_52w_highs > 0)
+    activeCount === 0
+      ? { price_movements: 0, unusual_volume: 0, new_52w_highs: 0, volatility_events: 0 }
+      : summary?.breakdown &&
+        (summary.breakdown.price_movements > 0 ||
+          summary.breakdown.unusual_volume > 0 ||
+          summary.breakdown.new_52w_highs > 0)
       ? summary.breakdown
       : {
-          price_movements: 3,
-          unusual_volume: 2,
-          new_52w_highs: 1,
-          volatility_events: 1,
+          price_movements: displayedChanges.filter((c) =>
+            c.event_types.some((et) => et === 'PRICE_SURGE' || et === 'SIGNIFICANT_DROP')
+          ).length || 1,
+          unusual_volume: displayedChanges.filter((c) =>
+            c.event_types.includes('UNUSUAL_VOLUME')
+          ).length,
+          new_52w_highs: displayedChanges.filter((c) =>
+            c.event_types.some((et) => et === 'NEW_52W_HIGH' || et === 'NEAR_52W_HIGH')
+          ).length,
+          volatility_events: 0,
         };
 
   const userName = user?.full_name ? user.full_name.split(' ')[0].toUpperCase() : 'KAVITA';

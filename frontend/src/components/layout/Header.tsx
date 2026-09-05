@@ -12,7 +12,15 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
   const { marketStatus, activeScenario, performCheckIn, isCheckingIn, setSelectedStockSymbol } = useMarket();
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const [timeStr, setTimeStr] = useState<string>('');
+  const [timeStr, setTimeStr] = useState<string>(() => {
+    const d = new Date();
+    return d.toLocaleTimeString('en-US', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  });
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [justCheckedIn, setJustCheckedIn] = useState<boolean>(false);
@@ -141,7 +149,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
           {justCheckedIn && (
             <div className="animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-1.5 px-2.5 py-1 bg-signal-green text-white text-[10px] financial-mono font-bold uppercase rounded-sm shadow-retro-sm">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>BASELINE CAPTURED · {timeStr || '09:24'} IST</span>
+              <span>BASELINE CAPTURED · {timeStr.substring(0, 5)} IST</span>
             </div>
           )}
 
@@ -150,7 +158,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
             <Radio className="w-3.5 h-3.5 text-signal-green animate-pulse shrink-0" />
             <span className="font-bold text-[11px] financial-mono text-ink-800 dark:text-[#D4D8E0]">NSE // LIVE</span>
             <span className="text-ink-400">|</span>
-            <span className="text-ink-600 dark:text-[#A8AFBD] text-[11px] financial-mono">{timeStr || '09:45:00'} IST</span>
+            <span className="text-ink-600 dark:text-[#A8AFBD] text-[11px] financial-mono">{timeStr} IST</span>
           </div>
 
           {/* Snapshot Check-In Trigger with Subtitle & Tooltip */}

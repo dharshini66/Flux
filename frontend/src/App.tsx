@@ -31,6 +31,14 @@ const MainDashboard: React.FC = () => {
   const { summary } = useMarket();
 
   const topChanges = summary?.top_changes || [];
+  const meaningfulChanges = topChanges.filter((c) => c.is_meaningful);
+  const rawCount = summary?.meaningful_changes_count || 0;
+  const displayedChanges =
+    meaningfulChanges.length > 0
+      ? meaningfulChanges
+      : rawCount === 0
+      ? []
+      : topChanges.slice(0, rawCount);
   const isFirstVisit = summary?.is_first_visit || false;
 
   return (
@@ -59,7 +67,7 @@ const MainDashboard: React.FC = () => {
                   <MarketPulseTimeline />
 
                   {/* Top Changes Since Last Visit */}
-                  {!isFirstVisit && topChanges.length > 0 && (
+                  {!isFirstVisit && displayedChanges.length > 0 && (
                     <div className="pt-2 border-t border-ivory-300 dark:border-[#232A38]">
                       <div className="flex items-center justify-between mb-3.5 pt-1">
                         <div>
@@ -86,14 +94,14 @@ const MainDashboard: React.FC = () => {
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-                        {topChanges.map((change) => (
+                        {displayedChanges.map((change) => (
                           <TopChangeCard key={change.symbol} change={change} />
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {!isFirstVisit && topChanges.length === 0 && (
+                  {!isFirstVisit && displayedChanges.length === 0 && (
                     <EmptyState type="NO_FLUX" />
                   )}
 

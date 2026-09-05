@@ -7,8 +7,23 @@ export const RightRail: React.FC = () => {
   const { marketStatus } = useMarket();
   const { missionState } = useMission();
   const [showInsightBanner, setShowInsightBanner] = useState<boolean>(true);
-  const [timeStr, setTimeStr] = useState<string>('');
-  const [dateStr, setDateStr] = useState<string>('');
+  const [timeStr, setTimeStr] = useState<string>(() => {
+    const d = new Date();
+    return d.toLocaleTimeString('en-US', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  });
+  const [dateStr, setDateStr] = useState<string>(() => {
+    const d = new Date();
+    return d.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  });
 
   useEffect(() => {
     const updateClock = () => {
@@ -213,7 +228,7 @@ export const RightRail: React.FC = () => {
               <span className="text-xs font-bold text-ink-900 dark:text-[#F4F1E8] font-sans">Market Open</span>
             </div>
             <span className="text-[10px] financial-mono text-ink-600 dark:text-[#A8AFBD] block mt-0.5">
-              NSE | {dateStr || '04 Sep 2026'} {timeStr || '09:45:00'} IST
+              NSE | {dateStr} {timeStr} IST
             </span>
           </div>
           {/* Pixel Monument / Exchange Icon */}

@@ -34,7 +34,7 @@ const MainDashboard: React.FC = () => {
   const isFirstVisit = summary?.is_first_visit || false;
 
   return (
-    <div className="min-h-screen bg-ivory-200 flex flex-col justify-between">
+    <div className="min-h-screen bg-ivory-200 dark:bg-[#0F1117] flex flex-col justify-between text-ink-900 dark:text-[#F4F1E8]">
       <div>
         <Header />
 
@@ -63,17 +63,17 @@ const MainDashboard: React.FC = () => {
                     <div>
                       <div className="flex items-center justify-between mb-3.5">
                         <div>
-                          <span className="text-[10px] financial-mono font-bold text-cobalt-600 uppercase tracking-widest block mb-0.5">
+                          <span className="text-[10px] financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest block mb-0.5">
                             SIGNIFICANT MOVES
                           </span>
-                          <h2 className="editorial-headline text-2xl font-bold text-ink-900 tracking-tight">
+                          <h2 className="editorial-headline text-2xl font-bold text-ink-900 dark:text-[#F4F1E8] tracking-tight">
                             Top Changes Since Your Last Visit
                           </h2>
                         </div>
 
                         <button
                           onClick={() => setActiveTab('changes')}
-                          className="inline-flex items-center gap-1.5 text-xs font-sans font-semibold text-cobalt-600 hover:text-cobalt-800 uppercase tracking-wider group transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs font-sans font-semibold text-cobalt-600 dark:text-[#4C72FF] hover:text-cobalt-800 dark:hover:text-[#6284FF] uppercase tracking-wider group transition-colors"
                         >
                           <span>View All Signals</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -93,13 +93,13 @@ const MainDashboard: React.FC = () => {
                   )}
 
                   {/* Watchlist Section */}
-                  <div className="pt-6 border-t border-ivory-300 space-y-3.5">
+                  <div className="pt-6 border-t border-ivory-300 dark:border-[#232A38] space-y-3.5">
                     <div className="flex items-center justify-between">
                       <div>
-                        <span className="text-[10px] financial-mono font-bold text-cobalt-600 uppercase tracking-widest block mb-0.5">
+                        <span className="text-[10px] financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest block mb-0.5">
                           MONITORED EQUITIES
                         </span>
-                        <h2 className="editorial-headline text-2xl font-bold text-ink-900 tracking-tight">
+                        <h2 className="editorial-headline text-2xl font-bold text-ink-900 dark:text-[#F4F1E8] tracking-tight">
                           Your Watchlist
                         </h2>
                       </div>

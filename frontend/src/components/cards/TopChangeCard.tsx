@@ -77,16 +77,16 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
       </div>
 
       {/* Footer: Signal Strength & 'Why does this matter?' Trigger */}
-      <div className="pt-3 border-t border-ivory-300 flex items-center justify-between gap-2 mt-2">
+      <div className="pt-3 border-t border-ivory-300 dark:border-[#303746] flex items-center justify-between gap-2 mt-2">
         <SignalStrengthMeter level={change.signal_level} severity={change.severity} showText={false} />
 
         <div className="flex items-center gap-1.5">
           {/* Why Does This Matter Button */}
           <button
             onClick={() => setSelectedExplainChange(change)}
-            className="inline-flex items-center gap-1 text-[11px] font-sans font-medium text-cobalt-600 hover:text-cobalt-800 bg-cobalt-50 hover:bg-cobalt-100/80 border border-cobalt-200/80 px-2.5 py-1 rounded-sm transition-colors"
+            className="inline-flex items-center gap-1 text-[11px] font-sans font-medium text-cobalt-600 dark:text-[#6284FF] hover:text-cobalt-800 dark:hover:text-[#93C5FD] bg-cobalt-50 dark:bg-[#1B2338] hover:bg-cobalt-100/80 dark:hover:bg-[#222E4A] border border-cobalt-200/80 dark:border-cobalt-500/30 px-2.5 py-1 rounded-sm transition-colors"
           >
-            <HelpCircle className="w-3 h-3 text-cobalt-600" />
+            <HelpCircle className="w-3 h-3 text-cobalt-600 dark:text-[#6284FF]" />
             <span>Why this matters?</span>
           </button>
 
@@ -94,7 +94,7 @@ export const TopChangeCard: React.FC<TopChangeCardProps> = ({ change }) => {
           <button
             onClick={() => setSelectedStockSymbol(change.symbol)}
             title={`View ${change.symbol} chart & session history`}
-            className="p-1 bg-ivory-100 hover:bg-white border border-ink-900 rounded-sm text-ink-900 shadow-[1px_1px_0px_#121212] transition-all"
+            className="p-1 bg-ivory-100 dark:bg-[#1B202B] hover:bg-white dark:hover:bg-[#202633] border border-ink-900 dark:border-[#303746] rounded-sm text-ink-900 dark:text-[#F4F1E8] shadow-[1px_1px_0px_#121212] dark:shadow-none transition-all"
           >
             <ArrowUpRight className="w-3.5 h-3.5" />
           </button>

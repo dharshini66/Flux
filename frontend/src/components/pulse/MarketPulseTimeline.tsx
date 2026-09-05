@@ -13,36 +13,36 @@ export const MarketPulseTimeline: React.FC = () => {
   return (
     <section className="card-secondary p-5 mb-6 shadow-subtle">
       {/* Title Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-ivory-300">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-ivory-300 dark:border-[#303746]">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 bg-cobalt-500 text-white rounded-sm flex items-center justify-center shadow-[1px_1px_0px_#121212] select-none">
             <Activity className="w-3.5 h-3.5" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-ink-900 tracking-tight uppercase flex items-center gap-2">
+            <h2 className="text-sm font-bold text-ink-900 dark:text-[#F4F1E8] tracking-tight uppercase flex items-center gap-2">
               <span>THE MARKET PULSE</span>
-              <span className="text-[9px] financial-mono bg-ivory-300 text-ink-700 px-1.5 py-0.5 rounded font-bold">
+              <span className="text-[9px] financial-mono bg-ivory-300 dark:bg-[#202633] text-ink-700 dark:text-[#F4F1E8] px-1.5 py-0.5 rounded font-bold">
                 SIGNATURE TIMELINE
               </span>
             </h2>
-            <span className="text-[10.5px] font-sans text-ink-500">
+            <span className="text-[10.5px] font-sans text-ink-500 dark:text-[#737B8A]">
               Session Event Velocity & Anomaly Distribution
             </span>
           </div>
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-3.5 text-xs font-sans text-ink-600">
+        <div className="flex items-center gap-3.5 text-xs font-sans text-ink-600 dark:text-[#A8AFBD]">
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-retropink-500 border border-ink-900"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-retropink-500 border border-ink-900 dark:border-[#303746]"></span>
             <span className="text-[11px] font-medium">Critical</span>
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-cobalt-500 border border-ink-900"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-cobalt-500 border border-ink-900 dark:border-[#303746]"></span>
             <span className="text-[11px] font-medium">High</span>
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-signal-ochre border border-ink-900"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-signal-ochre border border-ink-900 dark:border-[#303746]"></span>
             <span className="text-[11px] font-medium">Moderate</span>
           </span>
         </div>
@@ -111,7 +111,7 @@ export const MarketPulseTimeline: React.FC = () => {
                 </div>
 
                 {/* Line 2: Event Title (Readable sans-serif, breathing room) */}
-                <div className="text-[11.5px] font-semibold text-ink-900 leading-snug font-sans min-h-[2.4rem] line-clamp-2">
+                <div className="text-[11.5px] font-semibold text-ink-900 dark:text-[#F4F1E8] leading-snug font-sans min-h-[2.4rem] line-clamp-2">
                   {evt.event_title}
                 </div>
 
@@ -125,7 +125,7 @@ export const MarketPulseTimeline: React.FC = () => {
                     {evt.price_delta}
                   </span>
                   <span className="text-ink-500 dark:text-[#737B8A]">
-                    Score: <strong className="text-ink-900 font-bold">{evt.significance_score.toFixed(2)}</strong>
+                    Score: <strong className="text-ink-900 dark:text-[#F4F1E8] font-bold">{evt.significance_score.toFixed(2)}</strong>
                   </span>
                 </div>
               </button>
@@ -143,7 +143,7 @@ export const MarketPulseTimeline: React.FC = () => {
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs financial-mono font-bold text-ink-900">
+                <span className="text-xs financial-mono font-bold text-ink-900 dark:text-[#F4F1E8]">
                   {activeEvent.time_label} · {activeEvent.symbol}
                 </span>
                 <SeverityBadge severity={activeEvent.severity} />
@@ -155,7 +155,7 @@ export const MarketPulseTimeline: React.FC = () => {
                   {activeEvent.price_delta}
                 </span>
               </div>
-              <p className="text-xs text-ink-700 mt-1 font-sans leading-relaxed">
+              <p className="text-xs text-ink-700 dark:text-[#D4D8E0] mt-1 font-sans leading-relaxed">
                 {activeEvent.detail}
               </p>
             </div>
@@ -164,7 +164,7 @@ export const MarketPulseTimeline: React.FC = () => {
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => setSelectedStockSymbol(activeEvent.symbol)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-ivory-100 hover:bg-white text-ink-900 border border-ink-900 rounded-sm text-xs font-bold uppercase shadow-[1.5px_1.5px_0px_#121212] transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-ivory-100 dark:bg-[#202633] hover:bg-white dark:hover:bg-[#283142] text-ink-900 dark:text-[#F4F1E8] border border-ink-900 dark:border-[#4C72FF]/50 rounded-sm text-xs font-bold uppercase shadow-[1.5px_1.5px_0px_#121212] dark:shadow-none transition-all"
             >
               <span className="financial-mono text-[11px]">Inspect {activeEvent.symbol}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

@@ -203,13 +203,65 @@
   background-size: 100% 4px;
 }
 
-/* Dark mode specific surface adjustments */
-.dark .backdrop-blur-xs {
-  background-color: rgba(0, 0, 0, 0.75) !important;
+/* ==========================================================================
+   Comprehensive Dark Mode Utility & Surface Overrides
+   Ensures 100% theme consistency across legacy utilities, CSS variable fallbacks,
+   borders, and background surfaces without contrast defects or inverted artifacts.
+   ========================================================================== */
+
+html.dark,
+html[data-theme="dark"],
+html.dark body,
+body.dark {
+  background-color: #0F1117 !important;
+  color: #F4F1E8 !important;
+}
+
+/* Background surfaces */
+html.dark .bg-ivory-200,
+html[data-theme="dark"] .bg-ivory-200,
+.dark .bg-ivory-200 {
+  background-color: #0F1117 !important;
+}
+
+html.dark .bg-ivory-100,
+html[data-theme="dark"] .bg-ivory-100,
+.dark .bg-ivory-100 {
+  background-color: #151922 !important;
+}
+
+html.dark .bg-ivory-50,
+html[data-theme="dark"] .bg-ivory-50,
+.dark .bg-ivory-50 {
+  background-color: #1B202B !important;
+}
+
+html.dark .bg-ivory-300,
+html[data-theme="dark"] .bg-ivory-300,
+.dark .bg-ivory-300 {
+  background-color: #232A38 !important;
+}
+
+html.dark .bg-ivory-400,
+html[data-theme="dark"] .bg-ivory-400,
+.dark .bg-ivory-400 {
+  background-color: #303746 !important;
 }
 
 .dark .bg-white {
   background-color: #1A202C !important;
+}
+
+/* Hover surfaces */
+html.dark .hover\:bg-ivory-50:hover,
+.dark .hover\:bg-ivory-50:hover,
+html.dark .hover\:bg-ivory-100:hover,
+.dark .hover\:bg-ivory-100:hover,
+html.dark .hover\:bg-ivory-200:hover,
+.dark .hover\:bg-ivory-200:hover,
+html.dark .hover\:bg-ivory-300:hover,
+.dark .hover\:bg-ivory-300:hover {
+  background-color: #202633 !important;
 }
 
 .dark .hover\:bg-white:hover {
@@ -218,6 +270,84 @@
 
 .dark .focus\:bg-white:focus {
   background-color: #1A202C !important;
+}
+
+.dark .backdrop-blur-xs {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Text hierarchy & contrast */
+html.dark .text-ink-900,
+html[data-theme="dark"] .text-ink-900,
+.dark .text-ink-900 {
+  color: #F4F1E8 !important;
+}
+
+html.dark .text-ink-800,
+html[data-theme="dark"] .text-ink-800,
+html.dark .text-ink-700,
+html[data-theme="dark"] .text-ink-700,
+.dark .text-ink-800,
+.dark .text-ink-700 {
+  color: #D4D8E0 !important;
+}
+
+html.dark .text-ink-600,
+html[data-theme="dark"] .text-ink-600,
+.dark .text-ink-600 {
+  color: #A8AFBD !important;
+}
+
+html.dark .text-ink-500,
+html[data-theme="dark"] .text-ink-500,
+html.dark .text-ink-400,
+html[data-theme="dark"] .text-ink-400,
+.dark .text-ink-500,
+.dark .text-ink-400 {
+  color: #737B8A !important;
+}
+
+html.dark .text-ink-300,
+html[data-theme="dark"] .text-ink-300,
+html.dark .text-ink-200,
+html[data-theme="dark"] .text-ink-200,
+.dark .text-ink-300,
+.dark .text-ink-200 {
+  color: #555F70 !important;
+}
+
+/* Borders & Dividers */
+html.dark .border-ivory-200,
+html.dark .border-ivory-300,
+html.dark .border-editorial,
+.dark .border-ivory-200,
+.dark .border-ivory-300,
+.dark .border-editorial {
+  border-color: #232A38 !important;
+}
+
+html.dark .border-ivory-400,
+html.dark .border-editorial-dark,
+.dark .border-ivory-400,
+.dark .border-editorial-dark {
+  border-color: #303746 !important;
+}
+
+html.dark .divide-ivory-300 > :not([hidden]) ~ :not([hidden]),
+html.dark .divide-ivory-200 > :not([hidden]) ~ :not([hidden]),
+.dark .divide-ivory-300 > :not([hidden]) ~ :not([hidden]),
+.dark .divide-ivory-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #232A38 !important;
+}
+
+/* Retro shadow softening in dark mode */
+html.dark .shadow-retro,
+html.dark .shadow-retro-sm,
+html.dark .shadow-retro-lg,
+.dark .shadow-retro,
+.dark .shadow-retro-sm,
+.dark .shadow-retro-lg {
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.75) !important;
 }
 
 /* Custom Editorial Scrollbars */

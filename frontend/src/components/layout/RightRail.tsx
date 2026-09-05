@@ -47,10 +47,10 @@ export const RightRail: React.FC = () => {
       {/* 1. Market Mission / Analyst Progress Card */}
       <div className="card-secondary p-4 shadow-subtle">
         {/* Card Header */}
-        <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 mb-3">
+        <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 dark:border-[#303746] mb-3">
           <div className="flex items-center gap-2">
             <span className="text-base select-none">🎯</span>
-            <h3 className="text-xs font-bold financial-mono text-ink-900 uppercase tracking-wider">
+            <h3 className="text-xs font-bold financial-mono text-ink-900 dark:text-[#F4F1E8] uppercase tracking-wider">
               MARKET MISSION
             </h3>
           </div>
@@ -58,7 +58,7 @@ export const RightRail: React.FC = () => {
             <span className="text-[10px] financial-mono font-bold px-1.5 py-0.5 bg-softpurple-500 text-white rounded-sm">
               Lv 3
             </span>
-            <span className="text-[11px] financial-mono font-bold text-ink-600">
+            <span className="text-[11px] financial-mono font-bold text-ink-600 dark:text-[#A8AFBD]">
               3 / 3
             </span>
           </div>
@@ -135,7 +135,7 @@ export const RightRail: React.FC = () => {
         <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 dark:border-[#303746] mb-2">
           <div className="flex items-center gap-2">
             <span className="text-sm select-none">📊</span>
-            <h3 className="text-xs font-bold financial-mono text-ink-900 uppercase tracking-wider">
+            <h3 className="text-xs font-bold financial-mono text-ink-900 dark:text-[#F4F1E8] uppercase tracking-wider">
               MARKET SNAPSHOT
             </h3>
           </div>
@@ -147,7 +147,7 @@ export const RightRail: React.FC = () => {
             <div key={idx.name} className="py-2 flex items-center justify-between text-xs">
               <span className="font-semibold text-ink-800 dark:text-[#F4F1E8] text-[11px] font-sans">{idx.name}</span>
               <div className="flex items-center gap-2.5 financial-mono">
-                <span className="text-ink-900 font-bold">{idx.value}</span>
+                <span className="text-ink-900 dark:text-[#F4F1E8] font-bold">{idx.value}</span>
                 <span
                   className={`text-[10px] font-bold px-1 py-0.5 rounded-xs ${
                     idx.positive ? 'text-signal-green bg-signal-green/10' : 'text-signal-red bg-signal-red/10'
@@ -194,46 +194,46 @@ export const RightRail: React.FC = () => {
 
       {/* 3. Market Status Card */}
       <div className="card-secondary p-4 shadow-subtle">
-        <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 mb-2.5">
+        <div className="flex items-center justify-between pb-2.5 border-b border-ivory-300 dark:border-[#303746] mb-2.5">
           <div className="flex items-center gap-2">
             <span className="text-sm select-none">🌐</span>
-            <h3 className="text-xs font-bold financial-mono text-ink-900 uppercase tracking-wider">
+            <h3 className="text-xs font-bold financial-mono text-ink-900 dark:text-[#F4F1E8] uppercase tracking-wider">
               MARKET STATUS
             </h3>
           </div>
-          <span className="text-[9px] financial-mono bg-ivory-300 text-ink-700 px-1.5 py-0.5 rounded uppercase font-bold">
+          <span className="text-[9px] financial-mono bg-ivory-300 dark:bg-[#202633] text-ink-700 dark:text-[#F4F1E8] px-1.5 py-0.5 rounded uppercase font-bold">
             NSE EQUITIES
           </span>
         </div>
 
-        <div className="flex items-center justify-between pb-3 border-b border-ivory-300">
+        <div className="flex items-center justify-between pb-3 border-b border-ivory-300 dark:border-[#303746]">
           <div>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-signal-green animate-pulse"></span>
-              <span className="text-xs font-bold text-ink-900 font-sans">Market Open</span>
+              <span className="text-xs font-bold text-ink-900 dark:text-[#F4F1E8] font-sans">Market Open</span>
             </div>
-            <span className="text-[10px] financial-mono text-ink-600 block mt-0.5">
+            <span className="text-[10px] financial-mono text-ink-600 dark:text-[#A8AFBD] block mt-0.5">
               NSE | {dateStr || '04 Sep 2026'} {timeStr || '09:45:00'} IST
             </span>
           </div>
           {/* Pixel Monument / Exchange Icon */}
-          <div className="w-8 h-8 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-base shadow-[1px_1px_0px_#121212] select-none">
+          <div className="w-8 h-8 bg-ivory-200 dark:bg-[#1B202B] border border-ink-900 dark:border-[#303746] rounded-sm flex items-center justify-center text-base shadow-[1px_1px_0px_#121212] dark:shadow-none select-none">
             🏛️
           </div>
         </div>
 
         {/* Philosophy Quote */}
         <div className="mt-3 flex items-center justify-between gap-2">
-          <div className="text-[11px] font-editorial italic text-ink-800 leading-tight">
+          <div className="text-[11px] font-editorial italic text-ink-800 dark:text-[#D4D8E0] leading-tight">
             "Not just what moved.<br />
-            <span className="font-semibold text-ink-900 not-italic font-sans text-[10.5px]">
+            <span className="font-semibold text-ink-900 dark:text-[#F4F1E8] not-italic font-sans text-[10.5px]">
               Understand why it matters."
             </span>
-            <span className="block text-[9px] financial-mono not-italic text-cobalt-600 mt-0.5 font-bold uppercase tracking-wider">
+            <span className="block text-[9px] financial-mono not-italic text-cobalt-600 dark:text-[#4C72FF] mt-0.5 font-bold uppercase tracking-wider">
               — FLUX INTELLIGENCE
             </span>
           </div>
-          <div className="w-7 h-7 bg-ivory-200 border border-ink-900 rounded-sm flex items-center justify-center text-sm shadow-[1px_1px_0px_#121212] select-none">
+          <div className="w-7 h-7 bg-ivory-200 dark:bg-[#1B202B] border border-ink-900 dark:border-[#303746] rounded-sm flex items-center justify-center text-sm shadow-[1px_1px_0px_#121212] dark:shadow-none select-none">
             🌱
           </div>
         </div>

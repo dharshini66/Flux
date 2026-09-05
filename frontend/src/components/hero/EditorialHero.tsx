@@ -79,21 +79,21 @@ export const EditorialHero: React.FC = () => {
           <div className="lg:col-span-7 space-y-3.5">
             {/* Greeting & Timestamp Tag */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs financial-mono font-bold text-cobalt-600 uppercase tracking-widest flex items-center gap-1.5">
+              <span className="text-xs financial-mono font-bold text-cobalt-600 dark:text-[#4C72FF] uppercase tracking-widest flex items-center gap-1.5">
                 <span>{greeting.text}</span>
                 <span>{greeting.icon}</span>
               </span>
-              <span className="text-ink-400">·</span>
-              <span className="text-[11px] financial-mono text-ink-600">
+              <span className="text-ink-400 dark:text-[#737B8A]">·</span>
+              <span className="text-[11px] financial-mono text-ink-600 dark:text-[#A8AFBD]">
                 {getVisitTime()}
               </span>
             </div>
 
             {/* Large Editorial Headline */}
             <div>
-              <h1 className="editorial-headline text-3xl lg:text-[2.6rem] font-bold text-ink-900 leading-[1.12] tracking-tight">
+              <h1 className="editorial-headline text-3xl lg:text-[2.6rem] font-bold text-ink-900 dark:text-[#F4F1E8] leading-[1.12] tracking-tight">
                 THE MARKET MOVED.{' '}
-                <span className="text-cobalt-600 italic block sm:inline font-normal">
+                <span className="text-cobalt-600 dark:text-[#4C72FF] italic block sm:inline font-normal">
                   HERE'S WHAT MATTERS.
                 </span>
               </h1>
@@ -107,10 +107,10 @@ export const EditorialHero: React.FC = () => {
                     {countStr}
                   </span>
                   <div className="space-y-0.5">
-                    <span className="block text-xs font-bold financial-mono tracking-wider text-softpurple-600 uppercase">
+                    <span className="block text-xs font-bold financial-mono tracking-wider text-softpurple-600 dark:text-[#8A78E8] uppercase">
                       MEANINGFUL CHANGES
                     </span>
-                    <span className="block text-[10px] financial-mono text-ink-500 uppercase tracking-wide">
+                    <span className="block text-[10px] financial-mono text-ink-500 dark:text-[#737B8A] uppercase tracking-wide">
                       SINCE YOUR LAST VISIT
                     </span>
                   </div>
@@ -119,18 +119,18 @@ export const EditorialHero: React.FC = () => {
                 {/* HOW WE DECIDE? Button */}
                 <button
                   onClick={() => setIsHowWeDecideOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-ivory-50 hover:bg-white text-cobalt-600 border border-cobalt-500/40 hover:border-cobalt-600 rounded-sm text-xs transition-all shadow-subtle hover:shadow-xs group"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-ivory-50 dark:bg-[#1B202B] hover:bg-white dark:hover:bg-[#202633] text-cobalt-600 dark:text-[#4C72FF] border border-cobalt-500/40 dark:border-[#4C72FF]/40 hover:border-cobalt-600 rounded-sm text-xs transition-all shadow-subtle hover:shadow-xs group"
                 >
                   <span className="font-bold tracking-wide uppercase text-[10.5px] financial-mono">
                     HOW WE DECIDE?
                   </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-cobalt-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-cobalt-500 dark:text-[#4C72FF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </button>
               </div>
 
               {/* Compact Breakdown Chips */}
-              <div className="flex flex-wrap items-center gap-2 mt-4 pt-3.5 border-t border-ivory-300">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 border border-ivory-300 rounded-sm text-xs text-ink-800">
+              <div className="flex flex-wrap items-center gap-2 mt-4 pt-3.5 border-t border-ivory-300 dark:border-[#303746]">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs text-ink-800 dark:text-[#F4F1E8]">
                   <TrendingUp className="w-3.5 h-3.5 text-signal-green shrink-0" />
                   <span>
                     <strong className="financial-mono font-bold">
@@ -140,7 +140,7 @@ export const EditorialHero: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 border border-ivory-300 rounded-sm text-xs text-ink-800">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs text-ink-800 dark:text-[#F4F1E8]">
                   <BarChart2 className="w-3.5 h-3.5 text-signal-ochre shrink-0" />
                   <span>
                     <strong className="financial-mono font-bold">
@@ -150,7 +150,7 @@ export const EditorialHero: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 border border-ivory-300 rounded-sm text-xs text-ink-800">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs text-ink-800 dark:text-[#F4F1E8]">
                   <Flame className="w-3.5 h-3.5 text-retropink-500 shrink-0" />
                   <span>
                     <strong className="financial-mono font-bold">

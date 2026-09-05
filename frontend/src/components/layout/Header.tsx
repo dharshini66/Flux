@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
   );
 
   return (
-    <header className="sticky top-0 z-30 bg-ivory-100 border-b border-ivory-300 px-4 lg:px-8 py-2.5">
+    <header className="sticky top-0 z-30 bg-ivory-100 dark:bg-[#151922] border-b border-ivory-300 dark:border-[#303746] px-4 lg:px-8 py-2.5">
       <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-4">
         
         {/* Brand & Tagline */}
@@ -71,14 +71,14 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold tracking-tight text-xl text-ink-900 leading-none">
+                <span className="font-extrabold tracking-tight text-xl text-ink-900 dark:text-[#F4F1E8] leading-none">
                   FLUX
                 </span>
-                <span className="text-[9px] font-bold financial-mono bg-ivory-300 text-ink-700 px-1.5 py-0.5 rounded-xs uppercase tracking-wider">
+                <span className="text-[9px] font-bold financial-mono bg-ivory-300 dark:bg-[#202633] text-ink-700 dark:text-[#F4F1E8] px-1.5 py-0.5 rounded-xs uppercase tracking-wider">
                   INTELLIGENCE
                 </span>
               </div>
-              <span className="text-[10px] financial-mono tracking-widest text-cobalt-600 font-bold block uppercase">
+              <span className="text-[10px] financial-mono tracking-widest text-cobalt-600 dark:text-[#4C72FF] font-bold block uppercase">
                 KNOW WHAT CHANGED.
               </span>
             </div>
@@ -148,9 +148,9 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
           {/* Market Status Badge */}
           <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-ivory-200 dark:bg-[#1B202B] border border-ivory-300 dark:border-[#303746] rounded-sm text-xs">
             <Radio className="w-3.5 h-3.5 text-signal-green animate-pulse shrink-0" />
-            <span className="font-bold text-[11px] financial-mono text-ink-800">NSE // LIVE</span>
+            <span className="font-bold text-[11px] financial-mono text-ink-800 dark:text-[#D4D8E0]">NSE // LIVE</span>
             <span className="text-ink-400">|</span>
-            <span className="text-ink-600 text-[11px] financial-mono">{timeStr || '09:45:00'} IST</span>
+            <span className="text-ink-600 dark:text-[#A8AFBD] text-[11px] financial-mono">{timeStr || '09:45:00'} IST</span>
           </div>
 
           {/* Snapshot Check-In Trigger with Subtitle & Tooltip */}
@@ -224,14 +224,14 @@ export const Header: React.FC<HeaderProps> = ({ onSearchSelect }) => {
 
           {/* User Profile Pill */}
           <div className="flex items-center gap-2.5 pl-2 border-l border-ivory-300 dark:border-[#303746]">
-            <div className="w-7 h-7 bg-ivory-200 dark:bg-[#1B202B] border border-editorial-dark rounded-sm flex items-center justify-center font-bold text-xs financial-mono text-ink-900 shadow-retro-sm">
+            <div className="w-7 h-7 bg-ivory-200 dark:bg-[#1B202B] border border-editorial-dark dark:border-[#303746] rounded-sm flex items-center justify-center font-bold text-xs financial-mono text-ink-900 dark:text-[#F4F1E8] shadow-retro-sm">
               {user?.username?.substring(0, 2).toUpperCase() || 'KS'}
             </div>
             <div className="hidden lg:block text-left leading-tight">
-              <span className="block text-xs font-bold text-ink-900 font-sans">
+              <span className="block text-xs font-bold text-ink-900 dark:text-[#F4F1E8] font-sans">
                 {user?.full_name || 'Kavita Sharma'}
               </span>
-              <span className="text-[10px] financial-mono text-cobalt-600 font-semibold">
+              <span className="text-[10px] financial-mono text-cobalt-600 dark:text-[#4C72FF] font-semibold">
                 XP: {user?.experience_points || 320} · {user?.role || 'Lead Analyst'}
               </span>
             </div>
